@@ -1,0 +1,21 @@
+{
+  "name": "cappadocia-blog",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test:vercel": "node --test ./tests/vercel-handler.test.mjs",
+    "db:generate": "drizzle-kit generate",
+    "db:check": "node scripts/check-postgres.mjs",
+    "db:migrate": "node scripts/migrate-postgres.mjs"
+  },
+  "devDependencies": {
+    "drizzle-kit": "0.31.10",
+    "drizzle-orm": "0.45.2",
+    "esbuild": "0.25.12"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
+    "web-vitals": "5.1.0"
+  }
+}

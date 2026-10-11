@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/worker?__path=/$1" }
+  ],
+  "functions": {
+    "api/worker.mjs": { "maxDuration": 30 }
+  }
+}
