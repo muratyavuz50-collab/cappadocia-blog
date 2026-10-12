@@ -75,13 +75,20 @@ import { onCLS,onINP,onLCP } from 'web-vitals';
   const menuButton = document.querySelector('.menu-button');
   const mobileMenu = document.querySelector('#mobile-menu');
   if (menuButton && mobileMenu) {
+    const positionMobileMenu = () => {
+      document.documentElement.style.setProperty('--mobile-menu-top', `${Math.max(0, Math.round(menuButton.closest('.site-header').getBoundingClientRect().bottom))}px`);
+    };
     menuButton.addEventListener('click', () => {
       const open = menuButton.getAttribute('aria-expanded') === 'true';
+      if (!open) positionMobileMenu();
       menuButton.setAttribute('aria-expanded', String(!open));
       menuButton.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
       mobileMenu.hidden = open;
       document.body.classList.toggle('menu-open', !open);
     });
+    window.addEventListener('resize', () => {
+      if (menuButton.getAttribute('aria-expanded') === 'true') positionMobileMenu();
+    }, { passive: true });
   }
 
   const search = document.querySelector('#guide-search');
