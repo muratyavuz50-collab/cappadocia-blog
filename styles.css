@@ -57,7 +57,7 @@ svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-
 .header-cta { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; padding: 0 18px; border-radius: 999px; background: var(--forest); color: white; font-weight: 750; font-size: .9rem; }
 .header-cta:hover { background: var(--emerald); }
 .menu-button { display: none; border: 0; background: transparent; color: var(--forest); padding: 9px; border-radius: 10px; cursor: pointer; }
-.mobile-menu { position: fixed; inset: 112px 0 0; z-index: 110; isolation: isolate; overflow-y: auto; background: #235b43; color: #fff; padding: 28px 24px; border-top: 1px solid rgba(255,255,255,.18); box-shadow: 0 18px 36px rgba(20,44,31,.28); }
+.mobile-menu { position: fixed; inset: var(--mobile-menu-top,112px) 0 0; z-index: 110; isolation: isolate; overflow-y: auto; overscroll-behavior: contain; background: #235b43; color: #fff; padding: 28px 24px max(32px,env(safe-area-inset-bottom)); border-top: 1px solid rgba(255,255,255,.18); box-shadow: 0 18px 36px rgba(20,44,31,.28); }
 .mobile-menu nav { display: grid; gap: 8px; }
 .mobile-menu a { display: block; padding: 13px 12px; color: #fff; font-size: 1.1rem; font-weight: 720; border-bottom: 1px solid rgba(255,255,255,.2); border-radius: 8px; }
 .mobile-menu a:hover, .mobile-menu a:focus-visible, .mobile-menu a[aria-current="page"] { color: #183f30; background: #e2edc9; outline: none; }
@@ -416,7 +416,7 @@ svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-
   .desktop-nav { display: none; }
   .nav-wrap { min-height: 70px; }
   .header-cta { margin-left: auto; }
-  .menu-button { display: grid; place-items: center; }
+  .menu-button { display: grid; place-items: center; margin-left: auto; }
   .hero-inner { grid-template-columns: 1fr; gap: 30px; align-items: center; }
   .decision-card { width: min(100%,660px); margin-bottom: -70px; border-radius: 22px; }
   .hero { min-height: 800px; }
@@ -443,7 +443,8 @@ svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-
   .utility a { display: none; }
   .header-cta { display: none; }
   .brand-word { font-size: 1.08rem; }
-  .mobile-menu { inset: 101px 0 0; }
+  .site-header { background: #fffdf7; backdrop-filter: none; }
+  .mobile-menu { inset: var(--mobile-menu-top,101px) 0 0; }
   .hero, .hero-inner { min-height: 790px; }
   .hero-photo img { object-position: 62% center; }
   .hero-photo::after { background: linear-gradient(180deg,rgba(20,58,38,.65) 0%,rgba(20,58,38,.84) 48%,rgba(20,58,38,.96) 100%); }
