@@ -40,6 +40,7 @@ const ownerSeo=await (await request("/api/admin/seo","owner")).json();
 assert.equal(ownerSeo.publishedArticles,55);assert.equal(ownerSeo.topicCount,8);assert.equal(ownerSeo.report.pageviews,0);
 const publicPages=["/","/guides/","/faq/","/about/","/privacy/","/terms/","/getting-there/","/advertise/",...topicHubs.map(h=>`/topics/${h.slug}/`),...site.articles.map(a=>`/articles/${a.slug}/`)];
 const seenLinks=new Set();
+const articleHeroImages=new Set();
 for(const path of publicPages){
  const response=await request(path);assert.equal(response.status,200,path);
  const document=await response.text();
@@ -61,8 +62,16 @@ for(const path of publicPages){
   assert.equal(schema[0]["@type"],"BlogPosting");assert.equal(schema[1]["@type"],"BreadcrumbList");
   assert.ok(schema[0].datePublished&&schema[0].dateModified&&schema[0].image);
   assert.equal(schema[0].mainEntityOfPage["@id"],env.PUBLIC_ORIGIN+path);
+  assert.ok(document.includes('class="guide-snapshot"'),path+": missing visual guide snapshot");
+  assert.ok(document.includes('class="editorial-illustration"'),path+": missing unique editorial field-note art");
+  assert.ok(document.includes('class="article-section-heading"'),path+": missing illustrated section headings");
+  const hero=document.match(/<figure class="article-hero"><img src="([^"]+)"/);
+  assert.ok(hero,path+": missing article hero image");
+  assert.ok(!articleHeroImages.has(hero[1]),path+": article hero image reused");
+  articleHeroImages.add(hero[1]);
  }
 }
+assert.equal(articleHeroImages.size,site.articles.length,"each article must keep a unique hero image");
 for(const path of seenLinks){if(!path.startsWith("/signin-with-chatgpt")&&!path.startsWith("/signout-with-chatgpt"))assert.ok((await request(path)).status<400,`broken reader link: ${path}`);}
 const hotelsHtml=await (await request("/articles/michelin-hotels-cappadocia/")).text();
 assert.equal((hotelsHtml.match(/class="directory-card"/g)||[]).length,18);
