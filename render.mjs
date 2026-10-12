@@ -32,12 +32,63 @@ function icon(name) {
     balloon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c4 0 7 3.2 7 7 0 4.3-3.3 7.8-5.2 9.4h-3.6C8.3 16.8 5 13.3 5 9c0-3.8 3-7 7-7Z"></path><path d="M10 18.5h4L13 22h-2l-1-3.5ZM8 4.2C9.4 7 9.4 12.5 11 18M16 4.2C14.6 7 14.6 12.5 13 18"></path></svg>',
     bed: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19V8M21 19v-7H8a3 3 0 0 0-3 3v1h16M7 12V8h5a3 3 0 0 1 3 3v1"></path></svg>',
     route: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="18" r="2"></circle><circle cx="18" cy="6" r="2"></circle><path d="M8 18h3a3 3 0 0 0 3-3V9a3 3 0 0 1 3-3h-1"></path></svg>',
+    plane: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 18-7-7 18-3-8-8-3Z"></path><path d="m11 14 4-4"></path></svg>',
+    museum: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 9 9-5 9 5M5 10v7M9 10v7M15 10v7M19 10v7M3 20h18M4 17h16"></path></svg>',
+    utensils: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v7M4 3v5a3 3 0 0 0 6 0V3M7 11v10M16 3v18M16 3c3 2 4 5 4 8h-4"></path></svg>',
+    sparkles: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3ZM19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15ZM5 13l.7 1.8 1.8.7-1.8.7L5 18l-.7-1.8-1.8-.7 1.8-.7L5 13Z"></path></svg>',
+    clock: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>',
+    check: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>',
     shield: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 6v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6l8-3Z"></path><path d="m8.5 12 2.2 2.2 4.8-5"></path></svg>',
     arrow: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5"></path></svg>',
     menu: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>',
     close: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>'
   };
   return icons[name] || icons.compass;
+}
+
+const topicIcons = {
+  "plan-your-trip": "calendar",
+  itineraries: "route",
+  balloons: "balloon",
+  transport: "plane",
+  "where-to-stay": "bed",
+  "museums-and-heritage": "museum",
+  "valleys-and-experiences": "sparkles",
+  "food-and-restaurants": "utensils"
+};
+
+const planningCues = {
+  "plan-your-trip": ["Trip shape", "Your usable days and priorities", "Dates, margins and cancellation terms"],
+  itineraries: ["Daily rhythm", "A realistic route with breathing room", "Arrival times and one flexible morning"],
+  balloons: ["Flight choice", "The exact operator and flight option", "Pickup, participation and weather terms"],
+  transport: ["Door-to-door route", "Airport, flight number and hotel", "Arrival and return transfer details"],
+  "where-to-stay": ["Your base", "Town, room type and daily routine", "Stairs, access, views and pickup zone"],
+  "museums-and-heritage": ["Meaningful visit", "One site explored with enough time", "Opening, access and photography rules"],
+  "valleys-and-experiences": ["Time outdoors", "Route, pace and return plan", "Weather, footwear and meeting point"],
+  "food-and-restaurants": ["A memorable meal", "Cuisine, town and occasion", "Reservation, menu and dietary needs"]
+};
+
+function guideSnapshot(article) {
+  const hub = articleHub(article);
+  const [focus, plan, confirm] = planningCues[hub.slug] || planningCues["plan-your-trip"];
+  const mark = topicIcons[hub.slug] || "compass";
+  return `<section class="guide-snapshot" aria-labelledby="snapshot-title"><div class="snapshot-mark">${icon(mark)}</div><div class="snapshot-heading"><span class="eyebrow">Guide snapshot</span><h2 id="snapshot-title">Know what matters before you decide.</h2></div><div class="snapshot-grid"><div><span>${icon("compass")}</span><small>Focus</small><strong>${escapeHtml(focus)}</strong></div><div><span>${icon("clock")}</span><small>Plan for</small><strong>${escapeHtml(plan)}</strong></div><div><span>${icon("check")}</span><small>Confirm</small><strong>${escapeHtml(confirm)}</strong></div></div></section>`;
+}
+
+function editorialIllustration(article) {
+  const hub = articleHub(article);
+  const mark = topicIcons[hub.slug] || "compass";
+  const seed = [...article.slug].reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  const palettes = [
+    ["#dceccf", "#f6c778", "#d7603c"],
+    ["#d9ece6", "#f2a957", "#2e7450"],
+    ["#eadfcb", "#efbd6d", "#b9563a"],
+    ["#dce7c8", "#f7d28a", "#386b50"]
+  ];
+  const [sky, sun, land] = palettes[seed % palettes.length];
+  const feature = article.sections[Math.min(article.sections.length - 1, Math.floor(article.sections.length / 2))]?.heading || hub.title;
+  const balloons = hub.slug === "balloons" || hub.slug === "plan-your-trip" || hub.slug === "itineraries";
+  return `<figure class="editorial-illustration"><div class="illustration-art" role="img" aria-label="Illustrated Cappadocia field note for ${escapeHtml(article.title)}" style="--art-sky:${sky};--art-sun:${sun};--art-land:${land}"><span class="art-sun"></span><span class="art-rock art-rock-one"></span><span class="art-rock art-rock-two"></span><span class="art-rock art-rock-three"></span>${balloons?'<span class="art-balloon art-balloon-one"></span><span class="art-balloon art-balloon-two"></span>':`<span class="art-emblem">${icon(mark)}</span>`}<div class="art-copy"><small>Cappadocia field note</small><strong>${escapeHtml(feature)}</strong></div></div><figcaption>A visual pause created for this guide · ${escapeHtml(hub.title)}</figcaption></figure>`;
 }
 
 function brand() {
@@ -213,7 +264,7 @@ function editorialHome() {
   <div class="shell final-ad">${adSlot("native", "Tell a clearly labelled local story with us")}</div>`;
 }
 
-function topicNavigation(){return `<nav class="topic-grid" aria-label="Browse Cappadocia topics">${topicHubs.map(h=>`<a href="/topics/${h.slug}/"><strong>${escapeHtml(h.title)}</strong><span>${topicArticles(site,h).length} guides</span></a>`).join("")}</nav>`;}
+function topicNavigation(){return `<nav class="topic-grid" aria-label="Browse Cappadocia topics">${topicHubs.map((h,index)=>`<a href="/topics/${h.slug}/"><span class="topic-card-top"><i>${icon(topicIcons[h.slug]||"compass")}</i><small>${String(index+1).padStart(2,"0")}</small></span><strong>${escapeHtml(h.title)}</strong><span class="topic-card-meta">${topicArticles(site,h).length} guides</span></a>`).join("")}</nav>`;}
 function topicPage(hub){
  const pieces=topicArticles(site,hub),start=hub.start.map(slug=>pieces.find(a=>a.slug===slug)).filter(Boolean);
  const remaining=pieces.filter(a=>!start.some(s=>s.slug===a.slug));
@@ -244,15 +295,16 @@ function articlePage(article) {
   const relatedCandidates=[...(article.relatedSlugs||[]).map(slug=>site.articles.find(a=>a.slug===slug)).filter(Boolean),...site.articles.filter(a=>a.category===article.category),...site.articles];
   const related=[...new Map(relatedCandidates.filter(a=>a.slug!==article.slug).map(a=>[a.slug,a])).values()].slice(0,3);
   const middle = Math.ceil(article.sections.length / 2);
-  const sectionHtml = article.sections.map((section, index) => `${index === middle ? adSlot("inline", "A considered placement within this guide") : ""}<section class="article-section" id="${slugify(section.heading)}"><h2>${escapeHtml(section.heading)}</h2>${section.paragraphs.map((p)=>`<p>${escapeHtml(p)}</p>`).join("")}${section.list ? `<ul>${section.list.map((item)=>`<li>${escapeHtml(item)}</li>`).join("")}</ul>` : ""}</section>${index === recommendationIndex ? gygModule(article.cmp || `${site.shortCode}_${article.slug}`, true, article) : ""}`).join("");
+  const sectionIcon = topicIcons[articleHub(article).slug] || "compass";
+  const sectionHtml = article.sections.map((section, index) => `${index === middle ? `${editorialIllustration(article)}${adSlot("inline", "A considered placement within this guide")}` : ""}<section class="article-section" id="${slugify(section.heading)}"><div class="article-section-heading"><span>${icon(sectionIcon)}</span><div><small>${String(index+1).padStart(2,"0")}</small><h2>${escapeHtml(section.heading)}</h2></div></div>${section.paragraphs.map((p)=>`<p>${escapeHtml(p)}</p>`).join("")}${section.list ? `<ul>${section.list.map((item)=>`<li>${escapeHtml(item)}</li>`).join("")}</ul>` : ""}</section>${index === recommendationIndex ? gygModule(article.cmp || `${site.shortCode}_${article.slug}`, true, article) : ""}`).join("");
   const faq = article.faq || [
     ["Should I book ahead?", "For limited-capacity experiences and peak travel periods, compare availability early. Keep weather-sensitive plans flexible and read the current cancellation terms before paying."],
     ["How current is this guide?", `This article was reviewed on ${updated}. Operational details can change, so confirm live schedules, access rules and inclusions with the provider before travel.`]
   ];
   return `<article class="article"><header class="article-header shell"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides/">${site.guideLabel}</a><span>/</span><span>${escapeHtml(article.category)}</span></nav><span class="eyebrow">${escapeHtml(article.category)}</span><h1>${escapeHtml(article.title)}</h1><p class="article-dek">${escapeHtml(article.dek)}</p><div class="article-byline"><span>By ${site.editorialName}</span><span>${article.readTime} min read</span><span>Updated ${reviewDate(article)}</span></div></header>
   <figure class="article-hero"><img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" width="${image.width}" height="${image.height}" fetchpriority="high"><figcaption>${imageCredit(image)}</figcaption></figure>
-  <div class="shell article-layout"><div class="article-main"><p class="article-intro">${escapeHtml(article.intro)}</p>${routeFor(article)}${directoryFor(article)}<p class="topic-backlink"><a href="/topics/${articleHub(article).slug}/">Explore ${escapeHtml(articleHub(article).title)}</a></p>${adSlot("inline", "A selected Cappadocia partner can appear here")}${sectionHtml}${["Getting There","Getting Around"].includes(article.category)?'<section class="article-section route-card"><h2>Plan your airport arrival</h2><p>Compare ASR and NAV, search flights for your dates and prepare a transfer checklist with your arrival and return flight numbers.</p><a href="/getting-there/">Open the Getting There calendar →</a></section>':""}${sourceBlock(article)}<div class="article-actions"><button type="button" data-share>${icon("arrow")} Share this guide</button><a href="/guides/">Explore more ${site.variant === "practical" ? "guides" : "stories"}</a></div>${adSlot("inline", "Reserved before reader questions")}<section class="faq"><span class="eyebrow">Useful to know</span><h2>Reader questions</h2>${faq.map(([q,a])=>`<details><summary>${escapeHtml(q)}</summary><p>${escapeHtml(a)}</p></details>`).join("")}</section></div>
-  <aside class="article-sidebar"><div class="sidebar-card"><span>In this guide</span>${article.sections.map((s)=>`<a href="#${slugify(s.heading)}">${escapeHtml(s.heading)}</a>`).join("")}</div>${adSlot("tall", "A high-visibility local partner position")}</aside></div>
+  <div class="shell article-layout"><div class="article-main"><p class="article-intro">${escapeHtml(article.intro)}</p>${guideSnapshot(article)}${routeFor(article)}${directoryFor(article)}<p class="topic-backlink"><a href="/topics/${articleHub(article).slug}/">Explore ${escapeHtml(articleHub(article).title)}</a></p>${adSlot("inline", "A selected Cappadocia partner can appear here")}${sectionHtml}${["Getting There","Getting Around"].includes(article.category)?'<section class="article-section route-card"><h2>Plan your airport arrival</h2><p>Compare ASR and NAV, search flights for your dates and prepare a transfer checklist with your arrival and return flight numbers.</p><a href="/getting-there/">Open the Getting There calendar →</a></section>':""}${sourceBlock(article)}<div class="article-actions"><button type="button" data-share>${icon("arrow")} Share this guide</button><a href="/guides/">Explore more ${site.variant === "practical" ? "guides" : "stories"}</a></div>${adSlot("inline", "Reserved before reader questions")}<section class="faq"><span class="eyebrow">Useful to know</span><h2>Reader questions</h2>${faq.map(([q,a])=>`<details><summary>${escapeHtml(q)}</summary><p>${escapeHtml(a)}</p></details>`).join("")}</section></div>
+  <aside class="article-sidebar"><div class="sidebar-topic-mark"><span>${icon(sectionIcon)}</span><small>${escapeHtml(article.category)}</small></div><div class="sidebar-card"><span>In this guide</span>${article.sections.map((s)=>`<a href="#${slugify(s.heading)}">${escapeHtml(s.heading)}</a>`).join("")}</div>${adSlot("tall", "A high-visibility local partner position")}</aside></div>
   <section class="section section-paper"><div class="shell"><div class="section-heading"><div><span class="eyebrow">Continue exploring</span><h2>Related reading</h2></div></div><div class="card-grid">${related.map((a)=>articleCard(a)).join("")}</div></div></section></article>`;
 }
 
