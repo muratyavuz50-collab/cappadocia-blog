@@ -13,7 +13,7 @@ const signIn=(path)=>`/signin-with-chatgpt?return_to=${encodeURIComponent(path)}
 const headers={"cache-control":"no-store","x-content-type-options":"nosniff","referrer-policy":"strict-origin-when-cross-origin","permissions-policy":"camera=(), microphone=(), geolocation=()"};
 const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{...headers,"content-type":"application/json; charset=utf-8"}});
 const html=(body,status=200,secure=false)=>new Response(body,{status,headers:{...headers,"content-type":"text/html; charset=utf-8",...(secure||status>=400?{"x-robots-tag":"noindex, nofollow"}:{}),...(secure?{"content-security-policy":"default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"}: {})}});
-function canonicalOrigin(env){try{const u=new URL(env.CANONICAL_ORIGIN||env.PUBLIC_ORIGIN||"https://cappadocia-blog.kelebek-grou-7963.chatgpt.site");if(u.protocol==="https:")return u.origin;}catch{}return "https://cappadocia-blog.kelebek-grou-7963.chatgpt.site";}
+function canonicalOrigin(env){try{const u=new URL(env.CANONICAL_ORIGIN||env.PUBLIC_ORIGIN||"https://cappadociablog.com");if(u.protocol==="https:")return u.origin;}catch{}return "https://cappadociablog.com";}
 
 async function body(request){
   if(!request.headers.get("content-type")?.startsWith("application/json"))throw new HttpError(415,"JSON içerik bekleniyor.");
