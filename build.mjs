@@ -1,10 +1,9 @@
-import { mkdir, readFile, readdir, rm, cp } from "node:fs/promises";
+import { mkdir, readFile, readdir, rm } from "node:fs/promises";
 import { build } from "esbuild";
 
 const out = new URL("./dist/", import.meta.url);
 await rm(out, { recursive: true, force: true });
 await mkdir(new URL("./server/", out), { recursive: true });
-await mkdir(new URL("./.openai/", out), { recursive: true });
 const files = {
   "/styles.css": ["./styles.css", "text/css; charset=utf-8"],
   "/site.js": ["./site.js", "application/javascript; charset=utf-8"],
@@ -29,7 +28,6 @@ await build({ entryPoints: ["worker.mjs"], outfile: "dist/server/index.js", bund
     builder.onLoad({filter:/.*/,namespace:"assets"},()=>({contents:`export default ${JSON.stringify(assets)};`,loader:"js"}));
   }}],
 });
-await cp(new URL("./.openai/hosting.json", import.meta.url), new URL("./.openai/hosting.json", out));
 const worker = await import(new URL("./server/index.js", out));
 if (typeof worker.default?.fetch !== "function") throw new Error("Worker fetch export missing.");
 console.log("Built persistent editorial CMS, public guides and travel planning.");
