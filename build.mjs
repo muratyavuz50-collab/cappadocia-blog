@@ -10,6 +10,7 @@ const files = {
   "/admin.css": ["./admin.css", "text/css; charset=utf-8"],
   "/admin.js": ["./admin.js", "application/javascript; charset=utf-8"],
   "/favicon.svg": ["./assets/favicon.svg", "image/svg+xml"],
+  "/googlef58436032d816b1e.html": ["./googlef58436032d816b1e.html", "text/html; charset=utf-8"],
   "/assets/cappadocia-sunrise.webp": ["./assets/cappadocia-sunrise.webp", "image/webp"],
 };
 const assets = {};
