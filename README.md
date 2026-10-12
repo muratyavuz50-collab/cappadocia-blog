@@ -8,7 +8,7 @@ The site can be deployed as a public, read-only preview before its database and 
 
 1. Import this repository into Vercel. Keep the project root at the repository root and use the default Node.js build settings. The build command is `npm run build`.
 2. Add a Neon Postgres database from Vercel Marketplace and copy its `DATABASE_URL` into the Vercel project environment variables.
-3. Run `npm run db:migrate` once with `DATABASE_URL` to create the Postgres schema. `npm run db:check` verifies connectivity and required tables.
+3. The Vercel function creates the required tables automatically on its first database request. `npm run db:migrate` remains available for explicit migrations, and `npm run db:check` verifies connectivity and required tables.
 4. Create a Google OAuth web client. Add the production callback URL `https://cappadociablog.com/auth/google/callback` as an authorized redirect URI. Configure:
 
    - `ADMIN_OWNER_EMAIL`: the one Google account allowed to use the CMS
