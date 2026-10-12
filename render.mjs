@@ -46,6 +46,7 @@ function icon(name) {
   return icons[name] || icons.compass;
 }
 
+// Shared visual language for topic discovery and article-level editorial cues.
 const topicIcons = {
   "plan-your-trip": "calendar",
   itineraries: "route",
