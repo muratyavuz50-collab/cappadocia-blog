@@ -376,6 +376,39 @@ Object.assign(articleImages, {
   }
 });
 
+// High-resolution, one-to-one images for the October 2026 guide collection.
+// Each source page carries the creator and exact reusable licence record.
+const highResCommons = (file, alt) => {
+  const source=`https://commons.wikimedia.org/wiki/File:${encodeURIComponent(file).replaceAll("%20", "_")}`;
+  return {src:`https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}?width=2000`,alt,width:2000,height:1333,source,author:"Creator credited on source page",license:"Reusable Commons licence",licenseUrl:source,title:file,modified:false,reviewed:"2026-10-14"};
+};
+
+Object.assign(articleImages, {
+  "best-balloon-companies-cappadocia":highResCommons("Hot air balloons over Cappadocia.jpg","Hot-air balloons rising above Cappadocia at sunrise."),
+  "best-hotels-cappadocia":highResCommons("Mustafapaşa General view in 2014 2096.jpg","Historic stone buildings and rock-cut structures in Mustafapaşa."),
+  "best-restaurants-cappadocia":highResCommons("A Turkish restaurant.jpg","A traditional Turkish restaurant displaying freshly prepared dishes."),
+  "best-atv-tours-cappadocia":highResCommons("Atv tour in Cappadocia.jpg","ATV riders following a Cappadocia valley route."),
+  "best-horseback-riding-cappadocia":highResCommons("Goreme Sword Valley Horseback Tour.jpg","A guided horseback ride through Sword Valley near Göreme."),
+  "top-attractions-cappadocia":highResCommons("Goreme Valley.jpg","Wide view across Göreme Valley and Cappadocia's rock formations."),
+  "most-beautiful-churches-cappadocia":highResCommons("Cappadocia Göreme Dark-Church 20241003 144513.jpg","The rock-cut Dark Church at Göreme Open-Air Museum."),
+  "most-visited-museums-cappadocia":highResCommons("Cappadocia Zelva Wikimedia Commons 01.jpg","Rock-cut spaces at Zelve Open-Air Museum."),
+  "top-rated-restaurants-cappadocia-yelp":highResCommons("Turkish cuisine dishes.jpg","A colourful selection of dishes from Turkish cuisine."),
+  "cappadocia-high-low-seasons":highResCommons("Cappadocia-winter.jpg","Snow-covered Cappadocia formations in winter light.")
+});
+
+export const articleExtras={
+  "best-balloon-companies-cappadocia":[highResCommons("Aerial view of Cappadocia from hot air balloon 40.jpg","Aerial view over Cappadocia from a hot-air balloon."),highResCommons("Hot-air ballooning in Cappadocia (52397863260).jpg","Balloons floating above the Cappadocia landscape.")],
+  "best-hotels-cappadocia":[highResCommons("One Windowed Cave Room in Cappadocia Turkiye.jpg","A windowed cave-room exterior in Cappadocia."),highResCommons("Doors of Mustafapaşa - Flickr - brewbooks.jpg","Historic carved doors in Mustafapaşa.")],
+  "best-restaurants-cappadocia":[highResCommons("Testi kebab.jpg","Testi kebab prepared in a traditional earthenware pot."),highResCommons("Turkish meze plate.jpg","A varied plate of Turkish meze.")],
+  "best-atv-tours-cappadocia":[highResCommons("ATV Safari, Göreme.jpg","An ATV safari group near Göreme."),highResCommons("Drone Aerial over Cappadocia, goreme, urgup, red valley, national park, Turkey, fairy chimneys 22.jpg","Aerial view of the valleys used by outdoor tours.")],
+  "best-horseback-riding-cappadocia":[highResCommons("Cappadociahorses.jpg","Horses in the Cappadocia landscape."),highResCommons("Horses and Hot-air ballooning in Cappadocia (52396921132).jpg","Horses beneath balloons at sunrise in Cappadocia.")],
+  "top-attractions-cappadocia":[highResCommons("Uçhisar View from castle top panorama to Ak Tepe side 0317.jpg","Panorama from Uçhisar Castle toward Cappadocia's valleys."),highResCommons("Zelve Open Air Museum v2.jpg","Rock formations and pathways at Zelve Open-Air Museum.")],
+  "most-beautiful-churches-cappadocia":[highResCommons("Tokali - Fresko NT.jpg","Painted scenes inside Tokalı Church in Göreme."),highResCommons("Mustafapaşa-Eglise troglodyte Sinasos (1).jpg","A rock-cut church in Mustafapaşa.")],
+  "most-visited-museums-cappadocia":[highResCommons("Zelve Open Air Museum v1.jpg","Visitor route through Zelve Open-Air Museum."),highResCommons("Derinkuyu .jpg","A passage inside Derinkuyu Underground City.")],
+  "top-rated-restaurants-cappadocia-yelp":[highResCommons("Turkish mezes.jpg","An assortment of Turkish meze dishes."),highResCommons("Turkish pide and meze.jpg","Turkish pide served with meze.")],
+  "cappadocia-high-low-seasons":[highResCommons("Autumn in Göreme Valley.jpg","Autumn colour across Göreme Valley."),highResCommons("Kapadokya - Nisan 2017 IMG 7518 hamdigumus.jpg","Cappadocia's green landscape in April.")]
+};
+
 // A distinct valley photograph for the four-day itinerary card and guide.
 articleImages["four-day-cappadocia-itinerary"] = { ...articleImages["extra-sunset"] };
 

@@ -308,6 +308,10 @@ svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-
 .article-hero img { width: 100%; height: clamp(340px,47vw,580px); object-fit: cover; border-radius: 27px; }
 .article-hero figcaption { margin-top: 9px; color: #718077; font-size: .74rem; }
 .article-hero figcaption a, .card-credit a { text-decoration: underline; text-underline-offset: 2px; }
+.article-supporting-image { margin: 28px 0 8px; overflow: hidden; border: 1px solid rgba(35,93,72,.16); border-radius: 22px; background: var(--cream); }
+.article-supporting-image img { display: block; width: 100%; aspect-ratio: 16/10; object-fit: cover; }
+.article-supporting-image figcaption { padding: 10px 14px; color: #718077; font-size: .72rem; line-height: 1.45; }
+.article-supporting-image figcaption a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 .card-credit { margin: 0; padding: 8px 18px; background: var(--paper); color: #66776b; font-size: .64rem; line-height: 1.5; }
 .article-layout { display: grid; grid-template-columns: minmax(0,760px) 270px; justify-content: center; gap: 64px; padding-block: 66px 90px; }
 .article-main { min-width: 0; }

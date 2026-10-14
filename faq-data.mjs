@@ -15,7 +15,7 @@ export const faqSources = {
   derinkuyu: { label: "Ministry of Culture: Derinkuyu", url: "https://muze.gov.tr/muze-detay?DistId=DKY&SectionId=DKY01" },
   darkchurch: { label: "Ministry of Culture: Dark Church", url: "https://muze.gov.tr/muze-detay?DistId=GRM&SectionId=GRM02" },
   aviation: { label: "SHGM: balloon operators", url: "https://web.shgm.gov.tr/en/s/80-balloon-operators" },
-  brothers: { label: "Brothers flight on GetYourGuide", url: "https://www.getyourguide.com/en-gb/goreme-l984/cappadocia-sunrise-hot-air-balloon-flight-in-goreme-t592667/?partner_id=GTS1OZ5&cmp=cb_faq_brothers" },
+  turquaz: { label: "Turquaz flight on GetYourGuide", url: "https://www.getyourguide.com/goreme-l984/cappadocia-hot-air-balloon-ride-t409126/?partner_id=GTS1OZ5&cmp=cb_faq_turquaz" },
   discovery: { label: "Discovery flight on GetYourGuide", url: "https://www.getyourguide.com/cappadocia-l1400/cappadocia-goreme-hot-air-balloon-flight-at-sunrise-t26992/?partner_id=GTS1OZ5&cmp=cb_faq_discovery" }
 };
 
@@ -219,15 +219,15 @@ Can I move a balloon booking to another morning?|Check the change policy and liv
 How do I plan if only one morning is available?|Understand the cancellation risk and keep a satisfying non-flight alternative for that morning.
 `},
 { id: "balloon-booking", title: "Balloon bookings and providers", rows: `
-Can I find Brothers Balloons through this site?|Yes. The recommended flight links to GetYourGuide product 592667 with our partner tracking.|brothers
+Can I find Turquaz Balloons through this site?|Yes. The recommended flight links to GetYourGuide product 409126 with our partner tracking.|turquaz
 Can I find Discovery Balloons through this site?|Yes. The recommended flight links to GetYourGuide product 26992 with our partner tracking.|discovery
-Where do I check Brothers flight availability?|Use its live date widget or open the linked product page for your chosen date.|brothers
+Where do I check Turquaz flight availability?|Use its live date widget or open the linked product page for your chosen date.|turquaz
 Where do I check Discovery flight availability?|Use its live date widget or open the linked product page for current options.|discovery
 Does this site charge an extra booking fee?|We do not add a fee to the linked booking; review the external checkout total before paying.
 Who completes payment for the linked balloon products?|The booking is completed through GetYourGuide, according to the selected product's current terms.
 Why might a widget price differ from an old screenshot?|Dates, options and availability can change; use the current checkout total.
 Which currency should I compare balloon offers in?|Compare like-for-like totals in one currency and check any conversion or card charges separately.
-Are the displayed Brothers and Discovery prices fixed?|No. Confirm the current price for the exact date and option on the booking page.
+Are the displayed Turquaz and Discovery prices fixed?|No. Confirm the current price for the exact date and option on the booking page.
 Does a booking link guarantee a seat?|No. Availability and booking confirmation are determined by the external booking service.
 What should I review before paying for a balloon flight?|Check participant eligibility, pickup, flight area, option, inclusions and cancellation terms.
 Are transfers included with my selected balloon option?|Read the option-specific inclusions and confirm your hotel's pickup eligibility.

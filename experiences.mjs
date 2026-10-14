@@ -10,7 +10,6 @@ export const experiences = {
   wine: {id:"1016813",name:"Cappadocia Wine Tasting",label:"A local wine experience",path:"/cappadocia-l1400/cappadocia-wine-tasting-experience-t1016813/",description:"Compare the current tasting format, location and wines in your selected option.",note:"Check participation requirements and arrange transport that does not require you to drive after drinking."},
   coffee: {id:"559306",name:"Sand-Brewed Turkish Coffee Workshop",label:"A food and drink stop",path:"/cappadocia-l1400/cappadocia-sand-brewed-turkish-coffee-workshop-wdesserts-t559306/",description:"A short coffee-making experience to compare alongside your food itinerary.",note:"Confirm the meeting point, ingredients and any dietary needs directly; this is not a restaurant table reservation."},
   turquaz: { id:"409126", name:"Turquaz Balloons", label:"Featured balloon experience", path:"/goreme-l984/cappadocia-hot-air-balloon-ride-t409126/", description:"Explore the flight listed by Cappadocia Turquaz Balloons. The current listing describes a second flight operated by a sister company; check the selected option and operator before booking.", reviews:991 },
-  brothers: { id:"592667", name:"Brothers Balloons", label:"Göreme balloon experience", path:"/en-gb/goreme-l984/cappadocia-sunrise-hot-air-balloon-flight-in-goreme-t592667/", description:"Compare the available flight options and their inclusions for your travel dates." },
   discovery: { id:"26992", name:"Discovery Balloons", label:"Göreme balloon experience", path:"/cappadocia-l1400/cappadocia-goreme-hot-air-balloon-flight-at-sunrise-t26992/", description:"Check dates and current booking terms for a Göreme balloon experience." },
   airport: { id:"440381", name:"Private & Shared Airport Transfers", label:"Kayseri and Nevşehir airports", path:"/goreme-l984/roundtrip-transfers-from-hotels-to-kayserinevsehir-airports-t440381/", description:"Compare private and shared options for your airport and hotel. Confirm the direction and selected vehicle option.", note:"Provide your arrival flight number and, when available, your return flight number, together with both dates and your hotel address.", reviews:8882 },
   airportAlternative: { id:"748485", name:"Nevşehir or Kayseri Airport Transfer", label:"Private or shared transport", path:"/nevsehir-l121020/nevsehir-airport-or-kayseri-airport-fromto-shuttle-service-t748485/", description:"An alternative airport transfer to compare by pickup area, waiting arrangements and vehicle option.", note:"Always send your arriving flight number; include the return flight number when available. Confirm your hotel pickup time separately.", reviews:4907 },
@@ -26,7 +25,7 @@ const articleSelections = {
   "cappadocia-car-rental":["privateCar","airport"],
   "ultimate-cappadocia-travel-guide":["turquaz","airport","museum"],
   "perfect-3-day-cappadocia-itinerary":["turquaz","museum","greenPopular"],
-  "cappadocia-hot-air-balloon-guide":["turquaz","brothers","discovery"],
+  "cappadocia-hot-air-balloon-guide":["turquaz","discovery"],
   "how-many-days-in-cappadocia":["museum","greenPopular"],
   "best-time-to-visit-cappadocia":["turquaz","museum"],
   "cappadocia-trip-cost":["airport","museum"],
@@ -36,9 +35,12 @@ const articleSelections = {
   "cappadocia-airport-transfers":["airport","airportAlternative"],
   "where-to-stay-in-cappadocia":["airport","museum"],
   "best-cave-hotels-in-goreme":["airport","museum"],
-  "cappadocia-balloon-price":["turquaz","brothers","discovery"],
+  "cappadocia-balloon-price":["turquaz","discovery"],
   "cappadocia-balloon-cancelled":["turquaz","museum","greenPopular"],
-  "where-to-watch-cappadocia-balloons":["turquaz","brothers","discovery"],
+  "where-to-watch-cappadocia-balloons":["turquaz","discovery"],
+  "best-balloon-companies-cappadocia":["turquaz","discovery"],
+  "best-atv-tours-cappadocia":["atv","atvAlternative"],
+  "best-horseback-riding-cappadocia":["horse"],
   "cappadocia-green-tour":["greenPopular","green","kaymakli"],
   "cappadocia-atv-tour":["atv","atvAlternative"],
   "derinkuyu-vs-kaymakli":["greenPopular","kaymakli"],
@@ -59,7 +61,7 @@ export function selectExperiences(article) {
   if (/derinkuyu|kaymakl|underground|green tour/.test(topic)) return ["greenPopular","kaymakli"];
   if (/museum|church|heritage|red tour/.test(topic)) return ["museum"];
   if (/atv|quad/.test(topic)) return ["atv","atvAlternative"];
-  if (/balloon/.test(topic)) return ["turquaz","brothers","discovery"];
+  if (/balloon/.test(topic)) return ["turquaz","discovery"];
   if (/hotel|stay|getting around/.test(topic)) return ["airport","museum"];
   return ["museum","greenPopular"];
 }
@@ -85,7 +87,7 @@ export function trackedUrl(key,placement) {
 // Placements remain separate from editorial selections and preserve their inventory names.
 export const advertisingSlots = {
   wide: {mode:"browse"},
-  native: {mode:"gyg",product:"brothers"},
+  native: {mode:"gyg",product:"discovery"},
   inline: {mode:"gyg",product:"turquaz"},
   tall: {mode:"gyg",product:"discovery"}
 };

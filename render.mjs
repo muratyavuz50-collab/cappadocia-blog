@@ -1,6 +1,6 @@
 import { faqPreview } from "./faq-pages.mjs";
 import { experiences, partnerId, selectExperiences, trackedUrl, advertisingSlots, contextualBrowse } from "./experiences.mjs";
-import { articleImages } from "./article-images.mjs";
+import { articleImages,articleExtras } from "./article-images.mjs";
 import { topicHubs,topicArticles,articleHub } from "./editorial.mjs";
 import { hotels,restaurants,michelinHotels } from "./business-guides.mjs";
 
@@ -177,12 +177,12 @@ function experienceCard(key, index, placement) {
 
 function gygModule(cmp, compact = false, article) {
   const code = cmp || `${site.shortCode}_experiences`;
-  const selections = article ? selectExperiences(article) : ["turquaz","brothers","discovery"];
+  const selections = article ? selectExperiences(article) : ["turquaz","discovery"];
   if (!selections.length && article) {
     const browse=contextualBrowse(article,`${code}_browse`);
     return `<section class="experience-module experience-compact" id="recommended-experiences"><div class="experience-content"><span class="eyebrow">Explore options for this guide</span><h2>${escapeHtml(browse.label)}</h2><p>Compare the current route, meeting point, participant requirements and your dates. This category link is a way to browse; it does not imply that we reviewed every listed provider.</p><a class="button button-green" href="${escapeHtml(browse.href)}" target="_blank" rel="sponsored noopener">${escapeHtml(browse.label)}</a></div></section>`;
   }
-  const hasBalloons = selections.some((key) => ["turquaz","brothers","discovery"].includes(key));
+  const hasBalloons = selections.some((key) => ["turquaz","discovery"].includes(key));
   const title = article ? "Experiences for this guide." : "Find your Cappadocia balloon flight.";
   const cards = selections.map((key,index) => experienceCard(key,index,`${code}_recommendation`)).join("");
   const more = !article ? `<div class="city-experiences"><div class="city-experiences-heading"><div><span class="eyebrow">Beyond the balloons</span><h3>Popular ways to explore Cappadocia</h3><p>Selected for relevant itineraries and substantial review histories.</p></div>${gygLink(`${code}_browse`, "Browse all experiences")}</div><div class="flight-list">${["airport","museum","atv"].map((key,index) => experienceCard(key,index,`${code}_popular`)).join("")}</div></div>` : "";
@@ -297,7 +297,9 @@ function articlePage(article) {
   const related=[...new Map(relatedCandidates.filter(a=>a.slug!==article.slug).map(a=>[a.slug,a])).values()].slice(0,3);
   const middle = Math.ceil(article.sections.length / 2);
   const sectionIcon = topicIcons[articleHub(article).slug] || "compass";
-  const sectionHtml = article.sections.map((section, index) => `${index === middle ? `${editorialIllustration(article)}${adSlot("inline", "A considered placement within this guide")}` : ""}<section class="article-section" id="${slugify(section.heading)}"><div class="article-section-heading"><span>${icon(sectionIcon)}</span><div><small>${String(index+1).padStart(2,"0")}</small><h2>${escapeHtml(section.heading)}</h2></div></div>${section.paragraphs.map((p)=>`<p>${escapeHtml(p)}</p>`).join("")}${section.list ? `<ul>${section.list.map((item)=>`<li>${escapeHtml(item)}</li>`).join("")}</ul>` : ""}</section>${index === recommendationIndex ? gygModule(article.cmp || `${site.shortCode}_${article.slug}`, true, article) : ""}`).join("");
+  const extraImages=articleExtras[article.slug]||[];
+  const supportingImage=(index)=>extraImages[index]?`<figure class="article-supporting-image"><img src="${escapeHtml(extraImages[index].src)}" alt="${escapeHtml(extraImages[index].alt)}" width="${extraImages[index].width}" height="${extraImages[index].height}" loading="lazy"><figcaption>${imageCredit(extraImages[index])}</figcaption></figure>`:"";
+  const sectionHtml = article.sections.map((section, index) => `${index === middle ? `${editorialIllustration(article)}${adSlot("inline", "A considered placement within this guide")}` : ""}<section class="article-section" id="${slugify(section.heading)}"><div class="article-section-heading"><span>${icon(sectionIcon)}</span><div><small>${String(index+1).padStart(2,"0")}</small><h2>${escapeHtml(section.heading)}</h2></div></div>${section.paragraphs.map((p)=>`<p>${escapeHtml(p)}</p>`).join("")}${index<2?supportingImage(index):""}${section.list ? `<ul>${section.list.map((item)=>`<li>${escapeHtml(item)}</li>`).join("")}</ul>` : ""}</section>${index === recommendationIndex ? gygModule(article.cmp || `${site.shortCode}_${article.slug}`, true, article) : ""}`).join("");
   const faq = article.faq || [
     ["Should I book ahead?", "For limited-capacity experiences and peak travel periods, compare availability early. Keep weather-sensitive plans flexible and read the current cancellation terms before paying."],
     ["How current is this guide?", `This article was reviewed on ${updated}. Operational details can change, so confirm live schedules, access rules and inclusions with the provider before travel.`]

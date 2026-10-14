@@ -3,7 +3,7 @@ import { faqGroups, faqCount, faqReviewed, faqSources } from "./faq-data.mjs";
 const escape = (value) => String(value).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
 function question(item, prefix = "") {
   const source = faqSources[item.source];
-  const sourceLink = source ? `<p class="faq-source">Source: <a href="${escape(source.url)}" target="_blank" rel="${["brothers","discovery"].includes(item.source) ? "sponsored " : ""}noopener">${escape(source.label)}</a></p>` : "";
+  const sourceLink = source ? `<p class="faq-source">Source: <a href="${escape(source.url)}" target="_blank" rel="${["turquaz","discovery"].includes(item.source) ? "sponsored " : ""}noopener">${escape(source.label)}</a></p>` : "";
   return `<details class="faq-item" id="${prefix}${item.id}" data-faq-accordion><summary>${escape(item.question)}</summary><div class="faq-answer"><p>${escape(item.answer)}</p>${sourceLink}</div></details>`;
 }
 

@@ -9,6 +9,7 @@ import { site } from "./content.mjs";
 import { topicHubs } from "./editorial.mjs";
 import { restaurants,michelinHotels } from "./business-guides.mjs";
 import { experiences,selectExperiences,trackedUrl } from "./experiences.mjs";
+import { articleImages,articleExtras } from "./article-images.mjs";
 
 const sqlite=new DatabaseSync(":memory:");
 for(const file of (await readdir("./drizzle")).filter((f)=>f.endsWith(".sql")))sqlite.exec(await readFile(`./drizzle/${file}`,"utf8"));
@@ -29,15 +30,15 @@ const adminHtml=await admin.text();const token=adminHtml.match(/name="csrf-token
 assert.ok(adminHtml.includes("Yazı yönetimi"));
 assert.ok(admin.headers.get("content-security-policy").includes("frame-ancestors 'none'"));
 const list=await (await request("/api/admin/articles","owner")).json();assert.equal(list.articles.length,site.articles.length);
-assert.equal(site.articles.length,55);
-assert.equal(new Set(site.articles.map(a=>a.slug)).size,55);
+assert.equal(site.articles.length,65);
+assert.equal(new Set(site.articles.map(a=>a.slug)).size,65);
 assert.equal(restaurants.length,18);assert.equal(michelinHotels.length,18);
 assert.equal(michelinHotels.filter(h=>h.distinction.includes("2 MICHELIN Keys")).length,2);
 assert.equal(michelinHotels.filter(h=>h.distinction.includes("1 MICHELIN Key")).length,1);
 assert.equal((await request("/api/admin/seo")).status,401);
 assert.equal((await request("/api/admin/seo","reader")).status,403);
 const ownerSeo=await (await request("/api/admin/seo","owner")).json();
-assert.equal(ownerSeo.publishedArticles,55);assert.equal(ownerSeo.topicCount,8);assert.equal(ownerSeo.report.pageviews,0);
+assert.equal(ownerSeo.publishedArticles,65);assert.equal(ownerSeo.topicCount,8);assert.equal(ownerSeo.report.pageviews,0);
 const publicPages=["/","/guides/","/faq/","/about/","/privacy/","/terms/","/getting-there/","/advertise/",...topicHubs.map(h=>`/topics/${h.slug}/`),...site.articles.map(a=>`/articles/${a.slug}/`)];
 const seenLinks=new Set();
 const articleHeroImages=new Set();
@@ -77,9 +78,18 @@ const hotelsHtml=await (await request("/articles/michelin-hotels-cappadocia/")).
 assert.equal((hotelsHtml.match(/class="directory-card"/g)||[]).length,18);
 assert.ok(hotelsHtml.includes("2 MICHELIN Keys")&&hotelsHtml.includes("1 MICHELIN Key"));
 const fullSitemap=await (await request("/sitemap.xml")).text();
-assert.equal((fullSitemap.match(/<loc>/g)||[]).length,68);
+assert.equal((fullSitemap.match(/<loc>/g)||[]).length,78);
 assert.ok(!fullSitemap.includes("/admin")&&!fullSitemap.includes("/account"));
 assert.ok(fullSitemap.includes(`${env.PUBLIC_ORIGIN}/articles/michelin-hotels-cappadocia/`));
+const octoberSlugs=["best-balloon-companies-cappadocia","best-hotels-cappadocia","best-restaurants-cappadocia","best-atv-tours-cappadocia","best-horseback-riding-cappadocia","top-attractions-cappadocia","most-beautiful-churches-cappadocia","most-visited-museums-cappadocia","top-rated-restaurants-cappadocia-yelp","cappadocia-high-low-seasons"];
+const octoberImages=octoberSlugs.flatMap(slug=>[articleImages[slug],...(articleExtras[slug]||[])]).map(image=>image.src);assert.equal(octoberImages.length,30);assert.equal(new Set(octoberImages).size,30,"all new guide images must be unique");
+for(const slug of octoberSlugs){
+ const article=site.articles.find(a=>a.slug===slug);assert.ok(article,slug);
+ const words=[article.intro,...article.sections.flatMap(s=>s.paragraphs)].join(" ").trim().split(/\s+/).length;assert.ok(words>=300,`${slug}: ${words} words`);
+ assert.equal(articleExtras[slug]?.length,2,`${slug}: two supporting images`);
+ const page=await (await request(`/articles/${slug}/`)).text();assert.equal((page.match(/class="article-supporting-image"/g)||[]).length,2,`${slug}: rendered supporting images`);
+ assert.ok(!page.includes("Brothers Balloons"),`${slug}: Brothers removed`);
+}
 const robots=await (await request("/robots.txt")).text();assert.ok(robots.includes("Allow: /")&&robots.includes("Disallow: /admin")&&robots.includes(env.PUBLIC_ORIGIN+"/sitemap.xml"));
 assert.ok((await (await request("/guides/?category=Food")).text()).includes('content="noindex,nofollow"'));
 assert.equal((await request("/guides")).status,308);
@@ -158,4 +168,4 @@ const arrivalHtml=await (await request("/getting-there/")).text();assert.ok(arri
 for(const path of ["/","/guides/","/about/","/advertise/","/getting-there/","/privacy/","/terms/","/styles.css","/admin.css","/admin.js","/favicon.svg","/assets/cappadocia-sunrise.webp","/sitemap.xml"]){assert.equal((await request(path)).status,200,path);}
 const otherId=new Request("https://cms.example.test/admin/",{headers:{"oai-authenticated-user-id":"different-id","oai-authenticated-user-email":"owner@example.test"}});
 assert.equal((await worker.fetch(otherId,env,{})).status,403);
-console.log(`${site.name}: 55 guides, arrival planning, 8 hubs, all reader links, schema, canonical/robots/sitemap, private SEO controls, real aggregate metrics, auth, CSRF, draft separation, publication conflicts, XSS, retired membership, travel calendars and route-reference checks passed.`);
+console.log(`${site.name}: 65 guides, 30 unique images in the new collection, arrival planning, 8 hubs, all reader links, schema, canonical/robots/sitemap, private SEO controls, real aggregate metrics, auth, CSRF, draft separation, publication conflicts, XSS, retired membership, travel calendars and route-reference checks passed.`);

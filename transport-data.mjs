@@ -3,7 +3,8 @@ export const winterSource = 'https://static.sunexpress.com/media/3bmmupmk/sunexp
 export const summerSource = 'https://static.sunexpress.com/media/wn1lmfyn/sxs-flightplan-s26-27nov_0126.pdf';
 // Regional market shortlist supplied for flight planning; not a visitor ranking.
 export const marketEvidence = {
-  note:'An alphabetical flight-planning shortlist based on regional accommodation research supplied for editorial planning; it is not a visitor ranking, and no visitor totals or shares are published.'
+  note:'An alphabetical flight-planning shortlist based on regional accommodation research supplied for editorial planning; it is not a visitor ranking, and no visitor totals or shares are published.',
+  primary:{label:'Regional accommodation research supplied for editorial planning',total:0}
 };
 // Mon=0. These are Europe -> Kayseri rows, visually checked in the primary PDF.
 // Published seasonal references are never interpreted as bookable inventory.
