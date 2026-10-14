@@ -90,6 +90,15 @@ for(const slug of octoberSlugs){
  const page=await (await request(`/articles/${slug}/`)).text();assert.equal((page.match(/class="article-supporting-image"/g)||[]).length,2,`${slug}: rendered supporting images`);
  assert.ok(!page.includes("Brothers Balloons"),`${slug}: Brothers removed`);
 }
+const balloonGuide=site.articles.find(a=>a.slug==="best-balloon-companies-cappadocia");
+assert.deepEqual(selectExperiences(balloonGuide),["turquaz","discovery","royal","butterfly"]);
+const balloonGuideHtml=await (await request("/articles/best-balloon-companies-cappadocia/")).text();
+for(const domain of ["turquazballoons.com","discoveryballoons.com","butterflyballoons.com","royalballoon.com"])assert.ok(!balloonGuideHtml.includes(domain),`balloon guide must not backlink to ${domain}`);
+for(const productId of ["409126","26992","13752"])assert.ok(balloonGuideHtml.includes(`-t${productId}/`)&&balloonGuideHtml.includes("partner_id=GTS1OZ5"),`balloon guide GYG product ${productId}`);
+assert.ok(balloonGuideHtml.includes("cb_best_balloon_sources_butterfly")&&balloonGuideHtml.includes("getyourguide.com/cappadocia-l1400/"),"Butterfly opens the partner-tracked Cappadocia page");
+assert.ok(balloonGuide.sections[0].paragraphs[0].startsWith("Start in Göreme"),"balloon guide starts its regional comparison with Göreme");
+const hotelGuide=site.articles.find(a=>a.slug==="best-hotels-cappadocia");assert.equal(hotelGuide.sections[0].heading,"Start with Göreme");assert.ok(hotelGuide.sections[0].paragraphs[0].startsWith("Sultan Cave Suites"));
+const restaurantGuide=site.articles.find(a=>a.slug==="best-restaurants-cappadocia");assert.equal(restaurantGuide.sections[0].heading,"Start in Göreme");assert.ok(restaurantGuide.sections[0].paragraphs[0].startsWith("Happena and Seten"));
 const robots=await (await request("/robots.txt")).text();assert.ok(robots.includes("Allow: /")&&robots.includes("Disallow: /admin")&&robots.includes(env.PUBLIC_ORIGIN+"/sitemap.xml"));
 assert.ok((await (await request("/guides/?category=Food")).text()).includes('content="noindex,nofollow"'));
 assert.equal((await request("/guides")).status,308);

@@ -165,6 +165,7 @@ function gygLink(cmp, label = "See Cappadocia experiences") {
 
 function availabilityWidget(key, placement, narrow = false) {
   const product = experiences[key];
+  if (product.browseOnly || !product.id) return "";
   const { href, code } = trackedUrl(key, placement);
   return `<div class="experience-widget" data-experience-widget><p class="widget-status" role="status">Loading dates and availability…</p><div data-gyg-href="https://widget.getyourguide.com/default/availability.frame" data-gyg-tour-id="${product.id}" data-gyg-locale-code="en-US" data-gyg-currency="EUR" data-gyg-widget="availability" ${narrow ? "" : 'data-gyg-variant="horizontal"'} data-gyg-partner-id="${partnerId}" data-gyg-cmp="${escapeHtml(code)}"><span>Powered by <a target="_blank" rel="sponsored noopener" href="${escapeHtml(href)}">GetYourGuide</a></span></div></div>`;
 }
@@ -172,7 +173,8 @@ function availabilityWidget(key, placement, narrow = false) {
 function experienceCard(key, index, placement) {
   const product = experiences[key];
   const { href } = trackedUrl(key, placement);
-  return `<article class="flight-card" data-recommended-product="${product.id}"><div class="flight-card-heading"><span class="flight-number" aria-hidden="true">${String(index + 1).padStart(2,"0")}</span><div><span class="flight-label">${escapeHtml(product.label)}</span><h3>${escapeHtml(product.name)}</h3><p>${escapeHtml(product.description)}</p></div><a class="button button-green" href="${escapeHtml(href)}" target="_blank" rel="sponsored noopener" aria-label="View ${escapeHtml(product.name)} on GetYourGuide">Check dates & details</a></div>${product.note ? `<p class="product-note">${escapeHtml(product.note)}</p>` : ""}${availabilityWidget(key, placement)}</article>`;
+  const action = product.browseOnly ? "Browse on GetYourGuide" : "Check dates & details";
+  return `<article class="flight-card" data-recommended-product="${product.id || "browse"}"><div class="flight-card-heading"><span class="flight-number" aria-hidden="true">${String(index + 1).padStart(2,"0")}</span><div><span class="flight-label">${escapeHtml(product.label)}</span><h3>${escapeHtml(product.name)}</h3><p>${escapeHtml(product.description)}</p></div><a class="button button-green" href="${escapeHtml(href)}" target="_blank" rel="sponsored noopener" aria-label="View ${escapeHtml(product.name)} options on GetYourGuide">${action}</a></div>${product.note ? `<p class="product-note">${escapeHtml(product.note)}</p>` : ""}${availabilityWidget(key, placement)}</article>`;
 }
 
 function gygModule(cmp, compact = false, article) {
@@ -182,7 +184,7 @@ function gygModule(cmp, compact = false, article) {
     const browse=contextualBrowse(article,`${code}_browse`);
     return `<section class="experience-module experience-compact" id="recommended-experiences"><div class="experience-content"><span class="eyebrow">Explore options for this guide</span><h2>${escapeHtml(browse.label)}</h2><p>Compare the current route, meeting point, participant requirements and your dates. This category link is a way to browse; it does not imply that we reviewed every listed provider.</p><a class="button button-green" href="${escapeHtml(browse.href)}" target="_blank" rel="sponsored noopener">${escapeHtml(browse.label)}</a></div></section>`;
   }
-  const hasBalloons = selections.some((key) => ["turquaz","discovery"].includes(key));
+  const hasBalloons = selections.some((key) => ["turquaz","discovery","royal","butterfly"].includes(key));
   const title = article ? "Experiences for this guide." : "Find your Cappadocia balloon flight.";
   const cards = selections.map((key,index) => experienceCard(key,index,`${code}_recommendation`)).join("");
   const more = !article ? `<div class="city-experiences"><div class="city-experiences-heading"><div><span class="eyebrow">Beyond the balloons</span><h3>Popular ways to explore Cappadocia</h3><p>Selected for relevant itineraries and substantial review histories.</p></div>${gygLink(`${code}_browse`, "Browse all experiences")}</div><div class="flight-list">${["airport","museum","atv"].map((key,index) => experienceCard(key,index,`${code}_popular`)).join("")}</div></div>` : "";
