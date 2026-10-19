@@ -1,4 +1,5 @@
 import { readingMinutes } from "./editorial.mjs";
+import { brandedTitle } from "./seo-helpers.mjs";
 export class HttpError extends Error {
   constructor(status, message) { super(message); this.status = status; }
 }
@@ -87,6 +88,20 @@ export function validateArticle(input, slug) {
     faq:Array.isArray(input.faq)&&input.faq.length ? input.faq.slice(0,12).map((pair)=>[plain(pair?.[0],300,true),plain(pair?.[1],5000,true)]) : undefined };
 }
 
+function normalizedSeo(value) { return value.trim().replace(/\s+/g," ").toLocaleLowerCase("en"); }
+function publicationSeo(article) {
+  return { title:(article.seoTitle||brandedTitle(article.title)).trim(),description:(article.metaDescription||article.dek).trim() };
+}
+async function assertPublicationSeo(env,seed,content,slug) {
+  const candidate=publicationSeo(content);
+  if(candidate.title.length<20||candidate.title.length>80)throw new HttpError(400,"Arama sonucu başlığı 20–80 karakter arasında olmalı.");
+  if(candidate.description.length<50||candidate.description.length>200)throw new HttpError(400,"Arama sonucu açıklaması 50–200 karakter arasında olmalı.");
+  const title=normalizedSeo(candidate.title),description=normalizedSeo(candidate.description);
+  const published=combineArticles(seed,await rows(env)).filter((article)=>article.slug!==slug);
+  if(published.some((article)=>normalizedSeo(publicationSeo(article).title)===title))throw new HttpError(400,"Bu arama sonucu başlığı başka bir yayında kullanılıyor.");
+  if(published.some((article)=>normalizedSeo(publicationSeo(article).description)===description))throw new HttpError(400,"Bu arama sonucu açıklaması başka bir yayında kullanılıyor.");
+}
+
 export async function saveArticle(env, seed, user, slug, input, expectedRevision, action) {
   const db=database(env);
   if(!["draft","publish","unpublish"].includes(action)) throw new HttpError(400,"Geçersiz işlem.");
@@ -99,6 +114,7 @@ export async function saveArticle(env, seed, user, slug, input, expectedRevision
   const content={...prior,...validated,datePublished:prior?.datePublished||(action==="publish"?now:undefined)};
   content.updatedAt=now;
   content.readTime=readingMinutes(content);
+  if(action==="publish")await assertPublicationSeo(env,seed,content,slug);
   const snapshot=JSON.stringify(content);
   let published=existing?.published_json ?? (original?JSON.stringify(original):null);
   let status=existing?.status || (original?"published":"draft");

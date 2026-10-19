@@ -10,6 +10,7 @@ import { topicHubs } from "./editorial.mjs";
 import { restaurants,michelinHotels } from "./business-guides.mjs";
 import { experiences,selectExperiences,trackedUrl } from "./experiences.mjs";
 import { articleImages,articleExtras } from "./article-images.mjs";
+import { createRenderer } from "./render.mjs";
 
 const sqlite=new DatabaseSync(":memory:");
 for(const file of (await readdir("./drizzle")).filter((f)=>f.endsWith(".sql")))sqlite.exec(await readFile(`./drizzle/${file}`,"utf8"));
@@ -18,6 +19,7 @@ const DB={
   async batch(statements){sqlite.exec("BEGIN");try{const results=[];for(const statement of statements)results.push(await statement.run());sqlite.exec("COMMIT");return results;}catch(e){sqlite.exec("ROLLBACK");throw e;}}
 };
 const env={DB,ADMIN_OWNER_EMAIL:"owner@example.test",CSRF_SECRET:randomBytes(32).toString("hex"),PUBLIC_ORIGIN:"https://cms.example.test"};
+const renderer=createRenderer({...site,domain:env.PUBLIC_ORIGIN});
 const identities={owner:{"oai-authenticated-user-id":"site-owner","oai-authenticated-user-email":"owner@example.test"},reader:{"oai-authenticated-user-id":"site-reader","oai-authenticated-user-email":"reader@example.test"}};
 async function request(path,who,options={}){
  return worker.fetch(new Request(`https://cms.example.test${path}`,{...options,headers:{...(identities[who]||{}),...(options.headers||{})}}),env,{});
@@ -45,7 +47,7 @@ const articleHeroImages=new Set();
 for(const path of publicPages){
  const response=await request(path);assert.equal(response.status,200,path);
  const document=await response.text();
- assert.ok(document.includes('content="index,follow,max-image-preview:large"'),path);
+ assert.ok(document.includes('content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"'),path);
  assert.ok(document.includes(`rel="canonical" href="${env.PUBLIC_ORIGIN}${path}"`),path);
  assert.equal(response.headers.get("x-robots-tag"),null,path);
  assert.equal((document.match(/We may earn a commission from bookings/g)||[]).length,1,path+": footer disclosure appears once");
@@ -78,9 +80,18 @@ const hotelsHtml=await (await request("/articles/michelin-hotels-cappadocia/")).
 assert.equal((hotelsHtml.match(/class="directory-card"/g)||[]).length,18);
 assert.ok(hotelsHtml.includes("2 MICHELIN Keys")&&hotelsHtml.includes("1 MICHELIN Key"));
 const fullSitemap=await (await request("/sitemap.xml")).text();
-assert.equal((fullSitemap.match(/<loc>/g)||[]).length,78);
+assert.equal((fullSitemap.match(/<url><loc>/g)||[]).length,81);
+const editorialImages=site.articles.flatMap(article=>renderer.imagesFor(article));
+assert.equal((fullSitemap.match(/<image:image>/g)||[]).length,editorialImages.length,"all article hero and supporting images in sitemap");
+for(const image of editorialImages)assert.ok(fullSitemap.includes(image.src.replaceAll("&","&amp;")),`sitemap image: ${image.src}`);
+assert.ok(fullSitemap.includes('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'));
+assert.ok(!fullSitemap.includes("<image:caption>"),"deprecated image sitemap tags stay out");
 assert.ok(!fullSitemap.includes("/admin")&&!fullSitemap.includes("/account"));
 assert.ok(fullSitemap.includes(`${env.PUBLIC_ORIGIN}/articles/michelin-hotels-cappadocia/`));
+const feed=await (await request("/feed.xml")).text();assert.equal((feed.match(/<item>/g)||[]).length,50);assert.ok(feed.includes(`<atom:link href="${env.PUBLIC_ORIGIN}/feed.xml" rel="self" type="application/rss+xml"/>`));
+const newestArticle=[...site.articles].sort((a,b)=>new Date(b.updatedAt||b.datePublished)-new Date(a.updatedAt||a.datePublished))[0];
+const newestFeedItem=feed.match(new RegExp(`<item><title>[^<]+</title><link>${env.PUBLIC_ORIGIN}/articles/${newestArticle.slug}/</link>[\\s\\S]*?<pubDate>([^<]+)</pubDate>`));
+assert.equal(newestFeedItem?.[1],new Date(newestArticle.datePublished||newestArticle.updatedAt).toUTCString(),"RSS pubDate is the publication date, not the modification date");
 const octoberSlugs=["best-balloon-companies-cappadocia","best-hotels-cappadocia","best-restaurants-cappadocia","best-atv-tours-cappadocia","best-horseback-riding-cappadocia","top-attractions-cappadocia","most-beautiful-churches-cappadocia","most-visited-museums-cappadocia","top-rated-restaurants-cappadocia-yelp","cappadocia-high-low-seasons"];
 const octoberImages=octoberSlugs.flatMap(slug=>[articleImages[slug],...(articleExtras[slug]||[])]).map(image=>image.src);assert.equal(octoberImages.length,30);assert.equal(new Set(octoberImages).size,30,"all new guide images must be unique");
 for(const slug of octoberSlugs){
@@ -99,8 +110,12 @@ assert.ok(balloonGuideHtml.includes("cb_best_balloon_sources_butterfly")&&balloo
 assert.ok(balloonGuide.sections[0].paragraphs[0].startsWith("Start in Göreme"),"balloon guide starts its regional comparison with Göreme");
 const hotelGuide=site.articles.find(a=>a.slug==="best-hotels-cappadocia");assert.equal(hotelGuide.sections[0].heading,"Start with Göreme");assert.ok(hotelGuide.sections[0].paragraphs[0].startsWith("Sultan Cave Suites"));
 const restaurantGuide=site.articles.find(a=>a.slug==="best-restaurants-cappadocia");assert.equal(restaurantGuide.sections[0].heading,"Start in Göreme");assert.ok(restaurantGuide.sections[0].paragraphs[0].startsWith("Happena and Seten"));
-const robots=await (await request("/robots.txt")).text();assert.ok(robots.includes("Allow: /")&&robots.includes("Disallow: /admin")&&robots.includes(env.PUBLIC_ORIGIN+"/sitemap.xml"));
-assert.ok((await (await request("/guides/?category=Food")).text()).includes('content="noindex,nofollow"'));
+const robots=await (await request("/robots.txt")).text();assert.ok(robots.includes("Allow: /")&&robots.includes("Disallow: /admin")&&robots.includes(env.PUBLIC_ORIGIN+"/sitemap.xml")&&robots.includes(env.PUBLIC_ORIGIN+"/feed.xml"));
+const filteredGuidesHtml=await (await request("/guides/?category=Food")).text();
+assert.ok(filteredGuidesHtml.includes('content="noindex,follow"'));
+assert.ok(filteredGuidesHtml.includes(`rel="canonical" href="${env.PUBLIC_ORIGIN}/guides/"`));
+const missingPage=await request("/missing-guide/");assert.equal(missingPage.status,404);const missingHtml=await missingPage.text();
+assert.ok(missingHtml.includes('content="noindex,nofollow"'));assert.ok(!missingHtml.includes('rel="canonical"')&&!missingHtml.includes('property="og:url"')&&!missingHtml.includes('application/ld+json'));
 assert.equal((await request("/guides")).status,308);
 assert.equal((await request("/",undefined,{method:"HEAD"})).status,200);
 assert.equal(await (await request("/",undefined,{method:"HEAD"})).text(),"");
@@ -148,6 +163,14 @@ assert.equal((await request("/articles/new-cms-article/")).status,404);
 assert.ok(!(await (await request("/sitemap.xml")).text()).includes("/articles/new-cms-article/"));
 assert.equal((await write(fresh,1,"publish")).status,200);
 assert.equal((await request("/articles/new-cms-article/")).status,200);
+const publishedReference=site.articles[1];
+const duplicateTitle={...structuredClone(publishedReference),slug:"duplicate-seo-title",metaDescription:"A distinct description used to verify that a duplicate search title cannot be published through the editorial CMS."};
+assert.equal((await write(duplicateTitle,0,"publish")).status,400,"CMS rejects a duplicate effective SEO title");
+const duplicateDescription={...structuredClone(publishedReference),slug:"duplicate-seo-description",title:"A Completely Distinct CMS Search Title",seoTitle:"A Completely Distinct CMS Search Title",metaDescription:publishedReference.metaDescription||publishedReference.dek};
+assert.equal((await write(duplicateDescription,0,"publish")).status,400,"CMS rejects a duplicate effective meta description");
+const overlongSeo={...structuredClone(publishedReference),slug:"draft-with-long-seo",seoTitle:"X".repeat(100),metaDescription:"Y".repeat(240)};
+assert.equal((await write(overlongSeo,0,"draft")).status,200,"long SEO fields can remain in an unpublished draft");
+assert.equal((await write(overlongSeo,1,"publish")).status,400,"CMS blocks out-of-policy SEO fields at publication");
 const record=await (await request(`/api/admin/articles/${slug}`,"owner")).json();assert.equal(record.history.length,3);
 assert.equal((await request("/account/","reader")).status,301);
 assert.equal((await request("/account/")).headers.get("location"),env.PUBLIC_ORIGIN+"/");
@@ -174,7 +197,7 @@ assert.equal((calendar.match(/BEGIN:VEVENT/g)||[]).length,3); // escaped hotel t
 assert.equal(calendar.split("\r\n").filter(l=>l==="BEGIN:VEVENT").length,2);
 assert.ok(calendar.includes("DTSTART;VALUE=DATE:20261020")&&calendar.includes("DTSTART;VALUE=DATE:20261025"));assert.ok(calendar.includes("Departure from ASR"));
 const arrivalHtml=await (await request("/getting-there/")).text();assert.ok(arrivalHtml.includes('id="flight-planner"')&&arrivalHtml.includes('name="flight" required')&&arrivalHtml.includes('id="transfer-checklist"'));assert.ok(arrivalHtml.includes('alphabetical list'));assert.ok(arrivalHtml.includes('not a ranking of visitor volumes'));assert.ok(!arrivalHtml.includes('January–May 2026'));assert.ok(arrivalHtml.includes('data-market-country="China"'));assert.ok(!arrivalHtml.includes('border-arrival'));assert.ok(!arrivalHtml.includes('2025 Türkiye'));assert.ok(!arrivalHtml.includes('libfile_'));assert.ok(arrivalHtml.includes('value="ICN"')&&arrivalHtml.includes('value="GRU"'));assert.ok(arrivalHtml.includes('id="market-20"'));
-for(const path of ["/","/guides/","/about/","/advertise/","/getting-there/","/privacy/","/terms/","/styles.css","/admin.css","/admin.js","/favicon.svg","/assets/cappadocia-sunrise.webp","/sitemap.xml"]){assert.equal((await request(path)).status,200,path);}
+for(const path of ["/","/guides/","/about/","/advertise/","/getting-there/","/privacy/","/terms/","/styles.css","/admin.css","/admin.js","/favicon.svg","/assets/cappadocia-sunrise.webp","/sitemap.xml","/feed.xml"]){assert.equal((await request(path)).status,200,path);}
 const otherId=new Request("https://cms.example.test/admin/",{headers:{"oai-authenticated-user-id":"different-id","oai-authenticated-user-email":"owner@example.test"}});
 assert.equal((await worker.fetch(otherId,env,{})).status,403);
 console.log(`${site.name}: 65 guides, 30 unique images in the new collection, arrival planning, 8 hubs, all reader links, schema, canonical/robots/sitemap, private SEO controls, real aggregate metrics, auth, CSRF, draft separation, publication conflicts, XSS, retired membership, travel calendars and route-reference checks passed.`);

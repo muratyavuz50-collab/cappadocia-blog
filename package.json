@@ -5,6 +5,7 @@
   "scripts": {
     "build": "node build.mjs",
     "test:vercel": "node --test ./tests/vercel-handler.test.mjs",
+    "test:seo": "node ./build.mjs && node ./scripts/seo-audit.mjs",
     "db:generate": "drizzle-kit generate",
     "db:check": "node scripts/check-postgres.mjs",
     "db:migrate": "node scripts/migrate-postgres.mjs"

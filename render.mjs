@@ -3,6 +3,7 @@ import { experiences, partnerId, selectExperiences, trackedUrl, advertisingSlots
 import { articleImages,articleExtras } from "./article-images.mjs";
 import { topicHubs,topicArticles,articleHub } from "./editorial.mjs";
 import { hotels,restaurants,michelinHotels } from "./business-guides.mjs";
+import { absoluteUrl } from "./seo-helpers.mjs";
 
 export function createRenderer(site) {
 const updated = "October 6, 2026";
@@ -21,6 +22,19 @@ const imageFor = (article) => {
   return articleImages[article.slug] || articleImages[article.imageKey] || articleImages[fallback] || { src:"/assets/cappadocia-sunrise.webp", alt:"Hot-air balloons over Cappadocia", width:2048, height:768 };
 };
 const imageCredit = (image) => image.source ? `${image.illustrative ? `${escapeHtml(image.title)}. ` : ""}Photo: <a href="${escapeHtml(image.source)}" title="${escapeHtml(image.title)}" target="_blank" rel="noopener">${escapeHtml(image.author)}</a> · <a href="${escapeHtml(image.licenseUrl)}" target="_blank" rel="noopener">${escapeHtml(image.license)}</a>. ${image.modified ? "Resized to WebP; cropped for display." : ""}` : "";
+const commonsVariant = (image, width) => {
+  try {
+    const url = new URL(image.src);
+    if (url.hostname !== "commons.wikimedia.org" || !url.pathname.includes("/Special:FilePath/")) return "";
+    url.searchParams.set("width", String(width));
+    return url.href;
+  } catch { return ""; }
+};
+const responsiveImageAttrs = (image, sizes) => {
+  const variants = [640, 1200, Math.min(2000, image.width)].filter((value,index,all)=>value<=image.width&&all.indexOf(value)===index)
+    .map(width=>[commonsVariant(image,width),width]).filter(([url])=>url);
+  return `${variants.length>1?` srcset="${variants.map(([url,width])=>`${escapeHtml(url)} ${width}w`).join(", ")}"`:""}${sizes?` sizes="${escapeHtml(sizes)}"`:""}`;
+};
 let adContext = `${site.shortCode}_page`;
 let adSequence = 0;
 
@@ -107,7 +121,7 @@ function header(active = "") {
       <a class="header-cta" href="${site.headerCta.href}"${site.headerCta.external ? ' target="_blank" rel="sponsored noopener"' : ""}>${site.headerCta.label}</a>
       <button class="menu-button" type="button" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">${icon("menu")}</button>
     </div>
-    <div id="mobile-menu" class="mobile-menu" hidden><nav aria-label="Mobile navigation">${nav}<a class="mobile-cta" href="${site.headerCta.href}">${site.headerCta.label}</a></nav></div>
+    <div id="mobile-menu" class="mobile-menu" hidden><nav aria-label="Mobile navigation">${nav}<a class="mobile-cta" href="${site.headerCta.href}"${site.headerCta.external ? ' target="_blank" rel="sponsored noopener"' : ""}>${site.headerCta.label}</a></nav></div>
   </header>`;
 }
 
@@ -146,15 +160,15 @@ function adSlot(format = "wide") {
   }
   const product = experiences[config.product];
   const {href} = trackedUrl(config.product, placement);
-  return `<aside class="ad-slot ad-${format} ad-experience" aria-label="Experience: ${escapeHtml(product.name)}" data-ad-slot="${format}" data-ad-product="${product.id}"><div class="ad-experience-body"><a class="ad-balloon-image" href="${escapeHtml(href)}" target="_blank" rel="sponsored noopener" aria-label="Explore ${escapeHtml(product.name)}"><img src="/assets/cappadocia-sunrise.webp" alt="Balloons over Cappadocia; destination photograph" loading="lazy"></a><div class="ad-experience-copy"><span class="eyebrow">Cappadocia balloon experience</span><strong>${escapeHtml(product.name)}</strong><p>Check your dates, flight options and booking terms.</p><a class="button button-terracotta" href="${escapeHtml(href)}" target="_blank" rel="sponsored noopener">View on GetYourGuide</a></div></div>${format === "tall" ? availabilityWidget(config.product, placement, true) : ""}</aside>`;
+  return `<aside class="ad-slot ad-${format} ad-experience" aria-label="Experience: ${escapeHtml(product.name)}" data-ad-slot="${format}" data-ad-product="${product.id}"><div class="ad-experience-body"><a class="ad-balloon-image" href="${escapeHtml(href)}" target="_blank" rel="sponsored noopener" aria-label="Explore ${escapeHtml(product.name)}"><img src="/assets/cappadocia-sunrise.webp" alt="Balloons over Cappadocia; destination photograph" width="2048" height="768" loading="lazy" decoding="async"></a><div class="ad-experience-copy"><span class="eyebrow">Cappadocia balloon experience</span><strong>${escapeHtml(product.name)}</strong><p>Check your dates, flight options and booking terms.</p><a class="button button-terracotta" href="${escapeHtml(href)}" target="_blank" rel="sponsored noopener">View on GetYourGuide</a></div></div>${format === "tall" ? availabilityWidget(config.product, placement, true) : ""}</aside>`;
 }
 
 function articleCard(article, options = {}) {
   const accent = options.featured ? " featured-card" : "";
   const image = imageFor(article);
   return `<article class="article-card${accent}" data-article-card data-category="${escapeHtml(article.category)}" data-search="${escapeHtml(`${article.title} ${article.dek} ${article.category}`.toLowerCase())}">
-    <a class="card-image" href="${articleUrl(article)}" aria-label="Read ${escapeHtml(article.title)}"><img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" width="${image.width}" height="${image.height}" loading="lazy"><span>${escapeHtml(article.category)}</span></a>
-    ${image.source ? `<p class="card-credit">${imageCredit(image)}</p>` : ""}<div class="card-body"><div class="card-meta"><span>${article.readTime} min read</span><span>Updated ${reviewDate(article)}</span></div><h3><a href="${articleUrl(article)}">${escapeHtml(article.title)}</a></h3><p>${escapeHtml(article.dek)}</p><a class="text-link" href="${articleUrl(article)}">Read guide ${icon("arrow")}</a></div>
+    <a class="card-image" href="${articleUrl(article)}" aria-label="Read ${escapeHtml(article.title)}"><img src="${escapeHtml(image.src)}"${responsiveImageAttrs(image,"(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw")} alt="${escapeHtml(image.alt)}" width="${image.width}" height="${image.height}" loading="lazy" decoding="async"><span>${escapeHtml(article.category)}</span></a>
+    ${image.source ? `<p class="card-credit">${imageCredit(image)}</p>` : ""}<div class="card-body"><div class="card-meta"><span>${article.readTime} min read</span><span>Updated ${reviewDate(article)}</span></div><h3><a href="${articleUrl(article)}">${escapeHtml(article.title)}</a></h3><p>${escapeHtml(article.dek)}</p><a class="text-link" href="${articleUrl(article)}">Read guide<span class="sr-only">: ${escapeHtml(article.title)}</span> ${icon("arrow")}</a></div>
   </article>`;
 }
 
@@ -194,11 +208,24 @@ function stayModule() {
   return `<section class="stay-module"><div class="stay-copy"><span class="eyebrow">Where to stay</span><h2>Choose the right town before the right room.</h2><p>Compare Göreme, Uçhisar, Ürgüp and Ortahisar by walkability, views, atmosphere and transport. Shortlist the rooms that fit your trip, then confirm the current offer with the property.</p><a class="button button-green" href="/guides/?category=Where%20to%20Stay">Read the stay guides</a></div><div class="stay-status"><span>${icon("bed")}</span><strong>Find your Cappadocia base</strong><p>Practical advice for cave rooms, locations and hotel transfers.</p><a href="/articles/cappadocia-hotel-guide/">Explore the hotel guide →</a></div></section>`;
 }
 
-function layout({ title, description, body, active = "", path = "/", type = "website", article, noindex=false }) {
+function layout({ title, description, body, active = "", path = "/", type = "website", article, noindex=false, nofollow=false, canonicalize=true, structuredData=true }) {
   const canonical = `${site.domain}${path}`;
   const base={"@context":"https://schema.org"};
-  const data=article?[{...base,"@type":"BlogPosting",headline:article.title,description:article.dek,image:site.domain+imageFor(article).src,datePublished:article.datePublished||article.updatedAt,dateModified:article.updatedAt||article.datePublished,author:{"@type":"Organization",name:site.editorialName,url:site.domain+"/about/"},publisher:{"@type":"Organization",name:site.name,url:site.domain},mainEntityOfPage:{"@type":"WebPage","@id":canonical}},{...base,"@type":"BreadcrumbList",itemListElement:[{name:"Home",item:site.domain+"/"},{name:articleHub(article).title,item:site.domain+`/topics/${articleHub(article).slug}/`},{name:article.title,item:canonical}].map((p,i)=>({"@type":"ListItem",position:i+1,...p}))}]:[{...base,"@type":path==="/"?"WebSite":"WebPage",name:title,description,url:canonical,publisher:{"@type":"Organization",name:site.name,url:site.domain+"/about/"}}];
-  const schema=`<script type="application/ld+json">${JSON.stringify(data).replaceAll("<","\\u003c")}</script>`;
+  const heroImage = article ? imageFor(article) : (articleImages["homepage-hero"] || articleImages["ultimate-cappadocia-travel-guide"]);
+  const heroImageUrl = absoluteUrl(site.domain, heroImage.src);
+  const organization={...base,"@type":"Organization","@id":`${site.domain}/#organization`,name:site.name,url:site.domain,logo:{"@type":"ImageObject",url:`${site.domain}/favicon.svg`}};
+  const website={...base,"@type":"WebSite","@id":`${site.domain}/#website`,url:`${site.domain}/`,name:site.name,description:site.description,inLanguage:"en",publisher:{"@id":organization["@id"]}};
+  const breadcrumbItems=article
+    ? [{name:"Home",item:`${site.domain}/`},{name:articleHub(article).title,item:`${site.domain}/topics/${articleHub(article).slug}/`},{name:article.title,item:canonical}]
+    : path.startsWith("/topics/")
+      ? [{name:"Home",item:`${site.domain}/`},{name:site.guideLabel,item:`${site.domain}/guides/`},{name:title.split(" | ")[0],item:canonical}]
+      : path==="/" ? [] : [{name:"Home",item:`${site.domain}/`},{name:title.split(" | ")[0],item:canonical}];
+  const breadcrumb=breadcrumbItems.length?{...base,"@type":"BreadcrumbList","@id":`${canonical}#breadcrumb`,itemListElement:breadcrumbItems.map((p,i)=>({"@type":"ListItem",position:i+1,...p}))}:null;
+  const articleSchema=article?{...base,"@type":"BlogPosting","@id":`${canonical}#article`,headline:article.title,description:article.metaDescription||article.dek,image:{"@type":"ImageObject",url:heroImageUrl,width:heroImage.width,height:heroImage.height,caption:heroImage.alt},datePublished:article.datePublished||article.updatedAt,dateModified:article.updatedAt||article.datePublished,inLanguage:"en",articleSection:article.category,author:{"@type":"Organization","@id":`${site.domain}/#editorial-desk`,name:site.editorialName,url:`${site.domain}/about/`},publisher:organization,isPartOf:{"@id":`${site.domain}/#website`},mainEntityOfPage:{"@type":"WebPage","@id":canonical}}:null;
+  const pageType=path==="/"?"WebPage":path==="/guides/"||path.startsWith("/topics/")||path==="/faq/"?"CollectionPage":"WebPage";
+  const pageSchema={...base,"@type":pageType,"@id":canonical,name:title.split(" | ")[0],description,url:canonical,inLanguage:"en",isPartOf:{"@id":website["@id"]},publisher:{"@id":organization["@id"]},primaryImageOfPage:{"@type":"ImageObject",url:heroImageUrl,width:heroImage.width,height:heroImage.height}};
+  const data=article?[articleSchema,breadcrumb,organization,website]:[pageSchema,...(breadcrumb?[breadcrumb]:[]),organization,website];
+  const schema=structuredData?`<script type="application/ld+json">${JSON.stringify(data).replaceAll("<","\\u003c")}</script>`:"";
   return `<!doctype html>
 <html lang="en" class="${site.variant}">
 <head>
@@ -206,14 +233,29 @@ function layout({ title, description, body, active = "", path = "/", type = "web
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">
-  <meta name="robots" content="${noindex?"noindex,nofollow":"index,follow,max-image-preview:large"}">
+  <meta name="robots" content="${noindex?`noindex,${nofollow?"nofollow":"follow"}`:"index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"}">
+  ${article?`<meta name="author" content="${escapeHtml(site.editorialName)}">`:""}
   ${site.googleVerification?`<meta name="google-site-verification" content="${escapeHtml(site.googleVerification)}">`:""}
-  <link rel="canonical" href="${canonical}">
+  ${canonicalize?`<link rel="canonical" href="${escapeHtml(canonical)}">`:""}
+  <link rel="alternate" type="application/rss+xml" title="${escapeHtml(site.name)} latest guides" href="${site.domain}/feed.xml">
+  ${(article||path==="/")&&heroImage.src.startsWith("/")?`<link rel="preload" as="image" href="${escapeHtml(heroImageUrl)}" fetchpriority="high">`:""}
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="${type}">
+  <meta property="og:site_name" content="${escapeHtml(site.name)}">
+  <meta property="og:locale" content="en_US">
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${escapeHtml(description)}">
-  <meta property="og:url" content="${canonical}">
+  ${canonicalize?`<meta property="og:url" content="${escapeHtml(canonical)}">`:""}
+  <meta property="og:image" content="${escapeHtml(heroImageUrl)}">
+  <meta property="og:image:width" content="${heroImage.width}">
+  <meta property="og:image:height" content="${heroImage.height}">
+  <meta property="og:image:alt" content="${escapeHtml(heroImage.alt)}">
+  ${article?`<meta property="article:published_time" content="${escapeHtml(article.datePublished||article.updatedAt)}"><meta property="article:modified_time" content="${escapeHtml(article.updatedAt||article.datePublished)}"><meta property="article:section" content="${escapeHtml(article.category)}">`:""}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escapeHtml(title)}">
+  <meta name="twitter:description" content="${escapeHtml(description)}">
+  <meta name="twitter:image" content="${escapeHtml(heroImageUrl)}">
+  <meta name="twitter:image:alt" content="${escapeHtml(heroImage.alt)}">
   <meta name="theme-color" content="#256447">
   <link rel="stylesheet" href="/styles.css">
   ${schema}
@@ -284,7 +326,7 @@ function guidesPage() {
   adContext = `${site.shortCode}_guides`; adSequence = 0;
   const categories = [...new Set(site.articles.map((a) => a.category))];
   return `<section class="page-hero"><div class="shell"><span class="eyebrow">${site.guideLabel}</span><h1>${site.guidesTitle}</h1><p>${site.guidesIntro}</p><form class="guide-search" role="search"><label for="guide-search">Search by question or topic</label><div>${icon("search")}<input id="guide-search" type="search" placeholder="Search ${site.articles.length} published ${site.variant === "practical" ? "guides" : "stories"}…"></div></form></div></section>
-  <section class="section shell guide-browser">${topicNavigation()}<div class="filter-row" aria-label="Filter by category"><button class="filter-chip active" data-filter="all" type="button">All</button>${categories.map((c)=>`<button class="filter-chip" data-filter="${escapeHtml(c)}" type="button">${escapeHtml(c)}</button>`).join("")}</div><p class="results-count" aria-live="polite"><strong>${site.articles.length}</strong> published pieces</p><div class="card-grid" id="guide-grid">${site.articles.map((a)=>articleCard(a)).join("")}</div><div class="empty-state" hidden><span>${icon("search")}</span><h2>No exact match yet.</h2><p>Try a broader term or browse every category.</p><button class="button button-green" type="button" data-clear-search>Clear filters</button></div></section>
+  <section class="section shell guide-browser">${topicNavigation()}<div class="filter-row" aria-label="Filter by category"><button class="filter-chip active" data-filter="all" type="button">All</button>${categories.map((c)=>`<button class="filter-chip" data-filter="${escapeHtml(c)}" type="button">${escapeHtml(c)}</button>`).join("")}</div><h2 class="sr-only">All Cappadocia travel guides</h2><p class="results-count" aria-live="polite"><strong>${site.articles.length}</strong> published pieces</p><div class="card-grid" id="guide-grid">${site.articles.map((a)=>articleCard(a)).join("")}</div><div class="empty-state" hidden><span>${icon("search")}</span><h2>No exact match yet.</h2><p>Try a broader term or browse every category.</p><button class="button button-green" type="button" data-clear-search>Clear filters</button></div></section>
   <div class="shell final-ad">${adSlot("wide")}</div>`;
 }
 
@@ -300,14 +342,14 @@ function articlePage(article) {
   const middle = Math.ceil(article.sections.length / 2);
   const sectionIcon = topicIcons[articleHub(article).slug] || "compass";
   const extraImages=articleExtras[article.slug]||[];
-  const supportingImage=(index)=>extraImages[index]?`<figure class="article-supporting-image"><img src="${escapeHtml(extraImages[index].src)}" alt="${escapeHtml(extraImages[index].alt)}" width="${extraImages[index].width}" height="${extraImages[index].height}" loading="lazy"><figcaption>${imageCredit(extraImages[index])}</figcaption></figure>`:"";
+  const supportingImage=(index)=>extraImages[index]?`<figure class="article-supporting-image"><img src="${escapeHtml(extraImages[index].src)}"${responsiveImageAttrs(extraImages[index],"(max-width: 820px) 100vw, 760px")} alt="${escapeHtml(extraImages[index].alt)}" width="${extraImages[index].width}" height="${extraImages[index].height}" loading="lazy" decoding="async"><figcaption>${imageCredit(extraImages[index])}</figcaption></figure>`:"";
   const sectionHtml = article.sections.map((section, index) => `${index === middle ? `${editorialIllustration(article)}${adSlot("inline", "A considered placement within this guide")}` : ""}<section class="article-section" id="${slugify(section.heading)}"><div class="article-section-heading"><span>${icon(sectionIcon)}</span><div><small>${String(index+1).padStart(2,"0")}</small><h2>${escapeHtml(section.heading)}</h2></div></div>${section.paragraphs.map((p)=>`<p>${escapeHtml(p)}</p>`).join("")}${index<2?supportingImage(index):""}${section.list ? `<ul>${section.list.map((item)=>`<li>${escapeHtml(item)}</li>`).join("")}</ul>` : ""}</section>${index === recommendationIndex ? gygModule(article.cmp || `${site.shortCode}_${article.slug}`, true, article) : ""}`).join("");
   const faq = article.faq || [
     ["Should I book ahead?", "For limited-capacity experiences and peak travel periods, compare availability early. Keep weather-sensitive plans flexible and read the current cancellation terms before paying."],
     ["How current is this guide?", `This article was reviewed on ${updated}. Operational details can change, so confirm live schedules, access rules and inclusions with the provider before travel.`]
   ];
-  return `<article class="article"><header class="article-header shell"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides/">${site.guideLabel}</a><span>/</span><span>${escapeHtml(article.category)}</span></nav><span class="eyebrow">${escapeHtml(article.category)}</span><h1>${escapeHtml(article.title)}</h1><p class="article-dek">${escapeHtml(article.dek)}</p><div class="article-byline"><span>By ${site.editorialName}</span><span>${article.readTime} min read</span><span>Updated ${reviewDate(article)}</span></div></header>
-  <figure class="article-hero"><img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" width="${image.width}" height="${image.height}" fetchpriority="high"><figcaption>${imageCredit(image)}</figcaption></figure>
+  return `<article class="article"><header class="article-header shell"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/topics/${articleHub(article).slug}/">${escapeHtml(articleHub(article).title)}</a><span>/</span><span aria-current="page">${escapeHtml(article.title)}</span></nav><span class="eyebrow">${escapeHtml(article.category)}</span><h1>${escapeHtml(article.title)}</h1><p class="article-dek">${escapeHtml(article.dek)}</p><div class="article-byline"><span>By <a href="/about/" rel="author">${escapeHtml(site.editorialName)}</a></span><span>${article.readTime} min read</span><span>Updated <time datetime="${escapeHtml(article.updatedAt||article.datePublished)}">${reviewDate(article)}</time></span></div></header>
+  <figure class="article-hero"><img src="${escapeHtml(image.src)}"${responsiveImageAttrs(image,"100vw")} alt="${escapeHtml(image.alt)}" width="${image.width}" height="${image.height}" fetchpriority="high" decoding="async"><figcaption>${imageCredit(image)}</figcaption></figure>
   <div class="shell article-layout"><div class="article-main"><p class="article-intro">${escapeHtml(article.intro)}</p>${guideSnapshot(article)}${routeFor(article)}${directoryFor(article)}<p class="topic-backlink"><a href="/topics/${articleHub(article).slug}/">Explore ${escapeHtml(articleHub(article).title)}</a></p>${adSlot("inline", "A selected Cappadocia partner can appear here")}${sectionHtml}${["Getting There","Getting Around"].includes(article.category)?'<section class="article-section route-card"><h2>Plan your airport arrival</h2><p>Compare ASR and NAV, search flights for your dates and prepare a transfer checklist with your arrival and return flight numbers.</p><a href="/getting-there/">Open the Getting There calendar →</a></section>':""}${sourceBlock(article)}<div class="article-actions"><button type="button" data-share>${icon("arrow")} Share this guide</button><a href="/guides/">Explore more ${site.variant === "practical" ? "guides" : "stories"}</a></div>${adSlot("inline", "Reserved before reader questions")}<section class="faq"><span class="eyebrow">Useful to know</span><h2>Reader questions</h2>${faq.map(([q,a])=>`<details><summary>${escapeHtml(q)}</summary><p>${escapeHtml(a)}</p></details>`).join("")}</section></div>
   <aside class="article-sidebar"><div class="sidebar-topic-mark"><span>${icon(sectionIcon)}</span><small>${escapeHtml(article.category)}</small></div><div class="sidebar-card"><span>In this guide</span>${article.sections.map((s)=>`<a href="#${slugify(s.heading)}">${escapeHtml(s.heading)}</a>`).join("")}</div>${adSlot("tall", "A high-visibility local partner position")}</aside></div>
   <section class="section section-paper"><div class="shell"><div class="section-heading"><div><span class="eyebrow">Continue exploring</span><h2>Related reading</h2></div></div><div class="card-grid">${related.map((a)=>articleCard(a)).join("")}</div></div></section></article>`;
@@ -342,5 +384,5 @@ function simplePage(kind) {
   return `<section class="page-hero simple-hero"><div class="shell"><span class="eyebrow">${p.eyebrow}</span><h1>${p.title}</h1><p>${p.intro}</p></div></section><section class="section shell simple-content">${p.content}</section>`;
 }
 
-return { layout, practicalHome, editorialHome, guidesPage, topicPage, articlePage, simplePage, escapeHtml, articleUrl };
+return { layout, practicalHome, editorialHome, guidesPage, topicPage, articlePage, simplePage, escapeHtml, articleUrl, imageFor, imagesFor:(article)=>[imageFor(article),...(articleExtras[article.slug]||[])] };
 }

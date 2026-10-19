@@ -1,6 +1,6 @@
 # CappadociaBlog.com
 
-An English-language Cappadocia travel publication with 55 guides, 500 FAQ entries, travel planning, GetYourGuide recommendations, image credits, SEO metadata and an owner-only editorial CMS.
+An English-language Cappadocia travel publication with 65 guides, 500 FAQ entries, travel planning, GetYourGuide recommendations, image credits, SEO metadata and an owner-only editorial CMS.
 
 ## Vercel deployment
 
@@ -35,10 +35,11 @@ Database schema changes are defined in `db/postgres-schema.sql`; run `npm run db
 npm install
 npm run build
 npm run test:vercel
+npm run test:seo
 node test-cms.mjs
 ```
 
-`test-cms.mjs` checks seeded content, CMS validation and publication workflows. `tests/vercel-handler.test.mjs` checks route rewrites, owner login setup and unauthenticated admin protection.
+`test-cms.mjs` checks seeded content, CMS validation and publication workflows. `scripts/seo-audit.mjs` checks unique metadata, canonical URLs, image semantics, structured data, crawlable internal links and sponsored affiliate links across every seeded article. `tests/vercel-handler.test.mjs` checks route rewrites, owner login setup and unauthenticated admin protection.
 
 ## Editorial notes
 

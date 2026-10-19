@@ -5,14 +5,16 @@ import { gettingTherePage } from "./getting-there.mjs";
 import { faqPage } from "./faq-pages.mjs";
 import { adminPage } from "./admin-pages.mjs";
 import { HttpError, database, authenticatedUser, administrator, rows, combineArticles, articleList, saveArticle, csrfToken, assertWrite } from "./db.mjs";
-import { topicHubs } from "./editorial.mjs";
+import { topicHubs,topicArticles } from "./editorial.mjs";
 import { recordMetric,analyticsReport,siteSettings,saveSettings,publicPaths } from "./analytics.mjs";
 import { businessShortlist } from "./business-guides.mjs";
+import { absoluteUrl,brandedTitle,latestIsoDate,xmlEscape } from "./seo-helpers.mjs";
+import { faqReviewed } from "./faq-data.mjs";
 
 const signIn=(path)=>`/signin-with-chatgpt?return_to=${encodeURIComponent(path)}`;
-const headers={"cache-control":"no-store","x-content-type-options":"nosniff","referrer-policy":"strict-origin-when-cross-origin","permissions-policy":"camera=(), microphone=(), geolocation=()"};
-const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{...headers,"content-type":"application/json; charset=utf-8"}});
-const html=(body,status=200,secure=false)=>new Response(body,{status,headers:{...headers,"content-type":"text/html; charset=utf-8",...(secure||status>=400?{"x-robots-tag":"noindex, nofollow"}:{}),...(secure?{"content-security-policy":"default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"}: {})}});
+const securityHeaders={"x-content-type-options":"nosniff","referrer-policy":"strict-origin-when-cross-origin","permissions-policy":"camera=(), microphone=(), geolocation=()"};
+const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{...securityHeaders,"cache-control":"no-store","content-type":"application/json; charset=utf-8"}});
+const html=(body,status=200,secure=false)=>new Response(body,{status,headers:{...securityHeaders,"cache-control":secure||status>=400?"no-store":"public, max-age=0, s-maxage=300, stale-while-revalidate=86400","content-type":"text/html; charset=utf-8",...(secure||status>=400?{"x-robots-tag":"noindex, nofollow"}:{}),...(secure?{"content-security-policy":"default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"}: {})}});
 function canonicalOrigin(env){try{const u=new URL(env.CANONICAL_ORIGIN||env.PUBLIC_ORIGIN||"https://cappadociablog.com");if(u.protocol==="https:")return u.origin;}catch{}return "https://cappadociablog.com";}
 
 async function body(request){
@@ -29,7 +31,7 @@ async function handle(request,env){
   if(assets[url.pathname]){
     const asset=assets[url.pathname];
     const bytes=Uint8Array.from(atob(asset.base64),(char)=>char.charCodeAt(0));
-    return new Response(request.method==="HEAD"?null:bytes,{headers:{"content-type":asset.type,"cache-control":"public, max-age=300","x-content-type-options":"nosniff"}});
+    return new Response(request.method==="HEAD"?null:bytes,{headers:{"content-type":asset.type,"cache-control":"public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800","x-content-type-options":"nosniff"}});
   }
   if(path.startsWith("/api/admin")){
     const user=await administrator(request,env);
@@ -78,7 +80,7 @@ async function handle(request,env){
     if(!article)throw new HttpError(404,"Yazı bulunamadı.");
     const renderer=createRenderer(seedSite);
     const banner='<div class="draft-banner">Taslak önizlemesi · Bu sürüm okuyuculara gösterilmez. <a href="/admin/">Yönetim paneline dön</a></div>';
-    return html(renderer.layout({title:`Taslak: ${article.title}`,description:article.dek,body:banner+renderer.articlePage(article),noindex:true}),200);
+    return html(renderer.layout({title:`Taslak: ${article.title}`,description:article.dek,body:banner+renderer.articlePage(article),noindex:true,nofollow:true,canonicalize:false,structuredData:false}),200);
   }
   if(path==="/api/metrics")return recordMetric(request,env,{...seedSite,articles:combineArticles(seedSite.articles,await rows(env))});
   if(request.method!=="GET" && request.method!=="HEAD")throw new HttpError(405,"Method not allowed.");
@@ -86,24 +88,49 @@ async function handle(request,env){
   const settings=await siteSettings(env);
   const site={...seedSite,domain:canonicalOrigin(env),googleVerification:settings.googleVerification,articles:combineArticles(seedSite.articles,records)};
   const r=createRenderer(site);
-  if(path==="/robots.txt")return new Response(`User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /account\nDisallow: /api/\nDisallow: /signin-with-chatgpt\nDisallow: /signout-with-chatgpt\nSitemap: ${site.domain}/sitemap.xml\n`,{headers:{"content-type":"text/plain"}});
-  if(path==="/sitemap.xml")return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["/","/guides/","/faq/","/about/","/getting-there/",...topicHubs.map(h=>`/topics/${h.slug}/`),...site.articles.map((a)=>r.articleUrl(a))].map((p)=>{const article=site.articles.find(a=>r.articleUrl(a)===p);return `<url><loc>${site.domain}${p}</loc>${p==="/getting-there/"?"<lastmod>2026-10-07</lastmod>":""}${article?.updatedAt?`<lastmod>${r.escapeHtml(article.updatedAt)}</lastmod>`:""}</url>`;}).join("")}</urlset>`,{headers:{...headers,"content-type":"application/xml"}});
+  const crawlHeaders={...securityHeaders,"cache-control":"public, max-age=300, s-maxage=3600, stale-while-revalidate=86400"};
+  if(path==="/robots.txt")return new Response(`User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /account\nDisallow: /api/\nDisallow: /signin-with-chatgpt\nDisallow: /signout-with-chatgpt\nSitemap: ${site.domain}/sitemap.xml\nSitemap: ${site.domain}/feed.xml\n`,{headers:{...crawlHeaders,"content-type":"text/plain; charset=utf-8"}});
+  if(path==="/sitemap.xml"){
+    const articleDates=site.articles.map(a=>a.updatedAt||a.datePublished);
+    const siteLastmod=latestIsoDate(articleDates);
+    const faqLastmod=new Date(faqReviewed).toISOString();
+    const staticEntries=[
+      {path:"/",lastmod:siteLastmod},{path:"/guides/",lastmod:siteLastmod},{path:"/faq/",lastmod:faqLastmod},{path:"/about/"},{path:"/getting-there/",lastmod:"2026-10-07T09:00:00.000Z"},{path:"/advertise/"},{path:"/privacy/"},{path:"/terms/"},
+      ...topicHubs.map(h=>({path:`/topics/${h.slug}/`,lastmod:latestIsoDate(topicArticles(site,h).map(a=>a.updatedAt||a.datePublished))}))
+    ];
+    // Image sitemaps may contain off-domain image URLs. Include every editorial hero and supporting image;
+    // Search Console verification of the remote host is encouraged by Google, but is not a prerequisite.
+    const articleEntries=site.articles.map(article=>({path:r.articleUrl(article),lastmod:article.updatedAt||article.datePublished,images:r.imagesFor(article)}));
+    const entries=[...staticEntries,...articleEntries];
+    const body=entries.map(({path:entryPath,lastmod,images=[]})=>`<url><loc>${xmlEscape(site.domain+entryPath)}</loc>${lastmod?`<lastmod>${xmlEscape(lastmod)}</lastmod>`:""}${images.map(image=>`<image:image><image:loc>${xmlEscape(absoluteUrl(site.domain,image.src))}</image:loc></image:image>`).join("")}</url>`).join("");
+    return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">${body}</urlset>`,{headers:{...crawlHeaders,"content-type":"application/xml; charset=utf-8"}});
+  }
+  if(path==="/feed.xml"){
+    const articles=[...site.articles].sort((a,b)=>new Date(b.updatedAt||b.datePublished)-new Date(a.updatedAt||a.datePublished)).slice(0,50);
+    const items=articles.map(article=>{const link=site.domain+r.articleUrl(article);return `<item><title>${xmlEscape(article.title)}</title><link>${xmlEscape(link)}</link><guid isPermaLink="true">${xmlEscape(link)}</guid><pubDate>${new Date(article.datePublished||article.updatedAt).toUTCString()}</pubDate><category>${xmlEscape(article.category)}</category><description>${xmlEscape(article.metaDescription||article.dek)}</description></item>`;}).join("");
+    const buildDate=latestIsoDate(articles.map(a=>a.updatedAt||a.datePublished));
+    return new Response(`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>${xmlEscape(site.name)}</title><link>${xmlEscape(site.domain+"/")}</link><description>${xmlEscape(site.description)}</description><language>en</language><atom:link href="${xmlEscape(site.domain+"/feed.xml")}" rel="self" type="application/rss+xml"/>${buildDate?`<lastBuildDate>${new Date(buildDate).toUTCString()}</lastBuildDate>`:""}${items}</channel></rss>`,{headers:{...crawlHeaders,"content-type":"application/rss+xml; charset=utf-8"}});
+  }
   if(path==="/site-manifest.json")return json({name:site.name,publishedArticles:site.articles.length});
   const fullPath=path==="/"?"/":path+"/";
-  if(publicPaths(site).has(fullPath)&&url.pathname!==fullPath){const target=new URL(request.url);target.pathname=fullPath;return Response.redirect(target,308);}
-  if(publicPaths(site).has(fullPath)&&new URL(request.url).origin!==site.domain&&env.CUSTOM_DOMAIN_STATUS==="active"){return Response.redirect(site.domain+url.pathname+url.search,308);}
+  if(publicPaths(site).has(fullPath)&&(url.pathname!==fullPath||(url.origin!==site.domain&&env.CUSTOM_DOMAIN_STATUS==="active"))){
+    const target=new URL(request.url);
+    if(env.CUSTOM_DOMAIN_STATUS==="active"){const canonical=new URL(site.domain);target.protocol=canonical.protocol;target.host=canonical.host;}
+    target.pathname=fullPath;
+    return Response.redirect(target,308);
+  }
   let output;
-  if(path==="/")output={title:`${site.name} | ${site.tagline}`,description:site.description,body:site.variant==="practical"?r.practicalHome():r.editorialHome(),active:"Home"};
-  if(path==="/guides")output={title:`${site.guideLabel} | ${site.name}`,description:site.guidesIntro,body:r.guidesPage(),path:"/guides/",noindex:url.searchParams.has("q")||url.searchParams.has("category")};
-  if(path==="/getting-there")output={title:`Getting to Cappadocia: ASR / NAV Flights & Transfers | ${site.name}`,description:"European flights to Kayseri, Istanbul connections to ASR and NAV, an arrival calendar, airport transfers and car rental planning for Cappadocia.",body:gettingTherePage(),path:"/getting-there/",active:"Getting There"};
-  if(path==="/faq")output={title:`Cappadocia FAQ: 500 Questions Answered | ${site.name}`,description:"500 Cappadocia questions answered: balloons, airports, transfers, hotels, museums, valley walks, food, families and practical travel planning.",body:faqPage(),path:"/faq/",active:"FAQ"};
+  if(path==="/")output={title:"Cappadocia Travel Guide: Plan Your Trip | CappadociaBlog",description:site.description,body:site.variant==="practical"?r.practicalHome():r.editorialHome(),active:"Home"};
+  if(path==="/guides")output={title:"Cappadocia Travel Guides | CappadociaBlog",description:site.guidesIntro,body:r.guidesPage(),path:"/guides/",noindex:url.searchParams.has("q")||url.searchParams.has("category")};
+  if(path==="/getting-there")output={title:"Getting to Cappadocia: Flights & Transfers | CappadociaBlog",description:"European flights to Kayseri, Istanbul connections to ASR and NAV, an arrival calendar, airport transfers and car rental planning for Cappadocia.",body:gettingTherePage(),path:"/getting-there/",active:"Getting There"};
+  if(path==="/faq")output={title:"Cappadocia FAQ: 500 Travel Questions | CappadociaBlog",description:"500 Cappadocia questions answered: balloons, airports, transfers, hotels, museums, valley walks, food, families and practical travel planning.",body:faqPage(),path:"/faq/",active:"FAQ"};
   const articleMatch=path.match(/^\/articles\/([a-z0-9-]+)$/);
-  if(articleMatch){const article=site.articles.find((a)=>a.slug===articleMatch[1]);if(article)output={title:article.seoTitle||`${article.title} | ${site.name}`,description:article.metaDescription||article.dek,body:r.articlePage(article),path:r.articleUrl(article),type:"article",article};}
+  if(articleMatch){const article=site.articles.find((a)=>a.slug===articleMatch[1]);if(article)output={title:article.seoTitle||brandedTitle(article.title),description:article.metaDescription||article.dek,body:r.articlePage(article),path:r.articleUrl(article),type:"article",article};}
   const topicMatch=path.match(/^\/topics\/([a-z0-9-]+)$/);
-  if(topicMatch){const hub=topicHubs.find(h=>h.slug===topicMatch[1]);if(hub)output={title:`${hub.title} | ${site.name}`,description:hub.description,body:r.topicPage(hub),path:`/topics/${hub.slug}/`};}
+  if(topicMatch){const hub=topicHubs.find(h=>h.slug===topicMatch[1]);if(hub)output={title:brandedTitle(hub.title),description:hub.description,body:r.topicPage(hub),path:`/topics/${hub.slug}/`};}
   const simple={"/about":"about","/advertise":"advertise","/privacy":"privacy","/terms":"terms"};
-  if(simple[path])output={title:`${simple[path]} | ${site.name}`,description:site.description,body:r.simplePage(simple[path]),path:`${path}/`};
-  if(!output)return html(r.layout({title:`Page not found | ${site.name}`,description:"This page is unavailable.",noindex:true,body:'<section class="page-hero"><div class="shell"><h1>This guide is not available.</h1><p>It may have moved or been unpublished.</p><a class="button button-green" href="/guides/">Browse published guides</a></div></section>'}),404);
+  if(simple[path]){const titles={about:"About CappadociaBlog",advertise:"Advertise With CappadociaBlog",privacy:"Privacy Policy",terms:"Terms of Use"};const descriptions={about:"Meet the CappadociaBlog Editorial Desk and read our standards for sourcing, corrections, commercial transparency and independent travel guidance.",advertise:"Explore transparent advertising and partnership formats for Cappadocia hotels, restaurants, experiences and regional brands.",privacy:"Read how CappadociaBlog handles aggregate site measurement, external booking services, travel-planner data and protected editorial records.",terms:"Read the terms for using CappadociaBlog travel guidance, external booking links and information about changing conditions in Cappadocia."};output={title:brandedTitle(titles[simple[path]]),description:descriptions[simple[path]],body:r.simplePage(simple[path]),path:`${path}/`};}
+  if(!output)return html(r.layout({title:`Page not found | ${site.name}`,description:"This page is unavailable.",noindex:true,nofollow:true,canonicalize:false,structuredData:false,body:'<section class="page-hero"><div class="shell"><h1>This guide is not available.</h1><p>It may have moved or been unpublished.</p><a class="button button-green" href="/guides/">Browse published guides</a></div></section>'}),404);
   return html(r.layout(output));
 }
 
@@ -125,7 +152,7 @@ export default {
       if(!(error instanceof HttpError))console.error("CMS request failed",error?.name);
       if(new URL(request.url).pathname.startsWith("/api/"))return json({error:message},status);
       const r=createRenderer(seedSite);
-      return html(r.layout({title:"Access / service notice",description:message,noindex:true,body:`<section class="page-hero"><div class="shell"><h1>${status===403?"Yetkisiz erişim":"İşlem tamamlanamadı"}</h1><p>${r.escapeHtml(message)}</p><a class="button button-green" href="/">Ana sayfaya dön</a></div></section>`}),status);
+      return html(r.layout({title:"Access / service notice",description:message,noindex:true,nofollow:true,canonicalize:false,structuredData:false,body:`<section class="page-hero"><div class="shell"><h1>${status===403?"Yetkisiz erişim":"İşlem tamamlanamadı"}</h1><p>${r.escapeHtml(message)}</p><a class="button button-green" href="/">Ana sayfaya dön</a></div></section>`}),status);
     }
   }
 };

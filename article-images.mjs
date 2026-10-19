@@ -377,10 +377,52 @@ Object.assign(articleImages, {
 });
 
 // High-resolution, one-to-one images for the October 2026 guide collection.
-// Each source page carries the creator and exact reusable licence record.
+// Dimensions, creators and licences were verified against each Commons file page.
+const commonsLicences = {
+  "CC BY-SA 4.0": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "CC BY 4.0": "https://creativecommons.org/licenses/by/4.0/",
+  "CC BY-SA 3.0": "https://creativecommons.org/licenses/by-sa/3.0/",
+  "CC BY 2.0": "https://creativecommons.org/licenses/by/2.0/",
+  "CC BY-SA 2.0": "https://creativecommons.org/licenses/by-sa/2.0/",
+  "CC0 1.0": "https://creativecommons.org/publicdomain/zero/1.0/"
+};
+const highResCommonsMetadata = {
+  "Hot air balloons over Cappadocia.jpg": [2000,1500,"AleksandrPidodnia","CC BY-SA 4.0"],
+  "Mustafapaşa General view in 2014 2096.jpg": [2000,1331,"Dosseman","CC BY-SA 4.0"],
+  "A Turkish restaurant.jpg": [2000,1500,"E4024","CC BY-SA 4.0"],
+  "Atv tour in Cappadocia.jpg": [2000,3556,"Zeynepunuvar","CC BY 4.0"],
+  "Goreme Sword Valley Horseback Tour.jpg": [2000,1500,"JaredMWr","CC BY-SA 4.0"],
+  "Goreme Valley.jpg": [2000,1335,"Emrahuygun","CC BY-SA 4.0"],
+  "Cappadocia Göreme Dark-Church 20241003 144513.jpg": [2000,2674,"Rigorius","CC BY-SA 4.0"],
+  "Cappadocia Zelva Wikimedia Commons 01.jpg": [2000,1333,"Benh LIEU SONG","CC BY-SA 3.0"],
+  "Turkish cuisine dishes.jpg": [2000,1500,"E4024","CC BY-SA 4.0"],
+  "Cappadocia-winter.jpg": [2000,1333,"Ozgurharmanci","CC BY-SA 4.0"],
+  "Aerial view of Cappadocia from hot air balloon 40.jpg": [2000,2667,"Netha Hussain","CC0 1.0"],
+  "Hot-air ballooning in Cappadocia (52397863260).jpg": [2000,1500,"Sonse","CC BY 2.0"],
+  "One Windowed Cave Room in Cappadocia Turkiye.jpg": [2000,2673,"Knslmn","CC BY 4.0"],
+  "Doors of Mustafapaşa - Flickr - brewbooks.jpg": [2000,1707,"brewbooks from near Seattle, USA","CC BY-SA 2.0"],
+  "TestiKebabGoreme.jpg": [2000,1500,"Niels Elgaard Larsen","CC BY-SA 3.0"],
+  "Turkish meze plate.jpg": [2000,1758,"Paasikivi","CC BY-SA 4.0"],
+  "ATV Safari, Göreme.jpg": [1600,777,"Figen Kalkan","CC BY-SA 4.0"],
+  "Drone Aerial over Cappadocia, goreme, urgup, red valley, national park, Turkey, fairy chimneys 22.jpg": [2000,1498,"Aquinoxmedia","CC BY-SA 4.0"],
+  "Cappadociahorses.jpg": [2000,1333,"Joel Gonsalves","CC BY 2.0"],
+  "Horses and Hot-air ballooning in Cappadocia (52396921132).jpg": [2000,2667,"Sonse","CC BY 2.0"],
+  "Uçhisar View from castle top panorama to Ak Tepe side 0317.jpg": [2000,756,"Dosseman","CC BY-SA 4.0"],
+  "Zelve Open Air Museum v2.jpg": [2000,1500,"Halil SAYIM","CC BY-SA 4.0"],
+  "Tokali - Fresko NT.jpg": [1600,1200,"Wolfgang Sauber","CC BY-SA 3.0"],
+  "Mustafapaşa-Eglise troglodyte Sinasos (1).jpg": [2000,1500,"Ji-Elle","CC BY-SA 3.0"],
+  "Zelve Open Air Museum v1.jpg": [2000,1500,"Halil SAYIM","CC BY-SA 4.0"],
+  "Derinkuyu .jpg": [2000,3556,"The.Turk.46","CC BY-SA 4.0"],
+  "Turkish mezes.jpg": [2000,1500,"E4024","CC BY-SA 3.0"],
+  "Turkish pide and meze.jpg": [2000,1500,"E4024","CC BY-SA 4.0"],
+  "Autumn in Göreme Valley.jpg": [2000,1335,"Emrahuygun","CC BY-SA 4.0"],
+  "Kapadokya - Nisan 2017 IMG 7518 hamdigumus.jpg": [2000,1333,"Hamdigumus","CC BY-SA 4.0"]
+};
 const highResCommons = (file, alt) => {
+  const [width,height,author,license] = highResCommonsMetadata[file] || [];
+  if (!width || !height || !author || !commonsLicences[license]) throw new Error(`Missing verified Commons metadata: ${file}`);
   const source=`https://commons.wikimedia.org/wiki/File:${encodeURIComponent(file).replaceAll("%20", "_")}`;
-  return {src:`https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}?width=2000`,alt,width:2000,height:1333,source,author:"Creator credited on source page",license:"Reusable Commons licence",licenseUrl:source,title:file,modified:false,reviewed:"2026-10-14"};
+  return {src:`https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}?width=${width}`,alt,width,height,source,author,license,licenseUrl:commonsLicences[license],title:file,modified:false,reviewed:"2026-10-19"};
 };
 
 Object.assign(articleImages, {
@@ -399,7 +441,7 @@ Object.assign(articleImages, {
 export const articleExtras={
   "best-balloon-companies-cappadocia":[highResCommons("Aerial view of Cappadocia from hot air balloon 40.jpg","Aerial view over Cappadocia from a hot-air balloon."),highResCommons("Hot-air ballooning in Cappadocia (52397863260).jpg","Balloons floating above the Cappadocia landscape.")],
   "best-hotels-cappadocia":[highResCommons("One Windowed Cave Room in Cappadocia Turkiye.jpg","A windowed cave-room exterior in Cappadocia."),highResCommons("Doors of Mustafapaşa - Flickr - brewbooks.jpg","Historic carved doors in Mustafapaşa.")],
-  "best-restaurants-cappadocia":[highResCommons("Testi kebab.jpg","Testi kebab prepared in a traditional earthenware pot."),highResCommons("Turkish meze plate.jpg","A varied plate of Turkish meze.")],
+  "best-restaurants-cappadocia":[highResCommons("TestiKebabGoreme.jpg","Testi kebab prepared in a traditional earthenware pot."),highResCommons("Turkish meze plate.jpg","A varied plate of Turkish meze.")],
   "best-atv-tours-cappadocia":[highResCommons("ATV Safari, Göreme.jpg","An ATV safari group near Göreme."),highResCommons("Drone Aerial over Cappadocia, goreme, urgup, red valley, national park, Turkey, fairy chimneys 22.jpg","Aerial view of the valleys used by outdoor tours.")],
   "best-horseback-riding-cappadocia":[highResCommons("Cappadociahorses.jpg","Horses in the Cappadocia landscape."),highResCommons("Horses and Hot-air ballooning in Cappadocia (52396921132).jpg","Horses beneath balloons at sunrise in Cappadocia.")],
   "top-attractions-cappadocia":[highResCommons("Uçhisar View from castle top panorama to Ak Tepe side 0317.jpg","Panorama from Uçhisar Castle toward Cappadocia's valleys."),highResCommons("Zelve Open Air Museum v2.jpg","Rock formations and pathways at Zelve Open-Air Museum.")],
