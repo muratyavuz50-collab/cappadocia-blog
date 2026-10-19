@@ -15,7 +15,15 @@ const signIn=(path)=>`/signin-with-chatgpt?return_to=${encodeURIComponent(path)}
 const securityHeaders={"x-content-type-options":"nosniff","referrer-policy":"strict-origin-when-cross-origin","permissions-policy":"camera=(), microphone=(), geolocation=()"};
 const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{...securityHeaders,"cache-control":"no-store","content-type":"application/json; charset=utf-8"}});
 const html=(body,status=200,secure=false)=>new Response(body,{status,headers:{...securityHeaders,"cache-control":secure||status>=400?"no-store":"public, max-age=0, s-maxage=300, stale-while-revalidate=86400","content-type":"text/html; charset=utf-8",...(secure||status>=400?{"x-robots-tag":"noindex, nofollow"}:{}),...(secure?{"content-security-policy":"default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"}: {})}});
-function canonicalOrigin(env){try{const u=new URL(env.CANONICAL_ORIGIN||env.PUBLIC_ORIGIN||"https://cappadociablog.com");if(u.protocol==="https:")return u.origin;}catch{}return "https://cappadociablog.com";}
+const productionOrigin="https://www.cappadociablog.com";
+function canonicalOrigin(env){
+  try{
+    const u=new URL(env.CANONICAL_ORIGIN||env.PUBLIC_ORIGIN||productionOrigin);
+    if(u.protocol!=="https:")return productionOrigin;
+    if(u.hostname==="cappadociablog.com"||u.hostname==="www.cappadociablog.com")return productionOrigin;
+    return u.origin;
+  }catch{return productionOrigin;}
+}
 
 async function body(request){
   if(!request.headers.get("content-type")?.startsWith("application/json"))throw new HttpError(415,"JSON içerik bekleniyor.");

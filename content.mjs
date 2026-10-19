@@ -1,7 +1,7 @@
 import { expandArticles } from "./editorial.mjs";
 export const site = {
   name: "CappadociaBlog.com",
-  domain: "https://cappadociablog.com",
+  domain: "https://www.cappadociablog.com",
   variant: "practical",
   shortCode: "cb",
   brandParts: ["Cappadocia", "Blog"],

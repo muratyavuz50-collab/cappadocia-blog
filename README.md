@@ -9,17 +9,17 @@ The site can be deployed as a public, read-only preview before its database and 
 1. Import this repository into Vercel. Keep the project root at the repository root and use the default Node.js build settings. The build command is `npm run build`.
 2. Add a Neon Postgres database from Vercel Marketplace and copy its `DATABASE_URL` into the Vercel project environment variables.
 3. The Vercel function creates the required tables automatically on its first database request. `npm run db:migrate` remains available for explicit migrations, and `npm run db:check` verifies connectivity and required tables.
-4. Create a Google OAuth web client. Add the production callback URL `https://cappadociablog.com/auth/google/callback` as an authorized redirect URI. Configure:
+4. Create a Google OAuth web client. Add the production callback URL `https://www.cappadociablog.com/auth/google/callback` as an authorized redirect URI. Configure:
 
    - `ADMIN_OWNER_EMAIL`: the one Google account allowed to use the CMS
    - `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`
    - `AUTH_SECRET` and `CSRF_SECRET`: independent random values of at least 32 characters
-   - `PUBLIC_ORIGIN=https://cappadociablog.com`
-   - `CANONICAL_ORIGIN=https://cappadociablog.com`
+   - `PUBLIC_ORIGIN=https://www.cappadociablog.com`
+   - `CANONICAL_ORIGIN=https://www.cappadociablog.com`
 
    Generate secrets locally with `openssl rand -base64 48`. Set production and preview values separately; use the corresponding Vercel preview URL in Google OAuth only if preview sign-in is needed.
 5. Deploy to a Vercel preview URL and verify the home page, `/guides/`, `/faq/`, `/getting-there/`, `/sitemap.xml`, Google owner sign-in and CMS draft/publish workflow.
-6. Add `cappadociablog.com` to the Vercel project and apply the exact DNS records Vercel displays at the registrar. Confirm the domain is verified and HTTPS works before treating it as live.
+6. Add `cappadociablog.com` and `www.cappadociablog.com` to the Vercel project, then make `www.cappadociablog.com` the primary domain. Apply the exact DNS records Vercel displays at the registrar and confirm HTTPS before treating the site as live.
 
 Do not commit `.env`, `.env.local`, OAuth credentials, database URLs, signing keys or exported CMS data. The `.openai/hosting.json` file is intentionally excluded from GitHub.
 

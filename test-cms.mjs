@@ -120,7 +120,7 @@ assert.equal((await request("/guides")).status,308);
 assert.equal((await request("/",undefined,{method:"HEAD"})).status,200);
 assert.equal(await (await request("/",undefined,{method:"HEAD"})).text(),"");
 const canonicalTest=await worker.fetch(new Request("https://cms.example.test/guides/"),{...env,CANONICAL_ORIGIN:"https://cappadociablog.com",CUSTOM_DOMAIN_STATUS:"active"},{});
-assert.equal(canonicalTest.status,308);assert.equal(canonicalTest.headers.get("location"),"https://cappadociablog.com/guides/");
+assert.equal(canonicalTest.status,308);assert.equal(canonicalTest.headers.get("location"),"https://www.cappadociablog.com/guides/");
 for(const key of Object.keys(experiences))assert.equal(new URL(trackedUrl(key,"test").href).searchParams.get("partner_id"),"GTS1OZ5");
 assert.deepEqual(selectExperiences(site.articles.find(a=>a.slug==="cappadocia-cooking-class-guide")),["cooking"]);
 assert.deepEqual(selectExperiences(site.articles.find(a=>a.slug==="avanos-pottery-guide")),["pottery"]);
