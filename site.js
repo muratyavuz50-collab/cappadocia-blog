@@ -97,13 +97,14 @@ import { onCLS,onINP,onLCP } from 'web-vitals';
   const resultCount = document.querySelector('.results-count strong');
   const empty = document.querySelector('.empty-state');
   let category = 'all';
+  const searchText=value=>value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/ı/g,'i');
 
   const applyFilters = () => {
     if (!cards.length) return;
-    const query = (search?.value || '').trim().toLowerCase();
+    const query = searchText((search?.value || '').trim());
     let visible = 0;
     cards.forEach((card) => {
-      const matchesText = !query || (card.dataset.search || '').includes(query);
+      const matchesText = !query || searchText(card.dataset.search || '').includes(query);
       const matchesCategory = category === 'all' || card.dataset.category === category;
       const show = matchesText && matchesCategory;
       card.hidden = !show;

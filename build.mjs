@@ -1,4 +1,4 @@
-import { mkdir, readFile, readdir, rm } from "node:fs/promises";
+import { mkdir, readFile, readdir, rm, cp } from "node:fs/promises";
 import { build } from "esbuild";
 
 const out = new URL("./dist/", import.meta.url);
@@ -7,6 +7,8 @@ await mkdir(new URL("./server/", out), { recursive: true });
 const files = {
   "/styles.css": ["./styles.css", "text/css; charset=utf-8"],
   "/site.js": ["./site.js", "application/javascript; charset=utf-8"],
+  "/localization.css": ["./localization.css", "text/css; charset=utf-8"],
+  "/localization-client.js": ["./localization-client.js", "application/javascript; charset=utf-8"],
   "/admin.css": ["./admin.css", "text/css; charset=utf-8"],
   "/admin.js": ["./admin.js", "application/javascript; charset=utf-8"],
   "/favicon.svg": ["./assets/favicon.svg", "image/svg+xml"],
@@ -31,4 +33,7 @@ await build({ entryPoints: ["worker.mjs"], outfile: "dist/server/index.js", bund
 });
 const worker = await import(new URL("./server/index.js", out));
 if (typeof worker.default?.fetch !== "function") throw new Error("Worker fetch export missing.");
+// Native Sites needs its Worker manifest; Vercel builds do not have this file.
+try { await mkdir(new URL('./.openai/',out),{recursive:true});await cp(new URL('./.openai/hosting.json',import.meta.url),new URL('./.openai/hosting.json',out)); }
+catch(error){if(error.code!=='ENOENT')throw error;}
 console.log("Built persistent editorial CMS, public guides and travel planning.");

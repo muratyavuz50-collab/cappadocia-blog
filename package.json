@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "test:locales": "node scripts/check-localization.mjs",
     "build": "node build.mjs",
     "test:vercel": "node --test ./tests/vercel-handler.test.mjs",
     "test:seo": "node ./build.mjs && node ./scripts/seo-audit.mjs",

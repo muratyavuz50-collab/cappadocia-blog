@@ -1,0 +1,79 @@
+{
+  "language": "tr",
+  "site": "CappadociaBlog.com",
+  "reviewed_at": "2026-10-22",
+  "research_purpose": "Türkçe gezi, kültür ve yemek yayınlarında doğal kelime seçimini ve ziyaretçiye rehberlik eden anlatımı incelemek. Kaynak cümleleri, üslubu veya güncel olmayan işletme bilgilerini kopyalamamak.",
+  "sources": [
+    {
+      "url": "https://www.oggusto.com/seyahat/yurtici/kapadokya-gezi-rehberi",
+      "publication": "Oggusto",
+      "observations": [
+        "Yer adları ve gezi kararları etrafında bölümleme.",
+        "Uzun tanıtım sıfatları yerine somut ortam ve deneyim sözcükleri seçildi."
+      ]
+    },
+    {
+      "url": "https://yemek.com/kapadokya-mekanlari/",
+      "publication": "Yemek.com",
+      "observations": [
+        "Yöresel lezzetler, taş fırın, tandır, testi kebabı gibi yerleşik yemek terimleri.",
+        "Mekân seçimini yemek ve ziyaret ihtiyacıyla ilişkilendiren anlaşılır anlatım."
+      ]
+    },
+    {
+      "url": "https://gezimanya.com/kapadokya",
+      "publication": "Gezimanya",
+      "observations": [
+        "Ulaşım, konaklama, ne zaman gitmeli ve gezilecek yerler gibi okurun kararına uygun başlıklar.",
+        "Gezi rotası, seyir noktası, günübirlik gezi ve yürüyüş parkuru gibi yerleşik kullanımlar."
+      ]
+    },
+    {
+      "url": "https://muze.gov.tr/muze-detay?DistId=GRM&SectionId=GRM01",
+      "publication": "T.C. Kültür ve Turizm Bakanlığı / Müze",
+      "observations": [
+        "Göreme Açık Hava Müzesi, Karanlık Kilise, fresk ve kaya oyma gibi kültür mirası terimleri.",
+        "Resmî kurum adlarının ve ziyaret koşullarının doğru aktarılması."
+      ]
+    }
+  ],
+  "editorial_rules": [
+    "Ziyaretçiye siz diye seslenen, kısa, açık ve özgün Türkçe kullanılır; belirli bir yazar taklit edilmez.",
+    "Getting there: Kapadokya’ya ulaşım; base: konaklama noktası veya kalacağınız yer; shoulder season: ara sezon; high/low season: yoğun/sakin sezon.",
+    "Live availability bağlama göre güncel yer durumu; anchor experiences öncelikli deneyimler; cancellation policy iptal koşulları olarak aktarılır.",
+    "Göreme, Uçhisar, Ürgüp, Ortahisar, Mustafapaşa gibi yerlerin Türkçe yazımı korunur. Marka, işletme ve lisans atıfları korunur.",
+    "MICHELIN Yıldızı, Bib Gourmand, Yeşil Yıldız, Seçki ve otellere verilen Anahtar birbirine dönüştürülmez.",
+    "Geliş uçuş numarası her transferde gereklidir; dönüş uçuşu alındıysa onun numarası da istenir. ASR, NAV, IST ve SAW ayrımları korunur.",
+    "Balon rotası, uçuş, kar, manzara, oda veya erişim garantisi eklenmez; kaynak metindeki koşullar ve belirsizlikler korunur.",
+    "İngilizce katalog anahtarı birebir esas alınır; sıralı indeks üzerinden eşleştirme yapılmaz.",
+    "İşaretlerin türü, sayısı ve iç içe yapısı korunur. Yeni HTML veya URL eklenmez.",
+    "Araştırma sayfalarından yeni fiyat, çalışma saati, sıralama veya başka işletme bilgisi çeviriye taşınmaz.",
+    "Rakamların anlamı korunur; doğal Türkçe başlıklarda iki/üç/dört yazıyla yazılabilir, ISO tarihleri Türkçe ay adıyla gösterilebilir."
+  ],
+  "scope": {
+    "catalog_keys": 3446,
+    "non_faq_keys": 2446,
+    "faq_question_answer_keys": 1000,
+    "non_faq_completed": 2446,
+    "translation_file_current_keys": 2458,
+    "faq_overlap_already_translated": 12,
+    "faq_assigned_to_separate_editor": true
+  },
+  "validation": {
+    "non_faq_missing_keys": 0,
+    "unknown_keys": 0,
+    "empty_values": 0,
+    "placeholder_multiset_errors": 0,
+    "placeholder_nesting_errors": 0,
+    "added_html": 0,
+    "semantic_review": [
+      "Geliş/dönüş uçuş numaraları ve farklı havalimanları",
+      "Michelin restoran/otel unvanları ve kontrol tarihleri",
+      "Balon işletmecisi, seçenek ve hava koşulları ayrımları",
+      "Otellerin tam oda kategorisi ve teras erişimi",
+      "Restoran, atölye, vadi ve müze ziyaretinin dahil hizmetleri",
+      "Kaynak adları, marka adları ve görsel lisansları"
+    ]
+  },
+  "handoff": "1000 FAQ soru/yanıt anahtarı ayrı Türkçe editörün /tmp/blog-tr-faq.json sözlüğünden ana ajan tarafından birleştirilecek. Ortak kaynak, bağlantı, partner kodu, build ve çerçeve dosyaları değiştirilmedi."
+}

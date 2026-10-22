@@ -3,6 +3,7 @@ import worker from "../dist/server/index.js";
 import { site } from "../content.mjs";
 import { publicPaths } from "../analytics.mjs";
 import { createRenderer } from "../render.mjs";
+import {languages,localePath,barePath} from '../localization/engine.mjs';
 
 const DB = {
   prepare() {
@@ -82,8 +83,8 @@ function validateLinks(document, path) {
     const internal = normalizeInternal(href);
     if (!internal || /^\/(admin|account|api|signin-with-chatgpt|signout-with-chatgpt)\//.test(internal)) continue;
     if (internal === "/affiliate-disclosure/") continue;
-    assert.ok(expectedPaths.has(internal), `${path}: unresolved internal link ${href}`);
-    incoming.get(internal).add(path);
+    assert.ok(expectedPaths.has(barePath(internal)), `${path}: unresolved internal link ${href}`);
+    incoming.get(barePath(internal)).add(path);
   }
 }
 
@@ -201,7 +202,7 @@ assert.ok(sitemap.includes('xmlns:image="http://www.google.com/schemas/sitemap-i
 assert.doesNotMatch(sitemap, /<image:caption>|\/admin|\/account/, "Sitemap omits deprecated tags and private routes");
 const sitemapBlocks = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((match) => match[1]);
 const sitemapPaths = new Set(sitemapBlocks.map((block) => new URL(decode(one(block, /<loc>([^<]+)<\/loc>/, "sitemap loc"))).pathname));
-assert.deepEqual(sitemapPaths, expectedPaths, "Sitemap exactly matches indexable public paths");
+assert.deepEqual(sitemapPaths, new Set([...expectedPaths].flatMap(path=>languages.map(lang=>localePath(path,lang)))), "Sitemap exactly matches indexable public paths in every language");
 for (const block of sitemapBlocks) {
   const lastmod = block.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1];
   if (lastmod) {
@@ -211,7 +212,7 @@ for (const block of sitemapBlocks) {
 }
 const sitemapImages = [...sitemap.matchAll(/<image:loc>([^<]+)<\/image:loc>/g)].map((match) => decode(match[1]));
 const expectedImageUrls = allEditorialImages.map((image) => new URL(image.src, site.domain).href);
-assert.equal(sitemapImages.length, expectedImageUrls.length, "Sitemap includes every hero and supporting image");
+assert.equal(sitemapImages.length, expectedImageUrls.length*languages.length, "Sitemap includes every hero and supporting image in every language");
 assert.deepEqual(new Set(sitemapImages), new Set(expectedImageUrls), "Sitemap image URLs exactly match editorial images");
 
 const feedResponse = await request("/feed.xml");

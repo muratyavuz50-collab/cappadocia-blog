@@ -10,6 +10,8 @@ import { recordMetric,analyticsReport,siteSettings,saveSettings,publicPaths } fr
 import { businessShortlist } from "./business-guides.mjs";
 import { absoluteUrl,brandedTitle,latestIsoDate,xmlEscape } from "./seo-helpers.mjs";
 import { faqReviewed } from "./faq-data.mjs";
+import {localizedResponse,sitemapAlternates} from "./localization/runtime.mjs";
+import {languages,localePath} from "./localization/engine.mjs";
 
 const signIn=(path)=>`/signin-with-chatgpt?return_to=${encodeURIComponent(path)}`;
 const securityHeaders={"x-content-type-options":"nosniff","referrer-policy":"strict-origin-when-cross-origin","permissions-policy":"camera=(), microphone=(), geolocation=()"};
@@ -110,8 +112,8 @@ async function handle(request,env){
     // Search Console verification of the remote host is encouraged by Google, but is not a prerequisite.
     const articleEntries=site.articles.map(article=>({path:r.articleUrl(article),lastmod:article.updatedAt||article.datePublished,images:r.imagesFor(article)}));
     const entries=[...staticEntries,...articleEntries];
-    const body=entries.map(({path:entryPath,lastmod,images=[]})=>`<url><loc>${xmlEscape(site.domain+entryPath)}</loc>${lastmod?`<lastmod>${xmlEscape(lastmod)}</lastmod>`:""}${images.map(image=>`<image:image><image:loc>${xmlEscape(absoluteUrl(site.domain,image.src))}</image:loc></image:image>`).join("")}</url>`).join("");
-    return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">${body}</urlset>`,{headers:{...crawlHeaders,"content-type":"application/xml; charset=utf-8"}});
+    const body=entries.flatMap(({path:entryPath,lastmod,images=[]})=>languages.map(lang=>`<url><loc>${xmlEscape(site.domain+localePath(entryPath,lang))}</loc>${lastmod?`<lastmod>${xmlEscape(lastmod)}</lastmod>`:""}${sitemapAlternates(site.domain,entryPath,xmlEscape)}${images.map(image=>`<image:image><image:loc>${xmlEscape(absoluteUrl(site.domain,image.src))}</image:loc></image:image>`).join("")}</url>`)).join("");
+    return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:xhtml="http://www.w3.org/1999/xhtml">${body}</urlset>`,{headers:{...crawlHeaders,"content-type":"application/xml; charset=utf-8"}});
   }
   if(path==="/feed.xml"){
     const articles=[...site.articles].sort((a,b)=>new Date(b.updatedAt||b.datePublished)-new Date(a.updatedAt||a.datePublished)).slice(0,50);
@@ -145,7 +147,7 @@ async function handle(request,env){
 export default {
   async fetch(request,env) {
     try{
-      const response=await handle(request,env);
+      const response=await localizedResponse(request,env,handle,canonicalOrigin);
       const privatePath=/^\/(admin|account|api)(\/|$)/.test(new URL(request.url).pathname);
       if(privatePath||request.method==="HEAD"){
         const responseHeaders=new Headers(response.headers);

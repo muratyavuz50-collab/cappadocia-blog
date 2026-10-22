@@ -11,6 +11,7 @@ import { restaurants,michelinHotels } from "./business-guides.mjs";
 import { experiences,selectExperiences,trackedUrl } from "./experiences.mjs";
 import { articleImages,articleExtras } from "./article-images.mjs";
 import { createRenderer } from "./render.mjs";
+import {languages} from './localization/engine.mjs';
 
 const sqlite=new DatabaseSync(":memory:");
 for(const file of (await readdir("./drizzle")).filter((f)=>f.endsWith(".sql")))sqlite.exec(await readFile(`./drizzle/${file}`,"utf8"));
@@ -80,9 +81,9 @@ const hotelsHtml=await (await request("/articles/michelin-hotels-cappadocia/")).
 assert.equal((hotelsHtml.match(/class="directory-card"/g)||[]).length,18);
 assert.ok(hotelsHtml.includes("2 MICHELIN Keys")&&hotelsHtml.includes("1 MICHELIN Key"));
 const fullSitemap=await (await request("/sitemap.xml")).text();
-assert.equal((fullSitemap.match(/<url><loc>/g)||[]).length,81);
+assert.equal((fullSitemap.match(/<url><loc>/g)||[]).length,publicPages.length*languages.length);
 const editorialImages=site.articles.flatMap(article=>renderer.imagesFor(article));
-assert.equal((fullSitemap.match(/<image:image>/g)||[]).length,editorialImages.length,"all article hero and supporting images in sitemap");
+assert.equal((fullSitemap.match(/<image:image>/g)||[]).length,editorialImages.length*languages.length,"all article hero and supporting images in every language sitemap entry");
 for(const image of editorialImages)assert.ok(fullSitemap.includes(image.src.replaceAll("&","&amp;")),`sitemap image: ${image.src}`);
 assert.ok(fullSitemap.includes('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'));
 assert.ok(!fullSitemap.includes("<image:caption>"),"deprecated image sitemap tags stay out");

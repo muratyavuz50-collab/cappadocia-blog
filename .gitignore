@@ -6,3 +6,4 @@ dist/
 .env.local
 .openai/hosting.json
 .DS_Store
+localization/source-pages/

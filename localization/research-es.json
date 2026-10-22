@@ -1,0 +1,111 @@
+{
+  "locale": "es",
+  "publication": "CappadociaBlog.com",
+  "reviewedAt": "2026-10-22",
+  "purpose": "Edición original en español internacional de todas las claves de interfaz, metadatos, textos alternativos, artículos, rutas, fuentes y secciones temáticas de preguntas frecuentes. El bloque de 500 preguntas y 500 respuestas se redactó en una tarea separada para integrarlo por clave exacta.",
+  "researchApproach": "Lectura de cuatro publicaciones españolas para observar vocabulario habitual de viajes, patrimonio y gastronomía. Se adoptan convenciones generales del idioma, sin copiar frases ni imitar la voz personal de ningún autor. Las fuentes editoriales no se utilizaron para añadir hechos, precios, recomendaciones o afirmaciones nuevas al catálogo inglés.",
+  "sources": [
+    {
+      "publication": "Viajeros Callejeros",
+      "url": "https://www.viajeroscallejeros.com/cosas-que-ver-y-hacer-en-la-capadocia/",
+      "title": "21 cosas que ver y hacer en la Capadocia imprescindibles",
+      "observations": [
+        "Orientación práctica organizada por decisiones de viaje.",
+        "Vocabulario claro de rutas, miradores, hoteles cueva y visitas por cuenta propia."
+      ],
+      "application": "Preguntas concretas y explicaciones útiles para decidir sin acumular adjetivos promocionales."
+    },
+    {
+      "publication": "Mochileando por el Mundo",
+      "authors": "Rober y Lety",
+      "url": "https://www.mochileandoporelmundo.com/que-ver-y-hacer-en-la-capadocia/",
+      "title": "10 imprescindibles que ver y hacer en la Capadocia",
+      "observations": [
+        "Lenguaje cercano de viajes; nombres habituales como chimeneas de hadas e iglesias rupestres.",
+        "Se distingue la descripción del paisaje de la organización del viaje."
+      ],
+      "application": "Tono accesible sin copiar bromas, experiencias personales, datos históricos ni precios del artículo."
+    },
+    {
+      "publication": "El País / El Viajero",
+      "author": "Sara Andrade Abad",
+      "url": "https://elpais.com/elviajero/viajes/2025-02-13/capadocia-que-ver-en-el-paisaje-lunar-de-turquia.html",
+      "title": "Capadocia, qué ver en el paisaje lunar de Turquía",
+      "publishedAt": "2025-02-13",
+      "observations": [
+        "Descripción visual concreta del paisaje y del patrimonio.",
+        "Uso natural de formaciones rocosas, espacios excavados en la roca y frescos."
+      ],
+      "application": "Describir lo que el viajero verá con precisión, sin exagerar ni añadir hechos no presentes en el original."
+    },
+    {
+      "publication": "Directo al Paladar",
+      "author": "Carmen Tía Alia",
+      "url": "https://www.directoalpaladar.com/curso-de-cocina/como-hacer-pide-pizza-turca-popular-repertorio-comida-rapida-callejera-pais/amp",
+      "title": "Cómo hacer pide: la pizza turca más popular del repertorio de comida rápida y callejera del país",
+      "publishedAt": "2022-10-04",
+      "observations": [
+        "Conserva el nombre turco del plato y explica su elaboración o presentación con vocabulario común.",
+        "Distingue ingredientes, preparación, relleno y acompañamientos."
+      ],
+      "application": "Hablar de carta, raciones, ingredientes, guarniciones y preparación sin convertir un nombre de plato en garantía de ingredientes."
+    }
+  ],
+  "editorialRules": [
+    "Español internacional con tuteo coherente. Frases directas, verbos concretos y títulos con mayúscula inicial, sin calcos de titulares ingleses.",
+    "Capadocia y Turquía en la prosa; Göreme, Uçhisar, Ürgüp, Ortahisar, Avanos, Mustafapaşa, Kayseri, Nevşehir y los nombres propios conservan sus diacríticos.",
+    "Los nombres de negocios, operadores, autores fotográficos, licencias y marcas permanecen identificables; no se presentan reseñas de visita personal si el original no las afirma.",
+    "Traslado para transfer; compartido o privado según el servicio. Se pide siempre el número del vuelo de llegada y el de regreso cuando ya está reservado.",
+    "Se distinguen el alquiler sin conductor y el coche con conductor. La opción verificada de GetYourGuide con conductor no se anuncia como alquiler convencional.",
+    "Vuelo en globo, cesta, tiempo en el aire, recogida y autorización operativa se tratan por separado. No se añaden garantías meteorológicas ni afirmaciones de superioridad de seguridad.",
+    "Ruta Roja y Ruta Verde conservan su función de etiquetas comerciales, sin convertirlas en itinerarios fijos ni prometer entradas o comidas universales.",
+    "Hotel cueva, habitación cueva, terraza, mirador, iglesia rupestre, ciudad subterránea y chimeneas de hadas son los términos de referencia.",
+    "Los nombres de platos se conservan y se explican cuando el original lo permite; testi kebab se acompaña de guiso en vasija de barro. No se infieren ingredientes ni aptitud dietética.",
+    "Las estrellas de restaurante, Bib Gourmand, Estrella Verde y Llaves Michelin se distinguen. No se convierten en categorías hoteleras ni se inventan premios.",
+    "Los CTA describen el destino real: leer una guía, comparar opciones, abrir Google Flights o ver en GetYourGuide; no prometen una reserva interna inexistente.",
+    "Se mantienen todos los números, fechas de verificación, códigos aeroportuarios, condiciones, restricciones y matices de incertidumbre del inglés.",
+    "Los marcadores numerados se preservan con su cantidad y anidación; no se introducen etiquetas HTML ni direcciones URL en las traducciones.",
+    "La asignación se hace mediante la clave original exacta, identificada por un hash SHA-256 comprobado; no se emparejan listas ni posiciones.",
+    "Los enlaces y los contactos no forman parte de la transformación del texto. El código de afiliación GTS1OZ5 debe permanecer en la integración que administra el agente principal.",
+    "No se copian tarifas antiguas, afirmaciones históricas discutibles ni clasificaciones de popularidad de los blogs consultados. Se traduce el alcance factual del catálogo original."
+  ],
+  "terminology": {
+    "Getting There": "Cómo llegar",
+    "Guides": "Guías",
+    "View on GetYourGuide": "Ver en GetYourGuide",
+    "airport transfer": "traslado al aeropuerto",
+    "shared shuttle": "traslado compartido",
+    "self-drive rental": "alquiler sin conductor",
+    "chauffeured service": "servicio con conductor",
+    "hot-air balloon": "globo aerostático",
+    "cave hotel": "hotel cueva",
+    "rock-cut church": "iglesia rupestre",
+    "viewpoint": "mirador",
+    "frescoes": "frescos",
+    "pottery workshop": "taller de cerámica",
+    "menu (restaurant selection of dishes)": "carta",
+    "tasting menu": "menú degustación",
+    "MICHELIN Keys": "Llaves MICHELIN",
+    "MICHELIN Selected": "selección MICHELIN",
+    "Green Star": "Estrella Verde",
+    "Red Tour": "Ruta Roja",
+    "Green Tour": "Ruta Verde",
+    "FAQ": "Preguntas frecuentes"
+  },
+  "qualityChecks": {
+    "catalogKeys": 3446,
+    "dictionaryKeysBeforeFaqMerge": 2458,
+    "nonFaqCatalogKeys": 2446,
+    "nonFaqMissing": 0,
+    "faqKeysAlreadyPresent": 12,
+    "faqKeysDelegated": 1000,
+    "unknownDictionaryKeys": 0,
+    "emptyValues": 0,
+    "markerMultisetErrors": 0,
+    "markerNestingErrors": 0,
+    "numericTokenDifferences": 0,
+    "rawHtmlInTranslations": 0,
+    "semanticReview": "Se revisaron los cuerpos de los artículos al redactarlos y se comprobó la coherencia de títulos simples y envueltos, las menciones a operadores de globos, las distinciones Michelin, las condiciones de traslados, la separación IST/SAW y el sentido real de los CTA. Las coincidencias exactas con el inglés corresponden a nombres propios, marcas, licencias o códigos."
+  },
+  "handoff": "El agente principal incorporará las 1.000 claves del bloque FAQ desde /tmp/blog-es-faq.json y hará la comprobación global, integración y publicación. No se han modificado fuentes compartidas, compilación ni Git."
+}

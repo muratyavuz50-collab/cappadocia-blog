@@ -1,0 +1,113 @@
+{
+  "site": "CappadociaBlog.com",
+  "language": "zh-Hans",
+  "researchDate": "2026-10-22",
+  "method": "阅读原生中文旅行与饮食文章，参考常用词汇、读者问题顺序及信息组织；译文根据英文原文独立改写，不复制句子、不仿写某位作者。参考文章中的票价、班次、营业时间与亲历判断不引入本站译文。",
+  "sources": [
+    {
+      "url": "https://carolblog.tw/capadocia/",
+      "publisher": "卡蘿旅遊生活札記",
+      "kind": "中文卡帕多奇亚旅行攻略",
+      "observations": [
+        "先说明住宿基地与交通，再进入景点和日程",
+        "用具体地名、乘车与步行安排回答读者问题"
+      ],
+      "application": "信息用语偏实用：住宿基地、机场接送、接车地点、门到门总耗时。"
+    },
+    {
+      "url": "https://whereamber.com/cappadocia-itinerary/",
+      "publisher": "莫務正業",
+      "kind": "中文卡帕多奇亚行程文章",
+      "observations": [
+        "用实际可用天数组织行程",
+        "交通比较与清晨活动安排应清楚易懂"
+      ],
+      "application": "区分住宿晚数与完整游览日，保留天气备选早晨，避免空泛的景点罗列。"
+    },
+    {
+      "url": "https://bj-chou.com/2016/06/13/turkey-cappadocian-cusine/",
+      "publisher": "BJ周",
+      "kind": "中文卡帕多奇亚饮食文章",
+      "observations": [
+        "以食材、烹调方式、分量和用餐场景描述菜肴",
+        "美食内容可以有感官细节，但不能用宣传形容词代替说明"
+      ],
+      "application": "统一使用陶罐炖肉、开胃小菜、配菜、提前预订、饮食需求等具体词语；旧资料仅供语言研究。"
+    },
+    {
+      "url": "https://www.wendyjourney.com/turkiye-travel/",
+      "publisher": "Wendy’s Journey",
+      "kind": "中文土耳其旅行与文化文章",
+      "observations": [
+        "景观和食物描写以可理解的物件与体验连接",
+        "文化参观文字兼顾观察、背景与读者路线"
+      ],
+      "application": "使用岩窟教堂、壁画、石砌建筑、历史脉络、从容参观；不添加未经本站核实的亲历体验。"
+    }
+  ],
+  "glossary": {
+    "Cappadocia": "卡帕多奇亚",
+    "Göreme": "格雷梅",
+    "Uçhisar": "乌奇希萨尔",
+    "Ürgüp": "于尔居普",
+    "Ortahisar": "奥塔希萨尔",
+    "Mustafapaşa": "穆斯塔法帕夏",
+    "Kayseri": "开塞利",
+    "Nevşehir": "内夫谢希尔",
+    "Avanos": "阿瓦诺斯",
+    "Çavuşin": "恰武辛",
+    "Zelve": "泽尔韦",
+    "Paşabağ": "帕夏巴格",
+    "Ihlara Valley": "厄赫拉热山谷",
+    "Derinkuyu": "代林库尤",
+    "Kaymaklı": "凯马克勒",
+    "fairy chimney": "精灵烟囱",
+    "cave hotel": "洞穴酒店",
+    "rock-cut church": "岩窟教堂",
+    "airport transfer": "机场接送",
+    "shared/private transfer": "拼车/包车接送",
+    "flight number": "航班号",
+    "testi kebab": "陶罐炖肉",
+    "meze": "开胃小菜",
+    "editorial guide": "旅行指南",
+    "licensed sightseeing guide": "持证观光导游",
+    "Red/Green Tour": "红线/绿线一日游",
+    "MICHELIN Star": "米其林星级",
+    "Bib Gourmand": "必比登推介",
+    "MICHELIN Green Star": "米其林绿星",
+    "MICHELIN Selected restaurant": "米其林指南入选餐厅",
+    "MICHELIN Key": "米其林钥级",
+    "MICHELIN Selected hotel": "米其林指南入选酒店"
+  },
+  "editorialRules": [
+    "使用自然、清楚的简体中文，按读者问题组织句子，不逐词硬译；不模仿特定作者，不添加第一人称到访或亲测。",
+    "保留酒店、餐厅与运营商品牌原名；机场代码、电话号码、人数、日期、限制条件和预订事实不得改写为新的承诺。",
+    "始终保留抵达航班号要求，以及回程已订时提供返程航班号的要求；IST与SAW是不同机场，ASR与NAV不得混淆。",
+    "热气球天气适飞、改期、取消与个人取消规则必须区分，不承诺路线、气球背景、第二天补飞或绝对安全。",
+    "餐厅星级、必比登、绿星、指南入选，以及酒店钥级为不同荣誉；不因入选指南就加星，不将餐厅星级换成酒店星级。",
+    "保留第三方预订关系：本站为编辑与推荐方，GetYourGuide为外部预订渠道，不把本站写成活动实际运营商。",
+    "所有译文按完整英文原文key映射；只使用完整key或唯一原文前缀精确解析，绝不按数组位置映射。",
+    "保留{0/}与{1}…{/1}等原内联占位符的名字、数量与合法嵌套，不插入HTML或新URL；不修改合作代码GTS1OZ5。"
+  ],
+  "qa": {
+    "catalogEntries": 3446,
+    "authoredDictionaryEntriesBeforeFaqMerge": 2458,
+    "nonFaqMissing": 0,
+    "faqOwnedBySeparateHelper": 1000,
+    "remainingExactFaqKeysBeforeMerge": 988,
+    "placeholderChecks": "全部已写条目逐批及最后整体校验，占位符名称与数量一致，嵌套合法。",
+    "unexpectedKeys": 0,
+    "rawHtmlAdded": 0,
+    "unchangedValues": "保留不应翻译的酒店、餐厅、运营商品牌、作者署名、许可证与Logo字符串；没有通用英语段落原样回填。",
+    "semanticChecks": [
+      "抽查机场选择、航班号与跨夜日期、拼车/包车、转机机场、租车与带司机服务的区别",
+      "抽查天气取消与个人取消条款、实际飞行运营商和排序说明",
+      "抽查18家餐厅与18家酒店的米其林分类及相关日期",
+      "抽查隐私政策中90天、约20%、不设分析Cookie、浏览器本地处理的含义",
+      "保持段落中的保留条件、否定限制和不保证事项，没有用简短通用句替换长文"
+    ],
+    "numberAudit": "数字差异人工核查均为英文月份转数字、日期改为年/月/日，以及one/two/three等自然中文数字；日期、月份、数量与航季含义保留。",
+    "independentReview": "已阅读/tmp/blog-zh-review.json的13项建议，认可其术语与自然度改进；由主代理在合并FAQ后应用，避免并发写入。",
+    "nextIntegrationStep": "主代理按英文完整key合并1000条FAQ助手文件，再应用独立复核建议；本编辑冻结zh.json，不再自行改写。"
+  }
+}

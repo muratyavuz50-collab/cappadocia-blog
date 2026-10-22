@@ -1,6 +1,7 @@
 import { database,HttpError } from "./db.mjs";
 import { topicHubs } from "./editorial.mjs";
 import { experiences } from "./experiences.mjs";
+import {barePath} from './localization/engine.mjs';
 export const publicPaths=site=>new Set(["/","/getting-there/","/guides/","/faq/","/about/","/advertise/","/privacy/","/terms/",...topicHubs.map(h=>`/topics/${h.slug}/`),...site.articles.map(a=>`/articles/${a.slug}/`)]);
 const sourceNames=new Set(["direct","google","bing","social","referral","internal"]);
 const products=new Set(["browse",...Object.values(experiences).map(p=>p.id)]);
@@ -10,7 +11,7 @@ export async function recordMetric(request,env,site){
  if(!request.headers.get("content-type")?.startsWith("application/json"))throw new HttpError(415,"JSON required.");
  const text=await request.text();if(text.length>1500)throw new HttpError(413,"Measurement too large.");
  let input;try{input=JSON.parse(text);}catch{throw new HttpError(400,"Invalid measurement.");}
- if(!input||!publicPaths(site).has(input.path))throw new HttpError(400,"Unknown public page.");
+ if(!input||typeof input.path!=='string'||!publicPaths(site).has(barePath(input.path)))throw new HttpError(400,"Unknown public page.");
  if(/bot|crawler|spider|headless/i.test(request.headers.get("user-agent")||""))return new Response(null,{status:204});
  let label="",bucket="",source="";
  if(input.kind==="view"){
