@@ -1,7 +1,9 @@
+import {initBookingWidgets} from './booking-client.js';
 import {initialiseTravelPlanner} from './travel-planner.mjs';
 import { onCLS,onINP,onLCP } from 'web-vitals';
 (() => {
   initialiseTravelPlanner();
+  initBookingWidgets();
   const measured=document.body.dataset.publicPage==='true'&&navigator.doNotTrack!=='1'&&!navigator.globalPrivacyControl;
   const report=(input)=>{
     if(!measured)return;
@@ -14,6 +16,7 @@ import { onCLS,onINP,onLCP } from 'web-vitals';
   report({kind:'view',source});
   document.addEventListener('click',event=>{
     const link=event.target.closest('a[href]');if(!link)return;
+    if(link.dataset.bookingProduct){try{const target=new URL(link.href);if(['www.dpbolvw.net','www.jdoqocy.com'].includes(target.hostname)&&/^\/click-101906092-(17293139|17323529)$/.test(target.pathname))report({kind:'affiliate',product:link.dataset.bookingProduct});}catch{}return;}
     try{const url=new URL(link.href);if((url.hostname==='getyourguide.com'||url.hostname.endsWith('.getyourguide.com'))&&url.searchParams.get('partner_id')==='GTS1OZ5'){report({kind:'affiliate',product:url.pathname.match(/-t(\d+)\/?$/)?.[1]||'browse'});}}catch{}
   });
   // Sample actual browser Web Vitals. Values are aggregated as threshold bands, not fabricated scores.

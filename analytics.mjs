@@ -1,10 +1,11 @@
+import {bookingProductIds} from './booking.mjs';
 import { database,HttpError } from "./db.mjs";
 import { topicHubs } from "./editorial.mjs";
 import { experiences } from "./experiences.mjs";
 import {barePath} from './localization/engine.mjs';
 export const publicPaths=site=>new Set(["/","/getting-there/","/guides/","/faq/","/about/","/advertise/","/privacy/","/terms/",...topicHubs.map(h=>`/topics/${h.slug}/`),...site.articles.map(a=>`/articles/${a.slug}/`)]);
 const sourceNames=new Set(["direct","google","bing","social","referral","internal"]);
-const products=new Set(["browse",...Object.values(experiences).map(p=>p.id)]);
+const products=new Set([...bookingProductIds,"browse",...Object.values(experiences).map(p=>p.id)]);
 export async function recordMetric(request,env,site){
  if(request.method!=="POST")throw new HttpError(405,"Method not allowed.");
  if(request.headers.get("origin")!==new URL(request.url).origin)throw new HttpError(403,"Invalid measurement origin.");

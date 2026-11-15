@@ -1,13 +1,14 @@
+import {bookingTranslations} from '../booking.mjs';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {cavetableTranslations} from '../cavetable.mjs';
 
 const tokens=text=>text.match(/\{\/?\d+\/?\}/g)||[];
 export async function checkDictionaries(directory){
-  const catalog=JSON.parse(await readFile(new URL('catalog.json',directory),'utf8'));
+  const catalog={...JSON.parse(await readFile(new URL('catalog.json',directory),'utf8')),...JSON.parse(await readFile(new URL('booking-catalog.json',directory),'utf8'))};
   const counts={};
   for(const lang of ['tr','es','zh']){
-    const supplemental=cavetableTranslations[lang]||{};
+    const supplemental={...cavetableTranslations[lang],...bookingTranslations[lang]};
     const dictionary={...JSON.parse(await readFile(new URL(lang+'.json',directory),'utf8')),...supplemental};
     const missing=Object.keys(catalog).filter(key=>!Object.hasOwn(dictionary,key));
     assert.equal(missing.length,0,`${lang}: ${missing.length} missing translations, first: ${missing.slice(0,3).join(' | ')}`);

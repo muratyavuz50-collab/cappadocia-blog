@@ -10,7 +10,7 @@ const voidTags=new Set('area base br col embed hr img input link meta param sour
 const skipped=new Set(['script','style','svg','code','pre','textarea','iframe']);
 const inline=new Set(['a','em','strong','b','i','small','span','sup','sub','br','s','u','abbr','time','mark']);
 const groups=new Set(['h1','h2','h3','h4','h5','h6','p','summary','li','button','a','span','label','figcaption','option','strong','em','small','td','th','dt','dd','legend','title']);
-const attrNames=new Set(['alt','title','placeholder','aria-label','aria-description']);
+const attrNames=new Set(['alt','title','placeholder','aria-label','aria-description','data-booking-fallback-text','data-booking-ready-text']);
 const textNode=value=>({type:'text',value});
 export function parse(html){
  const root={type:'root',children:[]},stack=[root];let cursor=0;

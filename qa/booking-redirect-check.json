@@ -1,0 +1,54 @@
+[
+  {
+    "status": 302,
+    "host": "www.dpbolvw.net",
+    "path": "/click-101906092-17293139",
+    "query_keys": [
+      "sid",
+      "url"
+    ],
+    "next_host": "cj.dotomi.com",
+    "next_path": "/b5106iqzyG/qx1/FLGNHFHN/FEFNEKENG/E/E/E",
+    "next_query_keys": [
+      "w"
+    ]
+  },
+  {
+    "status": 302,
+    "host": "cj.dotomi.com",
+    "path": "/b5106iqzyG/qx1/FLGNHFHN/FEFNEKENG/E/E/E",
+    "query_keys": [
+      "w"
+    ],
+    "next_host": "www.emjcd.com",
+    "next_path": "/m077efon7/fmr/4A5C646C/434C393C5/3/534B3A36853C38865A:ftCloIAlE1xI/iA4dgg6Bh3ie44i4B46334f93d4CB4ih",
+    "next_query_keys": [
+      "r"
+    ]
+  },
+  {
+    "status": 302,
+    "host": "www.emjcd.com",
+    "path": "/m077efon7/fmr/4A5C646C/434C393C5/3/534B3A36853C38865A:ftCloIAlE1xI/iA4dgg6Bh3ie44i4B46334f93d4CB4ih",
+    "query_keys": [
+      "r"
+    ],
+    "next_host": "www.booking.com",
+    "next_path": "/hotel/tr/sultan-cave-suites.html",
+    "next_query_keys": [
+      "aid",
+      "label",
+      "utm_campaign",
+      "utm_medium",
+      "utm_source",
+      "utm_term"
+    ]
+  },
+  {
+    "landed_on_booking_redirect": true,
+    "host": "www.booking.com",
+    "path": "/hotel/tr/sultan-cave-suites.html",
+    "correct_hotel": true,
+    "has_affiliate_parameter": true
+  }
+]

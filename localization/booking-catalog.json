@@ -1,0 +1,1043 @@
+{
+  "Language": {
+    "sources": [
+      "/",
+      "/about/",
+      "/advertise/",
+      "/articles/avanos-pottery-guide/",
+      "/articles/best-atv-tours-cappadocia/",
+      "/articles/best-balloon-companies-cappadocia/",
+      "/articles/best-cave-hotels-in-goreme/",
+      "/articles/best-horseback-riding-cappadocia/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/best-restaurants-cappadocia/",
+      "/articles/best-time-to-visit-cappadocia/",
+      "/articles/cappadocia-airport-transfers/",
+      "/articles/cappadocia-atv-tour/",
+      "/articles/cappadocia-balloon-booking-checklist/",
+      "/articles/cappadocia-balloon-cancelled/",
+      "/articles/cappadocia-balloon-price/",
+      "/articles/cappadocia-car-rental/",
+      "/articles/cappadocia-cooking-class-guide/",
+      "/articles/cappadocia-food-guide/",
+      "/articles/cappadocia-green-tour/",
+      "/articles/cappadocia-hamam-guide/",
+      "/articles/cappadocia-high-low-seasons/",
+      "/articles/cappadocia-horse-riding-guide/",
+      "/articles/cappadocia-hot-air-balloon-guide/",
+      "/articles/cappadocia-hotel-guide/",
+      "/articles/cappadocia-in-winter/",
+      "/articles/cappadocia-late-night-airport-arrival/",
+      "/articles/cappadocia-packing-list/",
+      "/articles/cappadocia-photography-guide/",
+      "/articles/cappadocia-red-tour-vs-green-tour/",
+      "/articles/cappadocia-restaurant-guide/",
+      "/articles/cappadocia-trip-cost/",
+      "/articles/cappadocia-wine-tasting-guide/",
+      "/articles/cappadocia-with-kids/",
+      "/articles/cappadocia-without-a-car/",
+      "/articles/cavetable-goreme-private-terrace/",
+      "/articles/cavusin-village-guide/",
+      "/articles/dark-church-goreme-guide/",
+      "/articles/derinkuyu-vs-kaymakli/",
+      "/articles/europe-to-cappadocia-flights/",
+      "/articles/four-day-cappadocia-itinerary/",
+      "/articles/goreme-open-air-museum-guide/",
+      "/articles/goreme-vs-uchisar/",
+      "/articles/how-many-days-in-cappadocia/",
+      "/articles/ihlara-valley-guide/",
+      "/articles/istanbul-to-cappadocia/",
+      "/articles/kayseri-airport-to-goreme/",
+      "/articles/kayseri-vs-nevsehir-airport/",
+      "/articles/love-valley-guide/",
+      "/articles/michelin-guide-cappadocia/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/articles/most-beautiful-churches-cappadocia/",
+      "/articles/most-visited-museums-cappadocia/",
+      "/articles/mustafapasa-guide/",
+      "/articles/nevsehir-airport-to-goreme/",
+      "/articles/perfect-3-day-cappadocia-itinerary/",
+      "/articles/pigeon-valley-walk/",
+      "/articles/responsible-travel-cappadocia/",
+      "/articles/rose-and-red-valley-hike/",
+      "/articles/testi-kebab-guide/",
+      "/articles/top-attractions-cappadocia/",
+      "/articles/top-rated-restaurants-cappadocia-yelp/",
+      "/articles/two-day-cappadocia-itinerary/",
+      "/articles/uchisar-castle-guide/",
+      "/articles/ultimate-cappadocia-travel-guide/",
+      "/articles/urgup-vs-ortahisar/",
+      "/articles/where-to-stay-in-cappadocia/",
+      "/articles/where-to-watch-cappadocia-balloons/",
+      "/articles/zelve-and-pasabag-guide/",
+      "/faq/",
+      "/getting-there/",
+      "/guides/",
+      "/privacy/",
+      "/terms/",
+      "/topics/balloons/",
+      "/topics/food-and-restaurants/",
+      "/topics/itineraries/",
+      "/topics/museums-and-heritage/",
+      "/topics/plan-your-trip/",
+      "/topics/transport/",
+      "/topics/valleys-and-experiences/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "nav@aria-label"
+    ],
+    "count": 82
+  },
+  "Featured stays": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/articles/cappadocia-packing-list/",
+      "/articles/cappadocia-photography-guide/",
+      "/articles/cappadocia-trip-cost/",
+      "/articles/cappadocia-with-kids/",
+      "/articles/four-day-cappadocia-itinerary/",
+      "/articles/goreme-vs-uchisar/",
+      "/articles/how-many-days-in-cappadocia/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/articles/perfect-3-day-cappadocia-itinerary/",
+      "/articles/responsible-travel-cappadocia/",
+      "/articles/top-attractions-cappadocia/",
+      "/articles/two-day-cappadocia-itinerary/",
+      "/articles/ultimate-cappadocia-travel-guide/",
+      "/articles/urgup-vs-ortahisar/",
+      "/articles/where-to-stay-in-cappadocia/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "span"
+    ],
+    "count": 19
+  },
+  "Our Cappadocia hotel shortlist": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/articles/cappadocia-packing-list/",
+      "/articles/cappadocia-photography-guide/",
+      "/articles/cappadocia-trip-cost/",
+      "/articles/cappadocia-with-kids/",
+      "/articles/four-day-cappadocia-itinerary/",
+      "/articles/goreme-vs-uchisar/",
+      "/articles/how-many-days-in-cappadocia/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/articles/perfect-3-day-cappadocia-itinerary/",
+      "/articles/responsible-travel-cappadocia/",
+      "/articles/top-attractions-cappadocia/",
+      "/articles/two-day-cappadocia-itinerary/",
+      "/articles/ultimate-cappadocia-travel-guide/",
+      "/articles/urgup-vs-ortahisar/",
+      "/articles/where-to-stay-in-cappadocia/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "h2"
+    ],
+    "count": 19
+  },
+  "Booking.com": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-airport-transfers/",
+      "/articles/cappadocia-hotel-guide/",
+      "/articles/cappadocia-late-night-airport-arrival/",
+      "/articles/cappadocia-packing-list/",
+      "/articles/cappadocia-photography-guide/",
+      "/articles/cappadocia-trip-cost/",
+      "/articles/cappadocia-with-kids/",
+      "/articles/europe-to-cappadocia-flights/",
+      "/articles/four-day-cappadocia-itinerary/",
+      "/articles/goreme-vs-uchisar/",
+      "/articles/how-many-days-in-cappadocia/",
+      "/articles/istanbul-to-cappadocia/",
+      "/articles/kayseri-airport-to-goreme/",
+      "/articles/kayseri-vs-nevsehir-airport/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/articles/nevsehir-airport-to-goreme/",
+      "/articles/perfect-3-day-cappadocia-itinerary/",
+      "/articles/responsible-travel-cappadocia/",
+      "/articles/top-attractions-cappadocia/",
+      "/articles/two-day-cappadocia-itinerary/",
+      "/articles/ultimate-cappadocia-travel-guide/",
+      "/articles/urgup-vs-ortahisar/",
+      "/articles/where-to-stay-in-cappadocia/",
+      "/getting-there/",
+      "/topics/transport/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "span"
+    ],
+    "count": 36
+  },
+  "Start with Sultan, Aza and Kelebek in Göreme, then explore our preferred stays in Göreme, Uçhisar and Çavuşin. Compare the room and total price for your own dates.": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/articles/cappadocia-packing-list/",
+      "/articles/cappadocia-photography-guide/",
+      "/articles/cappadocia-trip-cost/",
+      "/articles/cappadocia-with-kids/",
+      "/articles/four-day-cappadocia-itinerary/",
+      "/articles/goreme-vs-uchisar/",
+      "/articles/how-many-days-in-cappadocia/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/articles/perfect-3-day-cappadocia-itinerary/",
+      "/articles/responsible-travel-cappadocia/",
+      "/articles/top-attractions-cappadocia/",
+      "/articles/two-day-cappadocia-itinerary/",
+      "/articles/ultimate-cappadocia-travel-guide/",
+      "/articles/urgup-vs-ortahisar/",
+      "/articles/where-to-stay-in-cappadocia/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 19
+  },
+  "Compare the exact room and terrace access for your Göreme stay.": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/articles/cappadocia-packing-list/",
+      "/articles/cappadocia-photography-guide/",
+      "/articles/cappadocia-trip-cost/",
+      "/articles/cappadocia-with-kids/",
+      "/articles/four-day-cappadocia-itinerary/",
+      "/articles/goreme-vs-uchisar/",
+      "/articles/how-many-days-in-cappadocia/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/articles/perfect-3-day-cappadocia-itinerary/",
+      "/articles/responsible-travel-cappadocia/",
+      "/articles/top-attractions-cappadocia/",
+      "/articles/two-day-cappadocia-itinerary/",
+      "/articles/ultimate-cappadocia-travel-guide/",
+      "/articles/urgup-vs-ortahisar/",
+      "/articles/where-to-stay-in-cappadocia/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 19
+  },
+  "Check availability on Booking.com": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/articles/cappadocia-packing-list/",
+      "/articles/cappadocia-photography-guide/",
+      "/articles/cappadocia-trip-cost/",
+      "/articles/cappadocia-with-kids/",
+      "/articles/four-day-cappadocia-itinerary/",
+      "/articles/goreme-vs-uchisar/",
+      "/articles/how-many-days-in-cappadocia/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/articles/perfect-3-day-cappadocia-itinerary/",
+      "/articles/responsible-travel-cappadocia/",
+      "/articles/top-attractions-cappadocia/",
+      "/articles/two-day-cappadocia-itinerary/",
+      "/articles/ultimate-cappadocia-travel-guide/",
+      "/articles/urgup-vs-ortahisar/",
+      "/articles/where-to-stay-in-cappadocia/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "a"
+    ],
+    "count": 87
+  },
+  "Plan an adult stay in Göreme; check the guest-age policy and room category.": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/articles/cappadocia-packing-list/",
+      "/articles/cappadocia-photography-guide/",
+      "/articles/cappadocia-trip-cost/",
+      "/articles/cappadocia-with-kids/",
+      "/articles/four-day-cappadocia-itinerary/",
+      "/articles/goreme-vs-uchisar/",
+      "/articles/how-many-days-in-cappadocia/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/articles/perfect-3-day-cappadocia-itinerary/",
+      "/articles/responsible-travel-cappadocia/",
+      "/articles/top-attractions-cappadocia/",
+      "/articles/two-day-cappadocia-itinerary/",
+      "/articles/ultimate-cappadocia-travel-guide/",
+      "/articles/urgup-vs-ortahisar/",
+      "/articles/where-to-stay-in-cappadocia/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 19
+  },
+  "Compare cave and stone room categories, access and included facilities.": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/articles/cappadocia-packing-list/",
+      "/articles/cappadocia-photography-guide/",
+      "/articles/cappadocia-trip-cost/",
+      "/articles/cappadocia-with-kids/",
+      "/articles/four-day-cappadocia-itinerary/",
+      "/articles/goreme-vs-uchisar/",
+      "/articles/how-many-days-in-cappadocia/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/articles/perfect-3-day-cappadocia-itinerary/",
+      "/articles/responsible-travel-cappadocia/",
+      "/articles/top-attractions-cappadocia/",
+      "/articles/two-day-cappadocia-itinerary/",
+      "/articles/ultimate-cappadocia-travel-guide/",
+      "/articles/urgup-vs-ortahisar/",
+      "/articles/where-to-stay-in-cappadocia/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 19
+  },
+  "Artemis Cave Suites": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "h3"
+    ],
+    "count": 4
+  },
+  "Check the adults-only policy, room layout and any spa access in your offer.": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 4
+  },
+  "Henna Hotel": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "h3"
+    ],
+    "count": 4
+  },
+  "Check the adults-only policy, selected room and terrace arrangements.": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 4
+  },
+  "Aydınlı Cave Hotel": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "h3"
+    ],
+    "count": 4
+  },
+  "Compare room windows, steps and breakfast details for your Göreme base.": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 4
+  },
+  "Explore all 12 featured hotels →": {
+    "sources": [
+      "/",
+      "/articles/cappadocia-packing-list/",
+      "/articles/cappadocia-photography-guide/",
+      "/articles/cappadocia-trip-cost/",
+      "/articles/cappadocia-with-kids/",
+      "/articles/four-day-cappadocia-itinerary/",
+      "/articles/goreme-vs-uchisar/",
+      "/articles/how-many-days-in-cappadocia/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/articles/perfect-3-day-cappadocia-itinerary/",
+      "/articles/responsible-travel-cappadocia/",
+      "/articles/top-attractions-cappadocia/",
+      "/articles/two-day-cappadocia-itinerary/",
+      "/articles/ultimate-cappadocia-travel-guide/",
+      "/articles/urgup-vs-ortahisar/",
+      "/articles/where-to-stay-in-cappadocia/"
+    ],
+    "contexts": [
+      "a"
+    ],
+    "count": 16
+  },
+  "Find a stay for your dates": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/articles/goreme-vs-uchisar/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/articles/urgup-vs-ortahisar/",
+      "/articles/where-to-stay-in-cappadocia/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "h2"
+    ],
+    "count": 8
+  },
+  "Search Cappadocia accommodation on Booking.com. Choose your dates, guests and room, then review the final offer.": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/articles/goreme-vs-uchisar/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/articles/urgup-vs-ortahisar/",
+      "/articles/where-to-stay-in-cappadocia/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 8
+  },
+  "Open Booking.com to continue your search.": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-airport-transfers/",
+      "/articles/cappadocia-hotel-guide/",
+      "/articles/cappadocia-late-night-airport-arrival/",
+      "/articles/europe-to-cappadocia-flights/",
+      "/articles/goreme-vs-uchisar/",
+      "/articles/istanbul-to-cappadocia/",
+      "/articles/kayseri-airport-to-goreme/",
+      "/articles/kayseri-vs-nevsehir-airport/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/articles/nevsehir-airport-to-goreme/",
+      "/articles/urgup-vs-ortahisar/",
+      "/articles/where-to-stay-in-cappadocia/",
+      "/getting-there/",
+      "/topics/transport/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p@data-booking-fallback-text"
+    ],
+    "count": 17
+  },
+  "Booking.com search is ready.": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-airport-transfers/",
+      "/articles/cappadocia-hotel-guide/",
+      "/articles/cappadocia-late-night-airport-arrival/",
+      "/articles/europe-to-cappadocia-flights/",
+      "/articles/goreme-vs-uchisar/",
+      "/articles/istanbul-to-cappadocia/",
+      "/articles/kayseri-airport-to-goreme/",
+      "/articles/kayseri-vs-nevsehir-airport/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/articles/nevsehir-airport-to-goreme/",
+      "/articles/urgup-vs-ortahisar/",
+      "/articles/where-to-stay-in-cappadocia/",
+      "/getting-there/",
+      "/topics/transport/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p@data-booking-ready-text"
+    ],
+    "count": 17
+  },
+  "Loading Booking.com search…": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-airport-transfers/",
+      "/articles/cappadocia-hotel-guide/",
+      "/articles/cappadocia-late-night-airport-arrival/",
+      "/articles/europe-to-cappadocia-flights/",
+      "/articles/goreme-vs-uchisar/",
+      "/articles/istanbul-to-cappadocia/",
+      "/articles/kayseri-airport-to-goreme/",
+      "/articles/kayseri-vs-nevsehir-airport/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/articles/nevsehir-airport-to-goreme/",
+      "/articles/urgup-vs-ortahisar/",
+      "/articles/where-to-stay-in-cappadocia/",
+      "/getting-there/",
+      "/topics/transport/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 17
+  },
+  "Search Cappadocia stays on Booking.com": {
+    "sources": [
+      "/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/articles/goreme-vs-uchisar/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/articles/urgup-vs-ortahisar/",
+      "/articles/where-to-stay-in-cappadocia/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "a"
+    ],
+    "count": 8
+  },
+  "Our featured hotel selection includes properties connected to the publisher and other preferred stays. Some links are commercial; we may earn a commission at no extra cost to you. Reservations, payment and customer support are handled by Booking.com, GetYourGuide or the named provider.": {
+    "sources": [
+      "/",
+      "/about/",
+      "/advertise/",
+      "/articles/avanos-pottery-guide/",
+      "/articles/best-atv-tours-cappadocia/",
+      "/articles/best-balloon-companies-cappadocia/",
+      "/articles/best-cave-hotels-in-goreme/",
+      "/articles/best-horseback-riding-cappadocia/",
+      "/articles/best-hotels-cappadocia/",
+      "/articles/best-restaurants-cappadocia/",
+      "/articles/best-time-to-visit-cappadocia/",
+      "/articles/cappadocia-airport-transfers/",
+      "/articles/cappadocia-atv-tour/",
+      "/articles/cappadocia-balloon-booking-checklist/",
+      "/articles/cappadocia-balloon-cancelled/",
+      "/articles/cappadocia-balloon-price/",
+      "/articles/cappadocia-car-rental/",
+      "/articles/cappadocia-cooking-class-guide/",
+      "/articles/cappadocia-food-guide/",
+      "/articles/cappadocia-green-tour/",
+      "/articles/cappadocia-hamam-guide/",
+      "/articles/cappadocia-high-low-seasons/",
+      "/articles/cappadocia-horse-riding-guide/",
+      "/articles/cappadocia-hot-air-balloon-guide/",
+      "/articles/cappadocia-hotel-guide/",
+      "/articles/cappadocia-in-winter/",
+      "/articles/cappadocia-late-night-airport-arrival/",
+      "/articles/cappadocia-packing-list/",
+      "/articles/cappadocia-photography-guide/",
+      "/articles/cappadocia-red-tour-vs-green-tour/",
+      "/articles/cappadocia-restaurant-guide/",
+      "/articles/cappadocia-trip-cost/",
+      "/articles/cappadocia-wine-tasting-guide/",
+      "/articles/cappadocia-with-kids/",
+      "/articles/cappadocia-without-a-car/",
+      "/articles/cavetable-goreme-private-terrace/",
+      "/articles/cavusin-village-guide/",
+      "/articles/dark-church-goreme-guide/",
+      "/articles/derinkuyu-vs-kaymakli/",
+      "/articles/europe-to-cappadocia-flights/",
+      "/articles/four-day-cappadocia-itinerary/",
+      "/articles/goreme-open-air-museum-guide/",
+      "/articles/goreme-vs-uchisar/",
+      "/articles/how-many-days-in-cappadocia/",
+      "/articles/ihlara-valley-guide/",
+      "/articles/istanbul-to-cappadocia/",
+      "/articles/kayseri-airport-to-goreme/",
+      "/articles/kayseri-vs-nevsehir-airport/",
+      "/articles/love-valley-guide/",
+      "/articles/michelin-guide-cappadocia/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/articles/most-beautiful-churches-cappadocia/",
+      "/articles/most-visited-museums-cappadocia/",
+      "/articles/mustafapasa-guide/",
+      "/articles/nevsehir-airport-to-goreme/",
+      "/articles/perfect-3-day-cappadocia-itinerary/",
+      "/articles/pigeon-valley-walk/",
+      "/articles/responsible-travel-cappadocia/",
+      "/articles/rose-and-red-valley-hike/",
+      "/articles/testi-kebab-guide/",
+      "/articles/top-attractions-cappadocia/",
+      "/articles/top-rated-restaurants-cappadocia-yelp/",
+      "/articles/two-day-cappadocia-itinerary/",
+      "/articles/uchisar-castle-guide/",
+      "/articles/ultimate-cappadocia-travel-guide/",
+      "/articles/urgup-vs-ortahisar/",
+      "/articles/where-to-stay-in-cappadocia/",
+      "/articles/where-to-watch-cappadocia-balloons/",
+      "/articles/zelve-and-pasabag-guide/",
+      "/faq/",
+      "/getting-there/",
+      "/guides/",
+      "/privacy/",
+      "/terms/",
+      "/topics/balloons/",
+      "/topics/food-and-restaurants/",
+      "/topics/itineraries/",
+      "/topics/museums-and-heritage/",
+      "/topics/plan-your-trip/",
+      "/topics/transport/",
+      "/topics/valleys-and-experiences/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 82
+  },
+  "Choose your Uçhisar room carefully and arrange any restaurant reservation separately.": {
+    "sources": [
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 3
+  },
+  "Match the room, daylight and hillside access to the stay you have in mind.": {
+    "sources": [
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 3
+  },
+  "Compare the exact room, outdoor facilities and transport for a Uçhisar stay.": {
+    "sources": [
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 3
+  },
+  "Çavuşin": {
+    "sources": [
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "span"
+    ],
+    "count": 3
+  },
+  "Seki Cave Hotel": {
+    "sources": [
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "h3"
+    ],
+    "count": 3
+  },
+  "Stay in Çavuşin; check room details, terrace access and transport to Göreme.": {
+    "sources": [
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 3
+  },
+  "Confirm the layout and bed arrangement of the cave or stone room you select.": {
+    "sources": [
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 3
+  },
+  "Carus Cappadocia": {
+    "sources": [
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "h3"
+    ],
+    "count": 3
+  },
+  "Check the guest-age policy, exact room and access to the facilities you want.": {
+    "sources": [
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 3
+  },
+  "Read Cappadocia Hotel Guide: 12 Featured Stays to Compare": {
+    "sources": [
+      "/articles/best-hotels-cappadocia/",
+      "/articles/michelin-guide-cappadocia/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/guides/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "a@aria-label"
+    ],
+    "count": 5
+  },
+  "{0}Cappadocia Hotel Guide: 12 Featured Stays to Compare{/0}": {
+    "sources": [
+      "/articles/best-hotels-cappadocia/",
+      "/articles/michelin-guide-cappadocia/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/guides/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "h3"
+    ],
+    "count": 5
+  },
+  "Start with Sultan, Aza and Kelebek, then compare our twelve preferred hotels in Göreme, Uçhisar and Çavuşin.": {
+    "sources": [
+      "/articles/best-hotels-cappadocia/",
+      "/articles/cappadocia-hotel-guide/",
+      "/articles/michelin-guide-cappadocia/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/guides/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "p",
+      "meta@content"
+    ],
+    "count": 9
+  },
+  ": Cappadocia Hotel Guide: 12 Featured Stays to Compare": {
+    "sources": [
+      "/articles/best-hotels-cappadocia/",
+      "/articles/michelin-guide-cappadocia/",
+      "/articles/michelin-hotels-cappadocia/",
+      "/guides/",
+      "/topics/where-to-stay/"
+    ],
+    "contexts": [
+      "span"
+    ],
+    "count": 5
+  },
+  "Compare flights for your Cappadocia trip": {
+    "sources": [
+      "/articles/cappadocia-airport-transfers/",
+      "/articles/cappadocia-late-night-airport-arrival/",
+      "/articles/europe-to-cappadocia-flights/",
+      "/articles/istanbul-to-cappadocia/",
+      "/articles/kayseri-airport-to-goreme/",
+      "/articles/kayseri-vs-nevsehir-airport/",
+      "/articles/nevsehir-airport-to-goreme/",
+      "/getting-there/",
+      "/topics/transport/"
+    ],
+    "contexts": [
+      "h2"
+    ],
+    "count": 9
+  },
+  "Search flights on Booking.com. Compare Kayseri (ASR) and Nevşehir (NAV), then match your airport transfer to the flight you book.": {
+    "sources": [
+      "/articles/cappadocia-airport-transfers/",
+      "/articles/cappadocia-late-night-airport-arrival/",
+      "/articles/europe-to-cappadocia-flights/",
+      "/articles/istanbul-to-cappadocia/",
+      "/articles/kayseri-airport-to-goreme/",
+      "/articles/kayseri-vs-nevsehir-airport/",
+      "/articles/nevsehir-airport-to-goreme/",
+      "/getting-there/",
+      "/topics/transport/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 9
+  },
+  "Search flights on Booking.com": {
+    "sources": [
+      "/articles/cappadocia-airport-transfers/",
+      "/articles/cappadocia-late-night-airport-arrival/",
+      "/articles/europe-to-cappadocia-flights/",
+      "/articles/istanbul-to-cappadocia/",
+      "/articles/kayseri-airport-to-goreme/",
+      "/articles/kayseri-vs-nevsehir-airport/",
+      "/articles/nevsehir-airport-to-goreme/",
+      "/getting-there/",
+      "/topics/transport/"
+    ],
+    "contexts": [
+      "a"
+    ],
+    "count": 9
+  },
+  "Cappadocia Hotel Guide: 12 Featured Stays to Compare": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "title",
+      "meta@content",
+      "span",
+      "h1"
+    ],
+    "count": 5
+  },
+  "Start in Göreme with Sultan Cave Suites, Aza Cave Hotel and Kelebek Special Cave Hotel. Our twelve-hotel selection continues in the order shown below, with other Göreme stays and choices in Uçhisar and Çavuşin. Open the specific property on Booking.com to compare your dates, guests, room and cancellation conditions. This is a preferred selection, not a score-based ranking or a claim that every property suits every traveller.": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 1
+  },
+  "Göreme: Sultan, Aza and Kelebek": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "h2",
+      "a"
+    ],
+    "count": 2
+  },
+  "Illustrated Cappadocia field note for Cappadocia Hotel Guide: 12 Featured Stays to Compare": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "div@aria-label"
+    ],
+    "count": 1
+  },
+  "More choices in Göreme and Çavuşin": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "strong",
+      "h2",
+      "a"
+    ],
+    "count": 3
+  },
+  "In Göreme, continue with Artemis Cave Suites, Henna Hotel and Aydınlı Cave Hotel; Cappadocia Cave Suites and Carus Cappadocia are also part of our selection. Compare the exact room and access to the facilities you want. Aza, Artemis and Henna list adult-focused guest policies, so check the current minimum age before planning a family stay.": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 1
+  },
+  "Seki Cave Hotel is in Çavuşin. It is a separate hotel from Seki Restaurant at Argos in Cappadocia. Check the journey to your planned dinners and activities, as well as the route from the vehicle drop-off to your room. For every property, ask about windows, ventilation, stairs and your actual bed arrangement.": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 1
+  },
+  "Use each hotel’s Booking.com button to compare the same dates and guest count. The card opens that specific property, rather than a general hotel results page. Check the final total, breakfast, taxes, cancellation conditions and any deposit before paying.": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 1
+  },
+  "If you need more options, use the Cappadocia accommodation search below the selection. The current offer is confirmed on Booking.com; this guide does not promise a fixed rate or available room. Arrange airport transport with your arriving flight number and your return flight number when booked.": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 1
+  },
+  "{0}Sultan Cave Suites: Booking.com property page{/0}": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "li"
+    ],
+    "count": 1
+  },
+  "{0}Aza Cave Hotel: Booking.com property page{/0}": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "li"
+    ],
+    "count": 1
+  },
+  "{0}Kelebek Special Cave Hotel: Booking.com property page{/0}": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "li"
+    ],
+    "count": 1
+  },
+  "{0}Artemis Cave Suites: Booking.com property page{/0}": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "li"
+    ],
+    "count": 1
+  },
+  "{0}Henna Hotel: Booking.com property page{/0}": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "li"
+    ],
+    "count": 1
+  },
+  "{0}Aydınlı Cave Hotel: Booking.com property page{/0}": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "li"
+    ],
+    "count": 1
+  },
+  "{0}Museum Hotel: Booking.com property page{/0}": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "li"
+    ],
+    "count": 1
+  },
+  "{0}Argos in Cappadocia: Booking.com property page{/0}": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "li"
+    ],
+    "count": 1
+  },
+  "{0}Taşkonaklar Hotel: Booking.com property page{/0}": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "li"
+    ],
+    "count": 1
+  },
+  "{0}Seki Cave Hotel: Booking.com property page{/0}": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "li"
+    ],
+    "count": 1
+  },
+  "{0}Cappadocia Cave Suites: Booking.com property page{/0}": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "li"
+    ],
+    "count": 1
+  },
+  "{0}Carus Cappadocia: Booking.com property page{/0}": {
+    "sources": [
+      "/articles/cappadocia-hotel-guide/"
+    ],
+    "contexts": [
+      "li"
+    ],
+    "count": 1
+  },
+  "We count page views, broad referral categories and clicks on our GetYourGuide and Booking.com affiliate links in daily aggregates retained for 90 days. We do not store IP addresses, full referrer URLs, search queries or visitor identifiers in these aggregates, and do not set analytics cookies. Around 20% of eligible visits send real page-performance measurements (LCP, CLS and INP); only performance bands are retained. Our measurement honours Do Not Track and Global Privacy Control. Counts are not unique visitors or confirmed bookings.": {
+    "sources": [
+      "/privacy/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 1
+  },
+  "GetYourGuide and Booking.com widgets load when their section approaches the viewport. Booking.com placements also use CJ tracking links and impression pixels. These external services receive requests from your browser and apply their own privacy and cookie policies. Our Do Not Track setting controls our own measurement, not an external service. We do not receive payment-card details or complete reservations. If a widget is unavailable, the labelled booking link remains available.": {
+    "sources": [
+      "/privacy/"
+    ],
+    "contexts": [
+      "p"
+    ],
+    "count": 1
+  }
+}

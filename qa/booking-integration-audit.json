@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-15",
+  "pages": 328,
+  "pagesWithBooking": 112,
+  "bookingLinks": 416,
+  "widgets": 68,
+  "fullOrderPages": [
+    "/topics/where-to-stay/",
+    "/tr/topics/where-to-stay/",
+    "/es/topics/where-to-stay/",
+    "/zh/topics/where-to-stay/",
+    "/articles/cappadocia-hotel-guide/",
+    "/tr/articles/cappadocia-hotel-guide/",
+    "/es/articles/cappadocia-hotel-guide/",
+    "/zh/articles/cappadocia-hotel-guide/",
+    "/articles/best-hotels-cappadocia/",
+    "/tr/articles/best-hotels-cappadocia/",
+    "/es/articles/best-hotels-cappadocia/",
+    "/zh/articles/best-hotels-cappadocia/"
+  ],
+  "failures": []
+}

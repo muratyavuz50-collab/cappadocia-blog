@@ -1,12 +1,15 @@
+import {bookingTranslations} from '../booking.mjs';
 import {languages,localizeHTML,localePath,barePath} from './engine.mjs';
 import tr from './tr.json';
 import es from './es.json';
 import zh from './zh.json';
-import catalog from './catalog.json';
+import baseCatalog from './catalog.json';
+import bookingCatalog from './booking-catalog.json';
+const catalog={...baseCatalog,...bookingCatalog};
 import interfaceCopy from './interface.json';
 import {cavetableTranslations} from '../cavetable.mjs';
 
-const dictionaries={tr:{...tr,...cavetableTranslations.tr},es:{...es,...cavetableTranslations.es},zh:{...zh,...cavetableTranslations.zh}};
+const dictionaries={tr:{...tr,...cavetableTranslations.tr,...bookingTranslations.tr},es:{...es,...cavetableTranslations.es,...bookingTranslations.es},zh:{...zh,...cavetableTranslations.zh,...bookingTranslations.zh}};
 const privatePath=path=>/^\/(admin|account|api|signin-with-chatgpt|signout-with-chatgpt)(\/|$)/.test(path);
 
 export async function localizedResponse(request,env,handle,canonicalOrigin){
