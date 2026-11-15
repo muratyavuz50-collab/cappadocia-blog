@@ -115,8 +115,7 @@ function brand() {
 
 function header(active = "") {
   const nav = site.nav.map((item) => `<a ${active === item.label ? 'aria-current="page"' : ""} href="${item.href}">${item.label}</a>`).join("");
-  return `<div class="utility"><div class="shell utility-inner"><span>${site.utility}</span></div></div>
-  <header class="site-header">
+  return `<header class="site-header">
     <div class="shell nav-wrap">
       <a class="brand" href="/" aria-label="${site.name} home">${brand()}</a>
       <nav class="desktop-nav" aria-label="Primary navigation">${nav}</nav>
