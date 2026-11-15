@@ -1,3 +1,4 @@
+import { cavetableSlug, cavetableImages } from "./cavetable.mjs";
 // Verified Commons source metadata; resized photographs retain their stated licences.
 export const articleImages = {
   "ultimate-cappadocia-travel-guide": {
@@ -555,3 +556,8 @@ Object.assign(articleImages, {
   "cappadocia-restaurant-guide": commonsPhoto("Gözleme at Nazar Börek in Göreme.jpg", "Fresh gözleme served at Nazar Börek in Göreme.", "JB Macatulad"),
   "michelin-guide-cappadocia": commonsPhoto("Kinds from the Turkish cuisine.jpg", "A selection of Turkish dishes photographed in Cappadocia.", "flowcomm", "CC BY 2.0")
 });
+
+
+// First-party CaveTable photographs, embedded from the official website.
+articleImages[cavetableSlug] = cavetableImages.hero;
+articleExtras[cavetableSlug] = cavetableImages.extras;

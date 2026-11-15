@@ -1,6 +1,6 @@
 # CappadociaBlog.com
 
-An English-language Cappadocia travel publication with 65 guides, 500 FAQ entries, travel planning, GetYourGuide recommendations, image credits, SEO metadata and an owner-only editorial CMS.
+A Cappadocia travel publication with 66 guides in English, Turkish, Spanish and Simplified Chinese, 500 FAQ entries, travel planning, GetYourGuide recommendations, image credits, SEO metadata and an owner-only editorial CMS.
 
 ## Vercel deployment
 
@@ -25,7 +25,7 @@ Do not commit `.env`, `.env.local`, OAuth credentials, database URLs, signing ke
 
 ## Content and data migration
 
-The 65 seeded guides, FAQ and experience recommendations are versioned in this repository. CMS edits made on the existing hosted site are stored separately in its Cloudflare D1 database and are not included in GitHub. Before moving the editorial CMS to production, export its `articles`, `article_revisions`, `administrators`, `site_settings` and `site_metrics` data and import that export into Neon. Keep the existing hosted site available until the import has been checked. Do not initialize Neon as the sole source of truth if there are unpublished edits to preserve.
+The 66 seeded guides, FAQ and experience recommendations are versioned in this repository. CMS edits made on the existing hosted site are stored separately in its Cloudflare D1 database and are not included in GitHub. Before moving the editorial CMS to production, export its `articles`, `article_revisions`, `administrators`, `site_settings` and `site_metrics` data and import that export into Neon. Keep the existing hosted site available until the import has been checked. Do not initialize Neon as the sole source of truth if there are unpublished edits to preserve.
 
 Database schema changes are defined in `db/postgres-schema.sql`; run `npm run db:migrate` after a change and inspect the diff. Keep migration credentials local.
 
@@ -47,18 +47,19 @@ npm run test:locales
 - `/admin/` is restricted to the single configured owner Google account. Reader accounts are not part of this site.
 - All 19 experience-mapped guides include topic-related GetYourGuide links/widgets with partner ID `GTS1OZ5`; other guides use related activity links where relevant.
 - Affiliate and paid-ad disclosure appears in the footer. Banner placements are replaceable through `advertisingSlots` in `experiences.mjs`.
-- Article photographs are licensed images with source and attribution metadata; CC BY-SA derivatives retain their applicable license.
+- Article photographs retain source and attribution metadata; CC BY-SA derivatives retain their applicable license. The CaveTable guide embeds three photographs and three user-controlled videos from the official CaveTable website, credited as first-party media without claiming a Creative Commons licence. Instagram opens the verified official Reels page; no individual Reel permalink or embed is invented.
 - The FAQ contains 500 questions and answers in 25 topics, available in all four site languages. Its English source is managed in `faq-data.mjs`.
 - `GETTING THERE` content and flight/transfer details should be refreshed against current airline schedules before making time-sensitive claims.
 
 ## Language editing
 
-English uses the original page URLs. Turkish, Spanish and Simplified Chinese use `/tr/`, `/es/` and `/zh/` followed by the same path. The server renders translated content directly, including article bodies, headings, metadata, image descriptions, navigation and FAQ answers. Page canonicals, reciprocal `hreflang` links, Open Graph locale and structured data follow the selected language. The sitemap includes all 324 seeded public URLs.
+English uses the original page URLs. Turkish, Spanish and Simplified Chinese use `/tr/`, `/es/` and `/zh/` followed by the same path. The server renders translated content directly, including article bodies, headings, metadata, image descriptions, navigation and FAQ answers. Page canonicals, reciprocal `hreflang` links, Open Graph locale and structured data follow the selected language. The sitemap includes all 328 seeded public URLs.
 
-Reviewed dictionaries in `localization/tr.json`, `es.json` and `zh.json` map exact English strings to original native-language wording. Numbered placeholders retain the original inline links and formatting. Each language's `research-*.json` records the writing sources and terminology decisions. `localization/interface.json` covers dynamic messages, localized calendars, transfer validation and client-side status text.
+Reviewed dictionaries in `localization/tr.json`, `es.json` and `zh.json` map exact English strings to original native-language wording. The focused CaveTable content and its reviewed supplementary translations are in `cavetable.mjs`, merged by `localization/runtime.mjs` and validated by `localization/check.mjs`. Numbered placeholders retain the original inline links and formatting. Each language's `research-*.json` records the writing sources and terminology decisions. `localization/interface.json` covers dynamic messages, localized calendars, transfer validation and client-side status text.
 
 After an English source or published CMS article changes, run `npm run build` and `node scripts/extract-localization.mjs` to update the source catalog, then translate every new or changed key in all three dictionaries. Rebuild and run `npm run test:locales` before deployment. New CMS text without a reviewed dictionary entry falls back to its English source; it is not automatically machine-translated. Drafts, revision history and existing database content remain managed by the protected CMS and are not overwritten by language deployment.
 
 `test:locales` checks exact dictionary coverage and inline nesting, all language routes, translated article/schema headings, 500 expandable questions and answers per language, same-page language switching, private-route isolation, localized analytics, canonical URLs and sitemap language links. Existing SEO, CMS and Vercel handler tests remain separate.
 
 For internal browser QA only, `node scripts/export-localized-preview.mjs` exports the actual built Worker responses into the ignored `.sites-runtime/locale-preview` directory. This uses an empty test database and does not contact or replace production storage.
+

@@ -644,3 +644,16 @@ svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-
   .art-rock-three { display: none; }
   .art-emblem { right: 10%; transform: scale(.82) rotate(4deg); }
 }
+
+
+/* CaveTable: official media stays clear, responsive and user-controlled. */
+.article-cavetable .article-hero img{height:min(74vh,760px);object-fit:contain;background:#f5eee2}
+.article-cavetable .article-supporting-image img{object-fit:contain;background:#f5eee2}
+.cavetable-video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:24px 0}
+.cavetable-video-grid figure{margin:0;min-width:0}
+.cavetable-video-grid video{display:block;width:100%;max-width:100%;aspect-ratio:9/16;object-fit:contain;background:#f5eee2;border-radius:16px}
+.cavetable-video-grid figcaption{margin-top:10px;font-weight:650;font-size:.9rem;line-height:1.5}
+.cavetable-video-link{display:inline-block;margin-top:6px;font-size:.82rem;overflow-wrap:anywhere}
+.cavetable-actions{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}
+.cavetable-actions .button{white-space:normal;text-align:center;min-width:0;max-width:100%}
+@media(max-width:720px){.cavetable-video-grid{grid-template-columns:1fr}.cavetable-video-grid video{max-height:65vh}.cavetable-actions{flex-direction:column}.article-cavetable .article-hero img{height:65vh}}

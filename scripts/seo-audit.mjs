@@ -164,11 +164,21 @@ const allEditorialImages = site.articles.flatMap((article) => renderer.imagesFor
 assert.equal(new Set(allEditorialImages.map((image) => image.src)).size, allEditorialImages.length, "Every article hero/supporting image is unique");
 for (const image of allEditorialImages) {
   assert.ok(image.alt && image.width > 0 && image.height > 0, `${image.src}: complete image attributes`);
-  assert.ok(image.source && image.author && image.license && image.licenseUrl, `${image.src}: complete attribution metadata`);
+  assert.ok(image.source && image.author, `${image.src}: complete source attribution`);
   assert.doesNotMatch(image.author, /creator credited|unknown/i, `${image.src}: exact creator required`);
-  assert.doesNotMatch(image.license, /reusable|unknown/i, `${image.src}: exact licence required`);
   assert.match(image.source, /^https:\/\//, `${image.src}: HTTPS source`);
-  assert.match(image.licenseUrl, /^https:\/\/creativecommons\.org\//, `${image.src}: exact Creative Commons licence URL`);
+  if (image.officialMedia) {
+    // First-party embeds retain the provider's URL; do not invent a CC licence.
+    assert.equal(new URL(image.src).origin, "https://cavetable.com", `${image.src}: reviewed first-party media origin`);
+    assert.equal(image.source, "https://cavetable.com/", `${image.src}: official source attribution`);
+    assert.equal(image.author, "CaveTable", `${image.src}: source identity`);
+    assert.equal(image.reviewed, "2026-11-15", `${image.src}: source review date`);
+    assert.equal(image.license, undefined, `${image.src}: no invented licence`);
+  } else {
+    assert.ok(image.license && image.licenseUrl, `${image.src}: complete licence metadata`);
+    assert.doesNotMatch(image.license, /reusable|unknown/i, `${image.src}: exact licence required`);
+    assert.match(image.licenseUrl, /^https:\/\/creativecommons\.org\//, `${image.src}: exact Creative Commons licence URL`);
+  }
 }
 
 const filteredGuides = await request("/guides/?category=Food");
@@ -242,3 +252,4 @@ for (const privatePath of ["/admin", "/account", "/api/", "/signin-with-chatgpt"
 assert.ok(robots.includes(`Sitemap: ${site.domain}/sitemap.xml`), "robots advertises sitemap");
 
 console.log(`SEO audit passed: ${expectedPaths.size} live routes, ${site.articles.length} articles, ${titles.size} unique titles/descriptions, ${allEditorialImages.length} uniquely attributed images, complete canonical/link/schema/sitemap/feed/robots checks.`);
+

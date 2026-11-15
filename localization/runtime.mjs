@@ -4,8 +4,9 @@ import es from './es.json';
 import zh from './zh.json';
 import catalog from './catalog.json';
 import interfaceCopy from './interface.json';
+import {cavetableTranslations} from '../cavetable.mjs';
 
-const dictionaries={tr,es,zh};
+const dictionaries={tr:{...tr,...cavetableTranslations.tr},es:{...es,...cavetableTranslations.es},zh:{...zh,...cavetableTranslations.zh}};
 const privatePath=path=>/^\/(admin|account|api|signin-with-chatgpt|signout-with-chatgpt)(\/|$)/.test(path);
 
 export async function localizedResponse(request,env,handle,canonicalOrigin){
@@ -34,3 +35,4 @@ export async function localizedResponse(request,env,handle,canonicalOrigin){
 export function sitemapAlternates(origin,path,xmlEscape){
   return languages.map(lang=>`<xhtml:link rel="alternate" hreflang="${lang==='zh'?'zh-Hans':lang}" href="${xmlEscape(origin+localePath(path,lang))}"/>`).join('')+`<xhtml:link rel="alternate" hreflang="x-default" href="${xmlEscape(origin+path)}"/>`;
 }
+

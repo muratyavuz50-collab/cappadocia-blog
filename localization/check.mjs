@@ -1,16 +1,18 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
+import {cavetableTranslations} from '../cavetable.mjs';
 
 const tokens=text=>text.match(/\{\/?\d+\/?\}/g)||[];
 export async function checkDictionaries(directory){
   const catalog=JSON.parse(await readFile(new URL('catalog.json',directory),'utf8'));
   const counts={};
   for(const lang of ['tr','es','zh']){
-    const dictionary=JSON.parse(await readFile(new URL(lang+'.json',directory),'utf8'));
+    const supplemental=cavetableTranslations[lang]||{};
+    const dictionary={...JSON.parse(await readFile(new URL(lang+'.json',directory),'utf8')),...supplemental};
     const missing=Object.keys(catalog).filter(key=>!Object.hasOwn(dictionary,key));
     assert.equal(missing.length,0,`${lang}: ${missing.length} missing translations, first: ${missing.slice(0,3).join(' | ')}`);
     for(const [key,value]of Object.entries(dictionary)){
-      assert.ok(catalog[key],`${lang}: unexpected source key ${key.slice(0,120)}`);
+      assert.ok(catalog[key]||Object.hasOwn(supplemental,key),`${lang}: unexpected source key ${key.slice(0,120)}`);
       assert.equal(typeof value,'string',`${lang}: translation must be text`);
       assert.ok(value.trim(),`${lang}: empty translation for ${key.slice(0,100)}`);
       assert.deepEqual(tokens(value).sort(),tokens(key).sort(),`${lang}: changed inline-markup tokens for ${key.slice(0,120)}`);
@@ -26,3 +28,4 @@ export async function checkDictionaries(directory){
   }
   return {catalog,counts};
 }
+
